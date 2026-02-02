@@ -13,8 +13,6 @@
 	  <Reference Include="Redemption">
 	    <HintPath>..\ModAssemblies\Redemption_v0.8.0.4110.dll</HintPath>
 	  </Reference>
-	</ItemGroup>
-	<ItemGroup>
 	  <ProjectReference Include="..\OrchidMod\OrchidMod.csproj" />
 	</ItemGroup>
 

@@ -1,6 +1,4 @@
-using Redemption;
 using OrchidMod.Content.Guardian;
-using Redemption.Globals;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -10,5 +8,10 @@ namespace GuardiansOfRedemption
 	public class GuardiansOfRedemption : Mod
 	{
 		public static GuardiansOfRedemption Instance { get; private set; }
+
+		public override void PostSetupContent()
+		{
+			
+		}
 	}
 }

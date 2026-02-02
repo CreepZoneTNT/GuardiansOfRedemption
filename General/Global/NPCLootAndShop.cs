@@ -9,7 +9,6 @@ namespace GuardiansOfRedemption.General.Global;
 
 public class NPCLootAndShop : GlobalNPC
 {
-    private Mod modOfRedemption = Redemption.Redemption.Instance;
     public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
         if (npc.type == ModContent.NPCType<SkeletonWarden>())
