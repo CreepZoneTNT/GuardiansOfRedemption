@@ -1,0 +1,89 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "OrchidMod/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/OrchidMod.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/OrchidMod.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "OrchidMod/1.0.0": {
+      "type": "project",
+      "path": "../../../../../../../mnt/bulk/creepzonetnt/Documents/Coding/tModLoader/ModSources/OrchidMod/OrchidMod.csproj",
+      "msbuildProject": "../../../../../../../mnt/bulk/creepzonetnt/Documents/Coding/tModLoader/ModSources/OrchidMod/OrchidMod.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "OrchidMod >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "/var/home/creepzonetnt/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/var/mnt/bulk/creepzonetnt/Documents/Coding/tModLoader/ModSources/GuardiansOfRedemption/GuardiansOfRedemption.csproj",
+      "projectName": "GuardiansOfRedemption",
+      "projectPath": "/var/mnt/bulk/creepzonetnt/Documents/Coding/tModLoader/ModSources/GuardiansOfRedemption/GuardiansOfRedemption.csproj",
+      "packagesPath": "/var/home/creepzonetnt/.nuget/packages/",
+      "outputPath": "/var/mnt/bulk/creepzonetnt/Documents/Coding/tModLoader/ModSources/GuardiansOfRedemption/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/var/home/creepzonetnt/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "/var/mnt/bulk/creepzonetnt/Documents/Coding/tModLoader/ModSources/OrchidMod/OrchidMod.csproj": {
+              "projectPath": "/var/mnt/bulk/creepzonetnt/Documents/Coding/tModLoader/ModSources/OrchidMod/OrchidMod.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/8.0.123/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
