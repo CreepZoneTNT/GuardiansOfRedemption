@@ -1,1 +1,6 @@
 /Properties/launchSettings.json
+/bin/
+/obj/
+/.git/
+/.idea/
+/Folder.DotSettings.user
