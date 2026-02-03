@@ -1,12 +1,39 @@
 Items: {
 	SkeletonWardenShield: {
-		DisplayName: Skeleton Warden Shield
+		DisplayName: Antique Aegis
 		Tooltip: ""
 	}
 
 	EaglecrestShield: {
-		DisplayName: Eaglecrest Shield
-		Tooltip: ""
+		DisplayName: Eaglecrest Pavise
+		Tooltip:
+			'''
+			Fires 5 bouncing pebbles on slam
+			Hitting the same target with all 5 pebbles calls lightning over them      
+			'''
+	}
+
+	ErhanWarhammer: {
+		DisplayName: Judge's Gavel
+		Tooltip: 
+		    '''
+		    Cannot be thrown
+		    Fully charging will instead empower the hammer with holy light
+		    This can be repeated up to 3 times
+		    Hitting an enemy while charged will release the energy as an explosion of light
+		    Deals increased damage against demonic enemies
+		    Blocking casts
+		    '''
+		ChargeToGlow: Charge to envelop in holy light, right click to swing while charging
+	}
+
+	WeaponGraveSteelWarhammer: {
+		DisplayName: Grave Steel Gavel
+		Tooltip:
+			'''
+			Can pierce once before breaking
+			'Not to be confused with a Grave Steel Warhammer'
+			'''
 	}
 }
 

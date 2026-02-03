@@ -44,7 +44,7 @@ public class EaglecrestShieldPebblesProj : OrchidModGuardianProjectile
         Projectile.tileCollide = true;
         Projectile.ignoreWater = true;
         Projectile.timeLeft = 300;
-        Projectile.scale = 2f;
+        Projectile.scale = 1.5f;
         OldPosition = [];
         OldRotation = [];
     }
@@ -75,10 +75,7 @@ public class EaglecrestShieldPebblesProj : OrchidModGuardianProjectile
         Projectile.height = DrawTexture.Width;
     }
 
-    public override void SafeOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone, Player player, OrchidGuardian guardian)
-    {
-        base.SafeOnHitNPC(target, hit, damageDone, player, guardian);
-    }
+    public override void SafeOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone, Player player, OrchidGuardian guardian) => Projectile.Kill();
 
     public override bool OnTileCollide(Vector2 oldVelocity)
     {
@@ -89,6 +86,9 @@ public class EaglecrestShieldPebblesProj : OrchidModGuardianProjectile
         if (Projectile.velocity.X != oldVelocity.X) Projectile.velocity.X = -oldVelocity.X;
         if (Projectile.velocity.Y != oldVelocity.Y) Projectile.velocity.Y = -oldVelocity.Y;
         Projectile.velocity *= 0.75f;
+        Projectile.penetrate--;
+        
+        if (Projectile.penetrate == 0) Projectile.Kill();
         
         return false;
     }

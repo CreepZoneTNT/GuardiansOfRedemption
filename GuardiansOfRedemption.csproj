@@ -5,7 +5,7 @@
 
 	<!-- General -->
 	<PropertyGroup>
-		
+		<AssemblyName>GuardiansOfRedemption</AssemblyName>
 	</PropertyGroup>
 
 	<!-- References -->

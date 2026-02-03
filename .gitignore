@@ -342,4 +342,8 @@ ASALocalRun/
 /.vscode
 
 /Properties/launchSettings.json
-/obj/
+obj/
+bin/
+Properties/
+.git/
+config/
