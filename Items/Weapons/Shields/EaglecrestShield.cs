@@ -2,6 +2,7 @@ using GuardiansOfRedemption.Projectiles.Shields;
 using Microsoft.Xna.Framework;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
+using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -11,6 +12,10 @@ namespace GuardiansOfRedemption.Items.Weapons.Shields;
 
 public class EaglecrestShield : OrchidModGuardianShield
 {
+    public override void SetStaticDefaults()
+    { 
+        ElementID.ItemEarth[Type] = true;
+    }
     public override void SafeSetDefaults()
     {
         Item.value = Item.sellPrice(0, 1);

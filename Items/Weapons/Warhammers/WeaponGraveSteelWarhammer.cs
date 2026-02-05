@@ -19,14 +19,14 @@ public class WeaponGraveSteelWarhammer : OrchidModGuardianHammer
         Item.rare = ItemRarityID.Blue;
         Item.UseSound = SoundID.Item1;
         Item.knockBack = 8f;
-        Item.shootSpeed = 10f;
-        Item.damage = 180;
+        Item.shootSpeed = 12f;
+        Item.damage = 100;
+        Item.useTime = 18;
         Range = 30;
         Penetrate = true;
         GuardStacks = 1;
         SwingSpeed = 1.5f;
-        ReturnSpeed = 0.8f;
-        BlockDuration = 150;
+        BlockDuration = 200;
     }
 
     public override void OnThrow(Player player, OrchidGuardian guardian, Projectile projectile, bool Weak)

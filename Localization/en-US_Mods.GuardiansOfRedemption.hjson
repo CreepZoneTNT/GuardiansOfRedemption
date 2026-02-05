@@ -15,15 +15,14 @@ Items: {
 
 	ErhanWarhammer: {
 		DisplayName: Judge's Gavel
-		Tooltip: 
-		    '''
-		    Cannot be thrown
-		    Fully charging will instead empower the hammer with holy light
-		    This can be repeated up to 3 times
-		    Hitting an enemy while charged will release the energy as an explosion of light
-		    Deals increased damage against demonic enemies
-		    Blocking casts
-		    '''
+		Tooltip:
+			'''
+			Cannot be thrown normally
+			Fully charging will instead empower the hammer with holy light
+			This can be repeated up to 3 times
+			Hitting an enemy while charged will release the energy as an explosion of light
+			Blocking casts a holy aura that slows and damages nearby enemies, more strongly if undead
+			'''
 		ChargeToGlow: Charge to envelop in holy light, right click to swing while charging
 	}
 
@@ -35,6 +34,32 @@ Items: {
 			'Not to be confused with a Grave Steel Warhammer'
 			'''
 	}
+
+	ZephosWarhammer: {
+		DisplayName: Zephos' Skullsmasher
+		Tooltip:
+			'''
+			Charged throw hits will boost warhammer damage and speed by 25% for 6 seconds
+			Deals increased damage against skeletons
+			'''
+	}
+
+	CosmosChain: {
+		DisplayName: Astral Linkage
+		Tooltip:
+			'''
+			Increases warhammer swing range to as far as your cursor
+			Enemies caught in the chain will take partial damage
+			'Long hammer is real and it is COMING FOR YOU'
+			'''
+	}
 }
 
-Projectiles.EaglecrestShieldPebblesProj.DisplayName: Eaglecrest Shield Pebbles Proj
+Projectiles.EaglecrestShieldPebblesProj.DisplayName: Eaglecrest Pebble
+
+Buffs: {
+	ZephosWarhammerBuff: {
+		DisplayName: Skullsmashing
+		Description: Smashing!
+	}
+}
