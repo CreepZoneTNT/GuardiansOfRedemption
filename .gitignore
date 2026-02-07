@@ -341,9 +341,7 @@ ASALocalRun/
 /Content/Guardian/GauntletHitProjectile.cs
 /.vscode
 
-/Properties/launchSettings.json
 obj/
 bin/
-Properties/
 .git/
 config/
