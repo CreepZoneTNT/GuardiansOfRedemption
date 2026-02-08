@@ -1,10 +1,18 @@
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.General.Global;
 
 public class MoRGuardianPlayer : ModPlayer
 {
-    public bool CosmosChainUpdates;
+    public bool GuardianXenomiteChain;
+    public bool GuardianOmegaChain;
+    public bool GuardianCosmosChain;
 
-    public override void ResetEffects() =>  CosmosChainUpdates = false;
+    public override void ResetEffects()
+    {
+        GuardianXenomiteChain = false;
+        GuardianOmegaChain = false;
+        GuardianCosmosChain = false;
+    }
 }

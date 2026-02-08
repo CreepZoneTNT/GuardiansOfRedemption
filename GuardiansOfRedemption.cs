@@ -1,5 +1,6 @@
 using System.Numerics;
 using OrchidMod.Content.Guardian;
+using OrchidMod.Content.Guardian.Accessories;
 using OrchidMod.Content.Guardian.Misc;
 using OrchidMod.Content.Guardian.Projectiles.Misc;
 using OrchidMod.Content.Guardian.Weapons.Gauntlets;

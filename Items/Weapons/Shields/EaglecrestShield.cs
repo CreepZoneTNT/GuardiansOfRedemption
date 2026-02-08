@@ -38,7 +38,7 @@ public class EaglecrestShield : OrchidModGuardianShield
         SoundEngine.PlaySound(SoundID.NPCDeath43);
         for (int i = -2; i < 3; i++)
         {
-            Projectile.NewProjectile(shield.GetSource_FromAI(), shield.Center, Vector2.UnitX.RotatedBy(shield.rotation + MathHelper.Pi + Main.rand.NextFloat(-MathHelper.Pi/12, MathHelper.Pi/12)) * Item.shootSpeed * (1 + 0.1f * i), ModContent.ProjectileType<EaglecrestShieldPebblesProj>(), guardian.GetGuardianDamage(shield.damage * 0.15f), Item.knockBack, shield.owner);
+            Projectile.NewProjectile(shield.GetSource_FromAI(), shield.Center, Vector2.UnitX.RotatedBy(shield.rotation + MathHelper.Pi + Main.rand.NextFloat(-MathHelper.Pi/12, MathHelper.Pi/12)) * Item.shootSpeed * (1 + 0.1f * i), ModContent.ProjectileType<EaglecrestShield_PebblesProj>(), guardian.GetGuardianDamage(shield.damage * 0.15f), Item.knockBack, shield.owner);
         }
     }
 }

@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.Projectiles.Shields;
 
-public class EaglecrestShieldPebblesProj : OrchidModGuardianProjectile
+public class EaglecrestShield_PebblesProj : OrchidModGuardianProjectile
 {
     public override string Texture => "Redemption/Empty";
     

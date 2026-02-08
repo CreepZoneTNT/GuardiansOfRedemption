@@ -15,5 +15,8 @@
 	  </Reference>
 	  <ProjectReference Include="..\OrchidMod\OrchidMod.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Buffs\Debuffs\" />
+	</ItemGroup>
 
 </Project>

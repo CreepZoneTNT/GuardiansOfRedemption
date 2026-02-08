@@ -3,6 +3,7 @@ using OrchidMod.Content.Guardian.Weapons.Misc;
 using OrchidMod.Content.Guardian.Weapons.Warhammers;
 using Redemption.BaseExtension;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.General.Global;

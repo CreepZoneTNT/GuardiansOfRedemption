@@ -1,9 +1,14 @@
+using System;
 using System.Numerics;
 using FullSerializer.Internal;
+using GuardiansOfRedemption.General.Global;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Guardian.Accessories;
+using Redemption.BaseExtension;
+using Redemption.Buffs.Debuffs;
 using Redemption.Items.Materials.PostML;
+using Redemption.Items.Placeable.Tiles;
 using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Rarities;
 using Terraria;
@@ -26,20 +31,24 @@ public class CosmosChain : OrchidModGuardianEquipable
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
         OrchidGuardian modPlayer = player.GetModPlayer<OrchidGuardian>();
+        MoRGuardianPlayer addonPlayer = player.GetModPlayer<MoRGuardianPlayer>();
         if (player == Main.LocalPlayer)
         {
-            float chainDistance = (Main.MouseWorld - player.Center).Length();
+            addonPlayer.GuardianCosmosChain = true;
+        
+            float chainDistance = Math.Clamp((Main.MouseWorld - player.Center).Length(), 16f, 960f);
             modPlayer.GuardianChain = chainDistance;
             modPlayer.GuardianChainTexture = Texture + "_Chain";
             
-            if (player.HeldItem.ModItem is OrchidModGuardianHammer) player.GetModPlayer<OrchidGuardian>().GuardianMeleeSpeed *= 0.5f;
+            if (player.HeldItem.ModItem is OrchidModGuardianHammer) player.GetAttackSpeed(DamageClass.Melee) *= 0.25f;
+            
         }
     }
 
     public override void AddRecipes()
     {
         CreateRecipe()
-        .AddIngredient<HeavyChain>()
+        .AddIngredient<OmegaChain>()
         .AddIngredient<LifeFragment>(7)
         .AddTile(TileID.LunarCraftingStation)
         .Register();

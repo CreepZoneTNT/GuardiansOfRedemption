@@ -44,22 +44,69 @@ Items: {
 			'''
 	}
 
+	MoltenChain: {
+		DisplayName: Molten Chain
+		Tooltip:
+			'''
+			Significantly increases warhammer swing range
+			Melee and warhammer attacks inflict fire damage
+			'''
+	}
+
+	XenomiteChain: {
+		DisplayName: Infectious Cord
+		Tooltip:
+			'''
+			Greatly increases warhammer swing range
+			Enemies caught in the chain will take partial damage
+			Warhammer attacks inflict toxic damage
+			'''
+	}
+
+	OmegaChain: {
+		DisplayName: Omega Holo-Tether
+		Tooltip:
+			'''
+			Massively increases warhammer swing range
+			Enemies caught in the chain will take partial damage
+			Leaves behind damaging sparks on swing
+			Warhammer attacks inflict fire damage
+			'''
+	}
+
 	CosmosChain: {
 		DisplayName: Astral Linkage
 		Tooltip:
 			'''
 			Increases warhammer swing range to as far as your cursor
 			Enemies caught in the chain will take partial damage
+			Leaves behind damaging stars on swing that float toward nearby enemies
+			Warhammer attacks blast enemies with cosmic energy
 			'Long hammer is real and it is COMING FOR YOU'
 			'''
 	}
+
+	KeeperGauntlet: {
+		Tooltip: ""
+		DisplayName: Keeper Gauntlet
+	}
 }
 
-Projectiles.EaglecrestShieldPebblesProj.DisplayName: Eaglecrest Pebble
+Projectiles: {
+	EaglecrestShieldPebblesProj.DisplayName: Eaglecrest Pebble
+	CosmosChain_StarProj.DisplayName: Cosmos Chain_ Star Proj
+	EaglecrestShield_PebblesProj.DisplayName: Eaglecrest Shield_ Pebbles Proj
+	OmegaChain_SparkProj.DisplayName: Omega Chain_ Spark Proj
+}
 
 Buffs: {
 	ZephosWarhammerBuff: {
 		DisplayName: Skullsmashing
 		Description: Smashing!
+	}
+
+	CosmicRendDebuff: {
+		Description: Mods.GuardiansOfRedemption.Buffs.CosmicRendDebuff.Description
+		DisplayName: Cosmic Rend Debuff
 	}
 }

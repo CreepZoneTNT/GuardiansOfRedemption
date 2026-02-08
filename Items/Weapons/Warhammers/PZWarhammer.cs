@@ -4,6 +4,7 @@ using OrchidMod.Content.Guardian;
 using Redemption;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Rarities;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,7 +19,7 @@ public class PZWarhammer : OrchidModGuardianHammer
         Item.width = 62;
         Item.height = 50;
         Item.value = Item.sellPrice(20, 0);
-        Item.rare = ItemRarityID.Turquoise;
+        Item.rare = ModContent.RarityType<TurquoiseRarity>();
         Item.UseSound = SoundID.Item1;
         Item.knockBack = 20f;
         Item.shootSpeed = 20f;
