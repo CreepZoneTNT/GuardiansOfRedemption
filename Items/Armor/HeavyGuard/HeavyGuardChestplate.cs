@@ -13,7 +13,7 @@ using Terraria.ModLoader.Config;
 namespace GuardiansOfRedemption.Items.Armor.HeavyGuard
 {
 	[AutoloadEquip(EquipType.Body)]
-	public class GuardianBambooChest : HeavyGuardChestplate
+	public class GuardianHeavyGuardChest : HeavyGuardChestplate
 	{
 		public override void SafeSetDefaults()
 		{
