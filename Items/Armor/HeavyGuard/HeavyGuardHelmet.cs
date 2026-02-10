@@ -1,12 +1,15 @@
 using GuardiansOfRedemption.Buffs;
+using GuardiansOfRedemption.General.Global;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
 using Redemption;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Items.Materials.PreHM;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
@@ -41,23 +44,23 @@ namespace GuardiansOfRedemption.Items.Armor.HeavyGuard
 
 		public override bool IsArmorSet(Item head, Item body, Item legs)
 		{
-			return body.type == ItemType<HeavyGuardChestplate>() && legs.type == ItemType<HeavyGuardLeggings>();
+			return body.type == ModContent.ItemType<HeavyGuardChestplate>() && legs.type == ModContent.ItemType<HeavyGuardLeggings>();
 		}
 
 		public override void UpdateArmorSet(Player player)
 		{
-			OrchidGuardian modPlayer = player.GetModPlayer<OrchidGuardian>();
+			MoRGuardianPlayer modPlayer = player.GetModPlayer<MoRGuardianPlayer>();
 			player.setBonus = SetBonusText.Value;
 			modPlayer.GuardianHeavyGuard = true;
 		}
 
 		public override void AddRecipes()
 		{
-			var recipe = CreateRecipe();
-			recipe.AddIngredient(<Archcloth>, 3);
-      recipe.AddIngredient(<GraveSteelAlloy>, 15);
-			recipe.AddTile(TileID.Anvil);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient<Archcloth>(3)
+		.AddIngredient<GraveSteelAlloy>(15)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 }

@@ -90,6 +90,31 @@ Items: {
 		Tooltip: ""
 		DisplayName: Keeper Gauntlet
 	}
+
+	PZWarhammer: {
+		Tooltip: ""
+		DisplayName: P Z Warhammer
+	}
+
+	WastelandWarhammer: {
+		Tooltip: ""
+		DisplayName: Wasteland Warhammer
+	}
+
+	CyberWarhammer: {
+		Tooltip: ""
+		DisplayName: Cyber Warhammer
+	}
+
+	LivingGauntlet: {
+		Tooltip: ""
+		DisplayName: Living Gauntlet
+	}
+
+	ChickenGauntlet: {
+		Tooltip: ""
+		DisplayName: Chicken Gauntlet
+	}
 }
 
 Projectiles: {

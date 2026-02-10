@@ -4,6 +4,7 @@ using OrchidMod.Content.Guardian;
 using Redemption;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Items.Materials.PreHM;
 using Redemption.Rarities;
 using Terraria;
 using Terraria.ID;
@@ -13,7 +14,7 @@ using Terraria.ModLoader.Config;
 namespace GuardiansOfRedemption.Items.Armor.HeavyGuard
 {
 	[AutoloadEquip(EquipType.Body)]
-	public class HeavyGuardLeggings : OrchidModEquippable
+	public class HeavyGuardLeggings : OrchidModGuardianEquipable
 	{
 		public override void SafeSetDefaults()
 		{
@@ -34,11 +35,11 @@ namespace GuardiansOfRedemption.Items.Armor.HeavyGuard
 
 		public override void AddRecipes()
 		{
-			var recipe = CreateRecipe();
-			recipe.AddIngredient<Archcloth>, 3);
-      recipe.AddIngredient<GraveSteelAlloy>, 20);
-			recipe.AddTile(TileID.Sawmill);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient<Archcloth>(3)
+			.AddIngredient<GraveSteelAlloy>(20)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 }

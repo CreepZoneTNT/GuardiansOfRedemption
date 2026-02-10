@@ -26,6 +26,7 @@ public class OmegaChain_SparkProj : ModProjectile
 
     public override void AI()
     {
-        Dust.NewDustDirect(Projectile.Center, Projectile.width, Projectile.height, DustID.RedTorch);
+        Dust dust = Dust.NewDustDirect(Projectile.Center, Projectile.width, Projectile.height, DustID.RedTorch);
+        dust.noGravity = true;
     }
 }

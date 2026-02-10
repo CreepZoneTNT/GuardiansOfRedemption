@@ -24,7 +24,7 @@ public class PZWarhammer : OrchidModGuardianHammer
         Item.knockBack = 20f;
         Item.shootSpeed = 20f;
         Item.damage = 800;
-        Item.useTime = 80;
+        Item.useTime = 50;
         Range = 60;
         SlamStacks = 2;
         ReturnSpeed = 0.6f;

@@ -69,7 +69,7 @@ public class GlobalProjectiles : GlobalProjectile
                                 if (Main.rand.NextBool(3))
                                     RedeParticleManager.CreateRainbowParticle(projectile.Center + projectile.velocity, RedeHelper.Spread(1f), Main.rand.NextFloat(0.4f, 0.6f), projectile.Opacity * 0.5f, Main.rand.Next(20, 40));
                                 HitObjectsAlongChain(owner, projectile, armPosition, 0.75f * anchor.HammerItem.SwingDamage, cutTiles: true);
-                                if (projectile.timeLeft % 8 == 0) Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<CosmosChain_StarProj>(), guardian.GetGuardianDamage(projectile.damage * 0.1f), projectile.knockBack);
+                                if (projectile.timeLeft % 4 == 0) Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<CosmosChain_StarProj>(), guardian.GetGuardianDamage(projectile.damage * 0.1f), projectile.knockBack);
                                 projectile.extraUpdates = 3;
                             }
                             else if (addonGuardian.GuardianOmegaChain)

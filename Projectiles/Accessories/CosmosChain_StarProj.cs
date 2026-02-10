@@ -40,11 +40,8 @@ public class CosmosChain_StarProj : OrchidModGuardianProjectile
 
     public override void AI()
     {
-        if (Target == null)
-        {
-            int index = RedeHelper.GetNearestNPC(Projectile.Center, canBeChasedBy: true);
-            if (index != -1) Target ??= Main.npc[index];
-        }
+        int index = RedeHelper.GetNearestNPC(Projectile.Center, canBeChasedBy: true);
+        if (Target == null && index != -1) Target = Main.npc[index];
         Projectile.rotation += 0.1f;
         Projectile.scale = Main.rand.NextFloat(0.1f, 0.3f);
         if (Target != null) Projectile.Move(Projectile.DirectionTo(Target.position), 2);
