@@ -13,7 +13,7 @@ using Terraria.ModLoader.Config;
 
 namespace GuardiansOfRedemption.Items.Armor.HeavyGuard
 {
-	[AutoloadEquip(EquipType.Body)]
+	[AutoloadEquip(EquipType.Legs)]
 	public class HeavyGuardLeggings : OrchidModGuardianEquipable
 	{
 		public override void SafeSetDefaults()
