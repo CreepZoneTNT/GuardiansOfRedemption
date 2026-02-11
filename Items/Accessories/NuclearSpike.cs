@@ -22,18 +22,19 @@ namespace GuardianOfRedemption.Items.Accessories
 
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			MoRGuardianPlayer modPlayer = player.GetModPlayer<MoRGuardianPlayer>();
+			OrchidGuardian modPlayer = player.GetModPlayer<OrchidGuardian>();
+			MoRGuardianPlayer addonPlayer = player.GetModPlayer<MoRGuardianPlayer>();
 			if (modPlayer.GuardianSpikeDamage < 2.5f)
 				modPlayer.GuardianSpikeDamage = 2.5f;
-			modPlayer.GuardianSpikeNuclear = true;
 			modPlayer.GuardianSharpRebuttalBlock = true;
+			addonPlayer.GuardianSpikeNuclear = true;
 			player.GetCritChance<GuardianDamageClass>() += 10;
 		}
 
 		public override void AddRecipes()
 		{
 			recipe.AddIngredient<TempleSpike>();
-			recipe.AddIngredient<Plutonium>(), 8;
+			recipe.AddIngredient<Plutonium>(8);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
