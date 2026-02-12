@@ -1,13 +1,17 @@
+using GuardiansOfRedemption.General.Global;
 using Terraria;
 using Terraria.ID;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
+using OrchidMod.Content.Guardian.Accessories;
 using Redemption;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
+using Terraria.ModLoader;
 
-namespace GuardianOfRedemption.Items.Accessories
+namespace GuardiansOfRedemption.Items.Accessories
 {
 	public class NuclearSpike : OrchidModGuardianEquipable
 	{
@@ -33,10 +37,11 @@ namespace GuardianOfRedemption.Items.Accessories
 
 		public override void AddRecipes()
 		{
-			recipe.AddIngredient<TempleSpike>();
-			recipe.AddIngredient<Plutonium>(8);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.Register();
+			CreateRecipe()
+			.AddIngredient<TempleSpike>()
+			.AddIngredient<Plutonium>(8)
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 		}
 	}
 }

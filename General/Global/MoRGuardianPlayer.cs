@@ -6,14 +6,21 @@ namespace GuardiansOfRedemption.General.Global;
 
 public class MoRGuardianPlayer : ModPlayer
 {
+
+    public bool GuardianHeavyGuard;
+    
+    public bool GuardianSpikeNuclear;
+    
     public bool GuardianXenomiteChain;
     public bool GuardianOmegaChain;
     public bool GuardianCosmosChain;
-    public bool GuardianHeavyGuard;
+    
 
     public override void ResetEffects()
     {
         GuardianHeavyGuard = false;
+        
+        GuardianSpikeNuclear = false;
     
         GuardianXenomiteChain = false;
         GuardianOmegaChain = false;

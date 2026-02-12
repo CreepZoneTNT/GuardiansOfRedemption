@@ -87,18 +87,18 @@ Items: {
 	}
 
 	KeeperGauntlet: {
+		DisplayName: Shadow's Grasp
 		Tooltip: ""
-		DisplayName: Keeper Gauntlet
 	}
 
 	PZWarhammer: {
+		DisplayName: Epidemic
 		Tooltip: ""
-		DisplayName: P Z Warhammer
 	}
 
 	WastelandWarhammer: {
+		DisplayName: Meatball Masher
 		Tooltip: ""
-		DisplayName: Wasteland Warhammer
 	}
 
 	CyberWarhammer: {
@@ -107,13 +107,50 @@ Items: {
 	}
 
 	LivingGauntlet: {
-		Tooltip: ""
-		DisplayName: Living Gauntlet
+		DisplayName: Punchroot Knuckles
+		Tooltip:
+		    '''
+		    Shoots a seed on punch
+		    '''
 	}
 
 	ChickenGauntlet: {
+		DisplayName: Haymaker's Haymaker
+		Tooltip: 
+		    '''
+		    Slain enemies produce healing eggs that grant Well Fed for 6 seconds
+		    '''
+	}
+
+	ThornQuarterstaff: {
+		DisplayName: Cursed Walking Stick
 		Tooltip: ""
-		DisplayName: Chicken Gauntlet
+	}
+
+
+	HeavyGuardHelmet: {
+		DisplayName: Heavy Guard Helmet
+		Tooltip: ""
+		SetBonus: "Increases defense after blocking or parrying"
+	}
+
+	HeavyGuardChestplate: {
+		DisplayName: Heavy Guard Chestplate
+		Tooltip: "Increases maximum guards by 1"
+	}
+	
+	HeavyGuardLeggings: {
+		DisplayName: Heavy Guard Leggings
+		Tooltip:
+		    '''
+		    Slowly regenerates guards and slams over time
+		    10% increased movement speed
+		    '''
+	}
+
+	NuclearSpike: {
+		DisplayName: Nuclear Shield Spike
+		Tooltip: ""
 	}
 }
 
