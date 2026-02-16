@@ -108,18 +108,12 @@ Items: {
 
 	LivingGauntlet: {
 		DisplayName: Punchroot Knuckles
-		Tooltip:
-		    '''
-		    Shoots a seed on punch
-		    '''
+		Tooltip: Shoots a seed on punch
 	}
 
 	ChickenGauntlet: {
 		DisplayName: Haymaker's Haymaker
-		Tooltip: 
-		    '''
-		    Slain enemies produce healing eggs that grant Well Fed for 6 seconds
-		    '''
+		Tooltip: Slain enemies produce healing eggs that grant Well Fed for 6 seconds
 	}
 
 	ThornQuarterstaff: {
@@ -127,30 +121,42 @@ Items: {
 		Tooltip: ""
 	}
 
-
 	HeavyGuardHelmet: {
 		DisplayName: Heavy Guard Helmet
 		Tooltip: ""
-		SetBonus: "Increases defense after blocking or parrying"
+		SetBonus: Increases defense after blocking or parrying
 	}
 
 	HeavyGuardChestplate: {
 		DisplayName: Heavy Guard Chestplate
-		Tooltip: "Increases maximum guards by 1"
+		Tooltip: Increases maximum guards by 1
 	}
-	
+
 	HeavyGuardLeggings: {
 		DisplayName: Heavy Guard Leggings
 		Tooltip:
-		    '''
-		    Slowly regenerates guards and slams over time
-		    10% increased movement speed
-		    '''
+			'''
+			Slowly regenerates guards and slams over time
+			10% increased movement speed
+			'''
 	}
 
 	NuclearSpike: {
 		DisplayName: Nuclear Shield Spike
+		Tooltip:
+			'''
+			Deals 250% of your defense as opposing damage to enemies
+			Blocking unleashes a devastating nuclear laser, dealing your shield spike damage
+			15% increased opposing damage for 10 seconds after a successful block
+			10% increased opposing critical strike chance
+			'''
+	}
+
+	ChickenGauntlet_EggItem.DisplayName: Chicken Gauntlet_ Egg Item
+
+	DivineWarhammer: {
 		Tooltip: ""
+		DisplayName: Divine Warhammer
 	}
 }
 
@@ -159,6 +165,11 @@ Projectiles: {
 	CosmosChain_StarProj.DisplayName: Cosmos Chain_ Star Proj
 	EaglecrestShield_PebblesProj.DisplayName: Eaglecrest Shield_ Pebbles Proj
 	OmegaChain_SparkProj.DisplayName: Omega Chain_ Spark Proj
+	CyberWarhammer_Hologram.DisplayName: Cyber Warhammer_ Hologram
+	LivingGauntlet_Seed.DisplayName: Living Gauntlet_ Seed
+	CyberWarhammer_HologramProj.DisplayName: Cyber Warhammer_ Hologram Proj
+	LivingGauntlet_SeedProj.DisplayName: Living Gauntlet_ Seed Proj
+	ChickenGauntlet_EggProj.DisplayName: Chicken Gauntlet_ Egg Proj
 }
 
 Buffs: {

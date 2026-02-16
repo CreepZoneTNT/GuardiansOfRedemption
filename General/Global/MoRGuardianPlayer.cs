@@ -1,10 +1,19 @@
+using System;
+using System.Reflection;
 using System.Text;
+using Humanizer;
+using Microsoft.Xna.Framework;
+using OrchidMod;
+using OrchidMod.Content.Guardian;
+using OrchidMod.Content.Guardian.Projectiles.Misc;
+using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.General.Global;
 
-public class MoRGuardianPlayer : ModPlayer
+public class MoRGuardianPlayer : OrchidGuardian
 {
 
     public bool GuardianHeavyGuard;
@@ -26,4 +35,5 @@ public class MoRGuardianPlayer : ModPlayer
         GuardianOmegaChain = false;
         GuardianCosmosChain = false;
     }
+
 }

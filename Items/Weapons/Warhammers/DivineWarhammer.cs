@@ -20,12 +20,12 @@ using Terraria.WorldBuilding;
 
 namespace GuardiansOfRedemption.Items.Weapons.Warhammers;
 
-public class ErhanWarhammer : OrchidModGuardianHammer
+public class DivineWarhammer : OrchidModGuardianHammer
 {
 
-    public bool HasHolyLight = false;
-    public int HolyLightStacks = 0;
-    public int HolyLightTimer = 0;
+    public bool HasHolyLight;
+    public int HolyLightStacks;
+    public int HolyLightTimer;
     
     private float DrawTimer;
 
@@ -37,14 +37,14 @@ public class ErhanWarhammer : OrchidModGuardianHammer
 
     public override void SafeSetDefaults()
     {
-        Item.width = 36;
-        Item.height = 36;
-        Item.value = Item.sellPrice(0, 0, 54);
-        Item.rare = ItemRarityID.Blue;
+        Item.width = 62;
+        Item.height = 62;
+        Item.value = Item.sellPrice(0, 3, 50);
+        Item.rare = ItemRarityID.Pink;
         Item.UseSound = SoundID.DD2_MonkStaffSwing;
         Item.knockBack = 8f;
         Item.shootSpeed = 2f;
-        Item.damage = 150;
+        Item.damage = 400;
         Item.useTime = 40;
         Range = 120;
         SwingChargeGain = 0f;
@@ -52,13 +52,13 @@ public class ErhanWarhammer : OrchidModGuardianHammer
         BlockDuration = 210;
         HasHolyLight = false;
         HolyLightStacks = 0;
+        HoldOffset = -8f;
     }
 
     public override bool ThrowAI(Player player, OrchidGuardian guardian, Projectile projectile, bool Weak)
     {
         if (!Weak)
         {
-        
             if (guardian.UseSlam(1, true) || guardian.GuardianInfiniteResources)
             {
                 HasHolyLight = true;
@@ -139,10 +139,10 @@ public class ErhanWarhammer : OrchidModGuardianHammer
                     RedeDraw.SpawnRing(target.Center, new Color(255, 255, 120), 0.2f, 0.85f, 4f);
                     RedeDraw.SpawnRing(target.Center, new Color(255, 255, 120), 0.2f);
                 }
+                RedeHelper.NPCRadiusDamage(target.Center, (int)(30f * HolyLightStacks), projectile, guardian.GetGuardianDamage(Item.damage * (HolyLightStacks + 1) / 2f), 12f + 4f * HolyLightStacks);
+                RedeHelper.PlayerRadiusDamage((int)(30f * HolyLightStacks), projectile, 0, 12f + 4f * HolyLightStacks);
                 SoundEngine.PlaySound(HolyLightStacks == 3 ? CustomSounds.HeavyMagic1 : CustomSounds.Saint1);
-            
-            
-        
+                
             guardian.GuardianItemCharge = 0f;
         
             HasHolyLight = false;
@@ -166,7 +166,7 @@ public class ErhanWarhammer : OrchidModGuardianHammer
         int index = tooltips.FindIndex(ttip => ttip.Mod.Equals("Terraria") && ttip.Name.Equals("Knockback"));
         if (index != -1)
         {
-            tooltips[index + 3].Text = Language.GetTextValue("Mods.GuardiansOfRedemption.Items.ErhanWarhammer.ChargeToGlow");
+            tooltips[index + 3].Text = Language.GetTextValue("Mods.GuardiansOfRedemption.Items.DivineWarhammer.ChargeToGlow");
             tooltips[index + 3].OverrideColor = new Color(175, 255, 175);
         }
     }

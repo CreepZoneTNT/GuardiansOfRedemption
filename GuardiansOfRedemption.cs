@@ -1,4 +1,7 @@
+using System;
 using System.Numerics;
+using System.Reflection;
+using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Guardian.Accessories;
 using OrchidMod.Content.Guardian.Misc;
@@ -11,6 +14,7 @@ using OrchidMod.Content.Guardian.Weapons.Shields;
 using OrchidMod.Content.Guardian.Weapons.Warhammers;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -66,6 +70,27 @@ namespace GuardiansOfRedemption
 					modProjectile.Projectile.Redemption().IsHammer = false;
 					
 			}
+			
+			Main.QueueMainThreadAction(() =>
+			{
+				if (ModLoader.TryGetMod("RecipeBrowser", out Mod recipeBrowser) && !Main.dedServ) {
+					var utilities = recipeBrowser.Code.GetType("RecipeBrowser.Utilities");
+					var method = utilities?.GetMethod("ResizeImage", BindingFlags.Static | BindingFlags.NonPublic);
+					if (method != null)
+					{
+						Asset<Texture2D> classIcon = (Asset<Texture2D>)method?.Invoke(null, [ModContent.Request<Texture2D>("OrchidMod/Content/Guardian/Weapons/Warhammers/HellWarhammer"), 24, 24]);
+						recipeBrowser.Call("AddItemCategory", "Guardian", "Weapons", classIcon, (Predicate<Item>)(item =>
+							{
+								if (!item.accessory && item.damage > 0)
+									return item.CountsAsClass<GuardianDamageClass>() || item.DamageType == ModContent.GetInstance<GuardianDamageClass>();
+								return false;
+							})
+						);
+					}
+				}
+			});
+			
 		}
+		
 	}
 }
