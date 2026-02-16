@@ -37,8 +37,8 @@ public class ErhanWarhammer : OrchidModGuardianHammer
 
     public override void SafeSetDefaults()
     {
-        Item.width = 36;
-        Item.height = 36;
+        Item.width = 32;
+        Item.height = 32;
         Item.value = Item.sellPrice(0, 0, 54);
         Item.rare = ItemRarityID.Blue;
         Item.UseSound = SoundID.DD2_MonkStaffSwing;
