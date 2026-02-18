@@ -18,7 +18,7 @@ public class NPCLootAndShop : GlobalNPC
     {
         LeadingConditionRule nonExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
         if (npc.type == ModContent.NPCType<Erhan>())
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<DivineWarhammer>(), 3));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<JudgeWarhammer>(), 3));
         
         if (npc.type == ModContent.NPCType<SkeletonWarden>())
             npcLoot.Add(new CommonDrop(ModContent.ItemType<SkeletonWardenShield>(), 40, chanceNumerator: 3));
@@ -35,6 +35,6 @@ public class ItemLoot : GlobalItem
 {
     public override void ModifyItemLoot(Item item, Terraria.ModLoader.ItemLoot itemLoot)
     {
-        if (item.type == ModContent.ItemType<ErhanBag>()) itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<DivineWarhammer>(), 3));
+        if (item.type == ModContent.ItemType<ErhanBag>()) itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<JudgeWarhammer>(), 3));
     }
 }

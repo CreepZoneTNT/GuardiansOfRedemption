@@ -40,7 +40,7 @@ public class CyberWarhammer : OrchidModGuardianHammer
         Item.rare = ItemRarityID.LightPurple;
         Item.UseSound = SoundID.DD2_MonkStaffSwing;
         Item.knockBack = 8f;
-        Item.shootSpeed = 12.5f;
+        Item.shootSpeed = 15f;
         Item.damage = 174;
         Item.useTime = 20;
         Range = 60;
@@ -58,7 +58,7 @@ public class CyberWarhammer : OrchidModGuardianHammer
         {
             if (projectile.timeLeft < 598 && anchor.range % 10 == 0)
             {
-                Projectile hologram = Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.position, Vector2.Zero, ModContent.ProjectileType<CyberWarhammer_HologramProj>(), guardian.GetGuardianDamage(projectile.damage * 0.1f), projectile.knockBack, projectile.owner, projectile.rotation, projectile.direction, (anchor.WeakThrow ? 0.25f : 1.2f * projectile.velocity.Length() / 30f) * (projectile.velocity.X > 0 ? 1 : -1));
+                Projectile hologram = Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.position, Vector2.Zero, ModContent.ProjectileType<CyberWarhammer_HologramProj>(), guardian.GetGuardianDamage(projectile.damage * 0.25f), projectile.knockBack, projectile.owner, projectile.rotation, projectile.direction, (anchor.WeakThrow ? 0.25f : 1.2f * projectile.velocity.Length() / 30f) * (projectile.velocity.X > 0 ? 1 : -1));
                 hologram.scale = projectile.scale;
                 hologram.rotation = projectile.rotation;
             }
@@ -75,11 +75,23 @@ public class CyberWarhammer : OrchidModGuardianHammer
     {
         SoundEngine.PlaySound(SoundID.Item15, projectile.Center);
         Vector2 direction = Vector2.Normalize(Main.MouseWorld - projectile.Center);
-        {
-            Projectile hologram = Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.Center, direction * Item.shootSpeed * (!FullyCharged ? 0.5f : 1f), ModContent.ProjectileType<CyberWarhammer_HologramProj>(), guardian.GetGuardianDamage(projectile.damage * 0.25f * (FullyCharged ? 2f : 1)), projectile.knockBack, projectile.owner, projectile.rotation, projectile.direction, 0.6f);
+        if (guardian.GuardianItemCharge - 45f >= 0) {
+            Projectile hologram = Projectile.NewProjectileDirect(
+                projectile.GetSource_FromThis(), 
+                projectile.Center + player.velocity, 
+                direction * Item.shootSpeed * (!FullyCharged ? 0.5f : 1f), 
+                ModContent.ProjectileType<CyberWarhammer_HologramProj>(), 
+                guardian.GetGuardianDamage(projectile.damage * 0.5f * (FullyCharged ? 2f : 1)), 
+                projectile.knockBack, 
+                projectile.owner, 
+                projectile.rotation, 
+                projectile.direction, 
+                0.6f
+            );
             hologram.scale = projectile.scale;
             hologram.rotation = projectile.rotation;
             if (FullyCharged) ((CyberWarhammer_HologramProj)hologram.ModProjectile).ShouldDrawTrail = true;
+            guardian.GuardianItemCharge -= 45f;
         }
     }
 

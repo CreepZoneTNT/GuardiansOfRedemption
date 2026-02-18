@@ -8,6 +8,7 @@ using OrchidMod.Content.Guardian;
 using OrchidMod.Utilities;
 using Redemption;
 using Redemption.BaseExtension;
+using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Projectiles.Melee;
@@ -20,12 +21,12 @@ using Terraria.WorldBuilding;
 
 namespace GuardiansOfRedemption.Items.Weapons.Warhammers;
 
-public class ErhanWarhammer : OrchidModGuardianHammer
+public class JudgeWarhammer : OrchidModGuardianHammer
 {
 
-    public bool HasHolyLight = false;
-    public int HolyLightStacks = 0;
-    public int HolyLightTimer = 0;
+    public bool HasHolyLight;
+    public int HolyLightStacks;
+    public int HolyLightTimer;
     
     private float DrawTimer;
 
@@ -39,7 +40,7 @@ public class ErhanWarhammer : OrchidModGuardianHammer
     {
         Item.width = 66;
         Item.height = 66;
-        Item.value = Item.sellPrice(0, 3, 50, 0);
+        Item.value = Item.sellPrice(0, 3, 50);
         Item.rare = ItemRarityID.Pink;
         Item.UseSound = SoundID.DD2_MonkStaffSwing;
         Item.knockBack = 8f;
@@ -52,25 +53,25 @@ public class ErhanWarhammer : OrchidModGuardianHammer
         BlockDuration = 210;
         HasHolyLight = false;
         HolyLightStacks = 0;
+        HoldOffset = -8f;
     }
 
     public override bool ThrowAI(Player player, OrchidGuardian guardian, Projectile projectile, bool Weak)
     {
         if (!Weak)
         {
-        
             if (guardian.UseSlam(1, true) || guardian.GuardianInfiniteResources)
             {
                 HasHolyLight = true;
                 HolyLightTimer = 900;
                 HolyLightStacks++;
-                if (HolyLightStacks > 5) HolyLightStacks = 5;
+                if (HolyLightStacks > 3) HolyLightStacks = 3;
             
-                CombatText.NewText(player.getRect(), Color.Goldenrod, HolyLightStacks, HolyLightStacks == 5;
+                CombatText.NewText(player.getRect(), Color.Goldenrod, HolyLightStacks, HolyLightStacks == 3);
             
                 RedeDraw.SpawnRing(projectile.Center, new Color(255, 255, 120), 0.2f);
                 SoundEngine.PlaySound(CustomSounds.NebSound2 with {Pitch = 0.1f}, player.position);
-                if (HolyLightStacks == 5)
+                if (HolyLightStacks == 3)
                 {
                     SoundEngine.PlaySound(CustomSounds.Choir with {Pitch = 0.4f}, player.position);
                     RedeDraw.SpawnRing(projectile.Center, new Color(255, 255, 120), 0.2f, 0.85f, 4f);
@@ -80,7 +81,7 @@ public class ErhanWarhammer : OrchidModGuardianHammer
             else
             {
                 SoundEngine.PlaySound(SoundID.Item16, player.Center);
-                CombatText.NewText(player.getRect(), Color.Red, "Not enough slams" + (Main.rand.NextBool(100) ? ", youf fool!" : "!"));
+                CombatText.NewText(player.getRect(), Color.Red, "Not enough slams" + (Main.rand.NextBool(100) ? ", you idiot!" : "!"));
             }
         }
         projectile.Kill();
@@ -91,7 +92,7 @@ public class ErhanWarhammer : OrchidModGuardianHammer
     {
         if (HasHolyLight)
         {
-            Item.useTime = 15 + (10 * HolyLightStacks);
+            Item.useTime = 15 + (15 * HolyLightStacks);
             projectile.damage = guardian.GetGuardianDamage(Item.damage * (1 + (0.2f * HolyLightStacks)));
         }
         else
@@ -99,6 +100,8 @@ public class ErhanWarhammer : OrchidModGuardianHammer
             Item.useTime = 40;
             projectile.damage = Item.damage;
         }
+
+        
 
         if (HolyLightTimer > 0) HolyLightTimer--;
         if (HolyLightTimer <= 0)
@@ -129,9 +132,9 @@ public class ErhanWarhammer : OrchidModGuardianHammer
     {
         if (HasHolyLight)
         {
-                if (HolyLightStacks == 5)
+                if (HolyLightStacks == 3)
                 {
-                    player.RedemptionScreen().ScreenShakeIntensity = 15f;
+                    player.RedemptionScreen().ScreenShakeIntensity = 6f;
                     RedeDraw.SpawnExplosion(target.Center, Color.White, shakeAmount: 0.0f, scale: 1f, noDust: true, tex: "Redemption/Textures/HolyGlow2");
                 }
                 else
@@ -139,10 +142,10 @@ public class ErhanWarhammer : OrchidModGuardianHammer
                     RedeDraw.SpawnRing(target.Center, new Color(255, 255, 120), 0.2f, 0.85f, 4f);
                     RedeDraw.SpawnRing(target.Center, new Color(255, 255, 120), 0.2f);
                 }
-                SoundEngine.PlaySound(HolyLightStacks == 5 ? CustomSounds.HeavyMagic1 : CustomSounds.Saint1);
-            
-            
-        
+                RedeHelper.NPCRadiusDamage(target.Center, 40 + (int)(20f * HolyLightStacks), projectile, guardian.GetGuardianDamage(Item.damage * (HolyLightStacks + 1) / 2f), 12f + 4f * HolyLightStacks);
+                RedeHelper.PlayerRadiusDamage(40 + (int)(20f * HolyLightStacks), projectile, 0, 6f + 2f * HolyLightStacks);
+                SoundEngine.PlaySound(HolyLightStacks == 3 ? CustomSounds.HeavyMagic1 : CustomSounds.Saint1);
+                
             guardian.GuardianItemCharge = 0f;
         
             HasHolyLight = false;
@@ -177,7 +180,7 @@ public class ErhanWarhammer : OrchidModGuardianHammer
         var position = projectile.Center - Main.screenPosition + Vector2.UnitY * player.gfxOffY;
         if (HasHolyLight)
         {
-            float auraOpacity = HolyLightStacks < 5 ? HolyLightStacks * 0.5f + 0.2f * (float)Math.Sin(MathHelper.Pi / 60f * HolyLightTimer) : 1f;
+            float auraOpacity = HolyLightStacks < 3 ? HolyLightStacks * 0.4f + 0.2f * (float)Math.Sin(MathHelper.Pi / 60f * HolyLightTimer) : 1f;
             
             float rotationBonus = 0f;
             rotationBonus += projectile.spriteDirection == 1 ? MathHelper.PiOver2 : -MathHelper.PiOver2;
@@ -188,9 +191,9 @@ public class ErhanWarhammer : OrchidModGuardianHammer
 
             Main.spriteBatch.End(out SpriteBatchSnapshot spriteBatchSnapshot);
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-            float scale = projectile.scale * (1f + HolyLightStacks * 0.1f);
+            float scale = projectile.scale * (0.9f + HolyLightStacks * 0.1f);
             RedeDraw.DrawTreasureBagEffect(spriteBatch, hammerTexture, ref DrawTimer, position, drawRectangle, Color.Goldenrod * auraOpacity, projectile.rotation + rotationBonus - (projectile.spriteDirection == 1 ? MathHelper.PiOver2 : -MathHelper.PiOver2), hammerTexture.Size() * 0.5f, scale, projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
-            if (HolyLightStacks == 5)
+            if (HolyLightStacks == 3)
             {
                 float rot = scale * (1f + (float) Math.Abs(Math.Sin(Main.GlobalTimeWrappedHourly * 4.5)) * 0.1f);
                 RedeDraw.DrawGodrays(spriteBatch, position, Color.Goldenrod, 40f * rot * projectile.Opacity, 8 * rot * projectile.Opacity, 8);

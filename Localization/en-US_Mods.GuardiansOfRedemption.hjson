@@ -14,16 +14,8 @@ Items: {
 	}
 
 	ErhanWarhammer: {
-		DisplayName: Judge's Gavel
-		Tooltip:
-			'''
-			Cannot be thrown normally
-			Fully charging will instead empower the hammer with holy light
-			This can be repeated up to 3 times
-			Hitting an enemy while charged will release the energy as an explosion of light
-			Blocking casts a holy aura that slows and damages nearby enemies, more strongly if undead
-			'''
-		ChargeToGlow: Charge to envelop in holy light, right click to swing while charging
+		DisplayName: Hand of Judgement
+		Tooltip: ""
 	}
 
 	WeaponGraveSteelWarhammer: {
@@ -88,7 +80,7 @@ Items: {
 
 	KeeperGauntlet: {
 		DisplayName: Shadow's Grasp
-		Tooltip: ""
+		Tooltip: Increases in range when fully charged
 	}
 
 	PZWarhammer: {
@@ -106,6 +98,24 @@ Items: {
 		DisplayName: Cyber Warhammer
 	}
 
+	JudgeWarhammer: {
+		DisplayName: Divine Gesture, Judge's Gavel
+		Tooltip:
+			'''
+			Cannot be thrown normally
+			Fully charging will instead empower the hammer with holy light
+			This can be repeated up to 3 times
+			Hitting an enemy while charged will release the energy as an explosion of light
+			Blocking casts a holy aura that slows and damages nearby enemies, more strongly if undead
+			'''
+		ChargeToGlow: Charge to envelop in holy light, right click to swing while charging
+	}
+
+	RocketGigahammer: {
+		DisplayName: Thruster On A Stick
+		Tooltip: ""
+	}
+
 	LivingGauntlet: {
 		DisplayName: Punchroot Knuckles
 		Tooltip: Shoots a seed on punch
@@ -113,7 +123,7 @@ Items: {
 
 	ChickenGauntlet: {
 		DisplayName: Haymaker's Haymaker
-		Tooltip: Slain enemies produce healing eggs that grant Well Fed for 6 seconds
+		Tooltip: Slain enemies occasionally produce healing eggs that grant Well Fed for 6 seconds
 	}
 
 	ThornQuarterstaff: {
@@ -152,11 +162,17 @@ Items: {
 			'''
 	}
 
-	ChickenGauntlet_EggItem.DisplayName: Chicken Gauntlet_ Egg Item
+	ChickenGauntlet_EggItem.DisplayName: egg
 
-	DivineWarhammer: {
-		Tooltip: ""
-		DisplayName: Divine Warhammer
+	GirusShield: {
+		DisplayName: Energy Projector
+		Tooltip:
+			'''
+			Generates a powerful energy shield on block
+			Launches a devastating energy orb on slam
+			The orb homes onto the player, but damages enemies along the way
+			Blocking the orb will reflect it away from the shield with increased damage
+			'''
 	}
 }
 
