@@ -4,9 +4,6 @@ using Terraria.ID;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Guardian.Accessories;
-using Redemption;
-using Redemption.BaseExtension;
-using Redemption.Globals;
 using Redemption.Items.Materials.PostML;
 using Redemption.Rarities;
 using Terraria.ModLoader;
@@ -27,7 +24,7 @@ namespace GuardiansOfRedemption.Items.Accessories
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			OrchidGuardian modPlayer = player.GetModPlayer<OrchidGuardian>();
-			MoRGuardianPlayer addonPlayer = player.GetModPlayer<MoRGuardianPlayer>();
+			RedemptionGuardian addonPlayer = player.GetModPlayer<RedemptionGuardian>();
 			if (modPlayer.GuardianSpikeDamage < 2.5f)
 				modPlayer.GuardianSpikeDamage = 2.5f;
 			modPlayer.GuardianSharpRebuttalBlock = true;

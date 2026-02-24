@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Content.Guardian;
+using Redemption.Buffs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -11,7 +12,7 @@ namespace GuardiansOfRedemption.Projectiles.Gauntlets;
 
 public class ChickenGauntlet_EggProj : OrchidModGuardianProjectile
 {
-    public override string Texture => "GuardiansOfRedemption/Projectiles/Gauntlets/ChickenGauntlet_Egg";
+    public override string Texture => "Redemption/Items/Weapons/PreHM/Ranged/ChickenEgg";
 
     public override void SafeSetDefaults()
     {
@@ -41,7 +42,7 @@ public class ChickenGauntlet_EggItem : ModItem
 {
     public override LocalizedText Tooltip => LocalizedText.Empty;
     
-    public override string Texture => "GuardiansOfRedemption/Projectiles/Gauntlets/ChickenGauntlet_Egg";
+    public override string Texture => "Redemption/Items/Weapons/PreHM/Ranged/ChickenEgg";
 
     public override void SetStaticDefaults()
     {
@@ -71,6 +72,7 @@ public class ChickenGauntlet_EggItem : ModItem
             SoundEngine.PlaySound(new SoundStyle("GuardiansOfRedemption/Sounds/ASDFMovieEgg", 2), player.Center);
         }
         else player.Heal(5);
+        player.AddBuff(BuffID.WellFed, 360);
         return false;
     }
 }

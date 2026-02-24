@@ -13,10 +13,10 @@ namespace GuardiansOfRedemption.Items.Weapons.Quarterstaves
 			Item.height = 42;
 			Item.value = Item.sellPrice(0, 0, 8, 80);
 			Item.rare = ItemRarityID.Green;
-			Item.useTime = 18;
-			ParryDuration = 30;
+			Item.useTime = 25;
+			ParryDuration = 50;
 			Item.knockBack = 4f;
-			Item.damage = 42;
+			Item.damage = 68;
 			GuardStacks = 1;
 			SwingSpeed = 1.3f;
 			CounterSpeed = 1.3f;

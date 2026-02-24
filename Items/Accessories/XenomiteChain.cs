@@ -23,7 +23,7 @@ public class XenomiteChain : OrchidModGuardianEquipable
     public override void UpdateAccessory(Player player, bool hideVisual)
     {
         OrchidGuardian modPlayer = player.GetModPlayer<OrchidGuardian>();
-        MoRGuardianPlayer addonPlayer = player.GetModPlayer<MoRGuardianPlayer>();
+        RedemptionGuardian addonPlayer = player.GetModPlayer<RedemptionGuardian>();
         if (player == Main.LocalPlayer)
         {
             modPlayer.GuardianChain = 128;

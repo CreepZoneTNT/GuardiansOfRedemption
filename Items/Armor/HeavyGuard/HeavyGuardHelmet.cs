@@ -49,7 +49,7 @@ namespace GuardiansOfRedemption.Items.Armor.HeavyGuard
 
 		public override void UpdateArmorSet(Player player)
 		{
-			MoRGuardianPlayer modPlayer = player.GetModPlayer<MoRGuardianPlayer>();
+			RedemptionGuardian modPlayer = player.GetModPlayer<RedemptionGuardian>();
 			player.setBonus = SetBonusText.Value;
 			modPlayer.GuardianHeavyGuard = true;
 		}

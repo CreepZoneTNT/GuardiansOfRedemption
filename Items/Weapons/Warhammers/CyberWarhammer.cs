@@ -40,7 +40,7 @@ public class CyberWarhammer : OrchidModGuardianHammer
         Item.rare = ItemRarityID.LightPurple;
         Item.UseSound = SoundID.DD2_MonkStaffSwing;
         Item.knockBack = 8f;
-        Item.shootSpeed = 15f;
+        Item.shootSpeed = 12f;
         Item.damage = 174;
         Item.useTime = 20;
         Range = 60;
@@ -79,7 +79,7 @@ public class CyberWarhammer : OrchidModGuardianHammer
             Projectile hologram = Projectile.NewProjectileDirect(
                 projectile.GetSource_FromThis(), 
                 projectile.Center + player.velocity, 
-                direction * Item.shootSpeed * (!FullyCharged ? 0.5f : 1f), 
+                direction * Item.shootSpeed * (!FullyCharged ? 0.75f : 1.5f), 
                 ModContent.ProjectileType<CyberWarhammer_HologramProj>(), 
                 guardian.GetGuardianDamage(projectile.damage * 0.5f * (FullyCharged ? 2f : 1)), 
                 projectile.knockBack, 

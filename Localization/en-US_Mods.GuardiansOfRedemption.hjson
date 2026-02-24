@@ -13,6 +13,22 @@ Items: {
 			'''
 	}
 
+	GirusShield: {
+		DisplayName: Energy Projector
+		Tooltip:
+			'''
+			Generates a powerful energy shield on block
+			Launches a devastating energy orb on slam
+			The orb homes onto the player, but damages enemies along the way
+			Blocking the orb will reflect it away from the shield with increased damage
+			'''
+	}
+
+	XeniumShield: {
+		Tooltip: ""
+		DisplayName: Xenium Shield
+	}
+
 	ErhanWarhammer: {
 		DisplayName: Hand of Judgement
 		Tooltip: ""
@@ -33,6 +49,127 @@ Items: {
 			'''
 			Charged throw hits will boost warhammer damage and speed by 25% for 6 seconds
 			Deals increased damage against skeletons
+			'''
+	}
+
+	WastelandWarhammer: {
+		DisplayName: Meatball Masher
+		Tooltip: ""
+	}
+
+	CyberWarhammer: {
+		DisplayName: Universal Hammer
+		Tooltip:
+			'''
+			Shoots a piercing hologram on swing at the cost of charge
+			Pierces infinitely and leaves behind holograms in flight
+			'''
+	}
+
+	JudgeWarhammer: {
+		DisplayName: Divine Gesture, Judge's Gavel
+		Tooltip:
+			'''
+			Cannot be thrown normally
+			Fully charging will instead empower the hammer with holy light
+			This can be repeated up to 3 times
+			Hitting an enemy while charged will release the energy as an explosion of light
+			Blocking casts a holy aura that slows and damages nearby enemies, more strongly if undead
+			'''
+		ChargeToGlow: Charge to envelop in holy light, right click to swing while charging
+	}
+
+	PZWarhammer: {
+		DisplayName: Epidemic
+		Tooltip:
+			'''
+			Hit enemies grow tumors that explode into toxic gas
+			Throwing the hammer makes hit enemies grow multiple tumors
+			Blocking produces a large cloud of toxic gas
+			'''
+	}
+
+	LivingGauntlet: {
+		DisplayName: Punchroot Knuckles
+		Tooltip: Shoots a piercing seed on punch
+	}
+
+	ChickenGauntlet: {
+		DisplayName: Haymaker's Haymaker
+		Tooltip: Slain enemies occasionally produce healing eggs that grant Well Fed for 6 seconds
+	}
+
+	ChickenGauntlet_EggItem.DisplayName: egg
+
+	KeeperGauntlet: {
+		DisplayName: Shadow's Grasp
+		Tooltip: Increases in range when fully charged
+	}
+
+	LaboratoryGauntlet: {
+		DisplayName: AMG-78
+		Tooltip:
+			'''
+			Can be charged in 3 stages
+			Punching makes you lunge forward with an explosive punch
+			'''
+	}
+
+	RocketGigahammer: {
+		DisplayName: Thruster On A Stick
+		Tooltip: ""
+	}
+
+	ErhanStick: {
+		DisplayName: Hand of Judgement
+		Tooltip: "'It wasn't meant to be taken literally!'"
+	}
+
+	ThornQuarterstaff: {
+		DisplayName: Cursed Walking Stick
+		Tooltip: ""
+	}
+
+	HeavyGuardHelmet: {
+		DisplayName: Heavy Guard Helmet
+		Tooltip: ""
+		SetBonus: Increases defense after blocking or parrying
+	}
+
+	HeavyGuardChestplate: {
+		DisplayName: Heavy Guard Chestplate
+		Tooltip: Increases maximum guards by 1
+	}
+
+	HeavyGuardLeggings: {
+		DisplayName: Heavy Guard Leggings
+		Tooltip:
+			'''
+			Slowly regenerates guards and slams over time
+			10% increased movement speed
+			'''
+	}
+
+	HardlightGreathelm: {
+		SetBonus: Summons 3 protector drones that take major damage for you, triggering your active parry
+		DisplayName: Hardlight Greathelm
+		Tooltip:
+			'''
+			13% increased opposing damage
+			5% increased opposing critical strike chance
+			Increases maximum guards and slams by 1
+			Enemies are more likely to target you
+			'''
+	}
+
+	NuclearSpike: {
+		DisplayName: Nuclear Shield Spike
+		Tooltip:
+			'''
+			Deals 250% of your defense as opposing damage to enemies
+			Blocking unleashes a devastating nuclear laser, dealing your shield spike damage
+			15% increased opposing damage for 10 seconds after a successful block
+			10% increased opposing critical strike chance
 			'''
 	}
 
@@ -78,100 +215,12 @@ Items: {
 			'''
 	}
 
-	KeeperGauntlet: {
-		DisplayName: Shadow's Grasp
-		Tooltip: Increases in range when fully charged
-	}
-
-	PZWarhammer: {
-		DisplayName: Epidemic
-		Tooltip: ""
-	}
-
-	WastelandWarhammer: {
-		DisplayName: Meatball Masher
-		Tooltip: ""
-	}
-
-	CyberWarhammer: {
-		Tooltip: ""
-		DisplayName: Cyber Warhammer
-	}
-
-	JudgeWarhammer: {
-		DisplayName: Divine Gesture, Judge's Gavel
+	GuardianMutagen: {
+		DisplayName: Guardian Mutagen
 		Tooltip:
 			'''
-			Cannot be thrown normally
-			Fully charging will instead empower the hammer with holy light
-			This can be repeated up to 3 times
-			Hitting an enemy while charged will release the energy as an explosion of light
-			Blocking casts a holy aura that slows and damages nearby enemies, more strongly if undead
-			'''
-		ChargeToGlow: Charge to envelop in holy light, right click to swing while charging
-	}
-
-	RocketGigahammer: {
-		DisplayName: Thruster On A Stick
-		Tooltip: ""
-	}
-
-	LivingGauntlet: {
-		DisplayName: Punchroot Knuckles
-		Tooltip: Shoots a seed on punch
-	}
-
-	ChickenGauntlet: {
-		DisplayName: Haymaker's Haymaker
-		Tooltip: Slain enemies occasionally produce healing eggs that grant Well Fed for 6 seconds
-	}
-
-	ThornQuarterstaff: {
-		DisplayName: Cursed Walking Stick
-		Tooltip: ""
-	}
-
-	HeavyGuardHelmet: {
-		DisplayName: Heavy Guard Helmet
-		Tooltip: ""
-		SetBonus: Increases defense after blocking or parrying
-	}
-
-	HeavyGuardChestplate: {
-		DisplayName: Heavy Guard Chestplate
-		Tooltip: Increases maximum guards by 1
-	}
-
-	HeavyGuardLeggings: {
-		DisplayName: Heavy Guard Leggings
-		Tooltip:
-			'''
-			Slowly regenerates guards and slams over time
-			10% increased movement speed
-			'''
-	}
-
-	NuclearSpike: {
-		DisplayName: Nuclear Shield Spike
-		Tooltip:
-			'''
-			Deals 250% of your defense as opposing damage to enemies
-			Blocking unleashes a devastating nuclear laser, dealing your shield spike damage
-			15% increased opposing damage for 10 seconds after a successful block
+			15% increased opposing damage
 			10% increased opposing critical strike chance
-			'''
-	}
-
-	ChickenGauntlet_EggItem.DisplayName: egg
-
-	GirusShield: {
-		DisplayName: Energy Projector
-		Tooltip:
-			'''
-			Generates a powerful energy shield on block
-			Launches a devastating energy orb on slam
-			The orb homes onto the player, but damages enemies along the way
-			Blocking the orb will reflect it away from the shield with increased damage
 			'''
 	}
 }
@@ -186,6 +235,7 @@ Projectiles: {
 	CyberWarhammer_HologramProj.DisplayName: Cyber Warhammer_ Hologram Proj
 	LivingGauntlet_SeedProj.DisplayName: Living Gauntlet_ Seed Proj
 	ChickenGauntlet_EggProj.DisplayName: Chicken Gauntlet_ Egg Proj
+	Hardlight_ParryDrone.DisplayName: Hardlight_ Parry Drone
 }
 
 Buffs: {

@@ -27,8 +27,8 @@ namespace GuardiansOfRedemption.General.Global;
 public class GlobalProjectiles : GlobalProjectile
 {
     public override bool InstancePerEntity => true;
-
-   
+    
+    public int ProjTimer;
 
     public override void OnSpawn(Projectile projectile, IEntitySource source)
     {
@@ -46,7 +46,7 @@ public class GlobalProjectiles : GlobalProjectile
             Player owner = Main.player[projectile.owner];
             
             OrchidGuardian guardian = owner.GetModPlayer<OrchidGuardian>();
-            MoRGuardianPlayer addonGuardian = owner.GetModPlayer<MoRGuardianPlayer>();
+            RedemptionGuardian addonGuardian = owner.GetModPlayer<RedemptionGuardian>();
             if (projectile.ModProjectile is GuardianShieldAnchor or GuardianHammerAnchor or GuardianQuarterstaffAnchor)
             {
                 if (owner.magmaStone && Main.rand.NextBool(3))
@@ -58,26 +58,33 @@ public class GlobalProjectiles : GlobalProjectile
                 {
                     if (guardian.GuardianChain > 0f)
                     {
+                        ProjTimer++;
                         Vector2 armPosition = owner.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, MathHelper.Pi - (guardian.GuardianItemCharge * 0.006f + (float)Math.Sin(MathHelper.Pi / 60f * projectile.ai[1]) * (3f + guardian.GuardianItemCharge * 0.006f)) * projectile.spriteDirection) - (new Vector2(owner.Center.X, owner.Center.Y) - new Vector2(owner.Center.X, owner.Center.Y).Floor());
-                        if (projectile.ai[1] < -35)
+                        if (projectile.ai[1] <= 0)
                         {
                             if (addonGuardian.GuardianCosmosChain)
                             { 
                                 Dust cloudDust = Dust.NewDustDirect(projectile.Center, projectile.width * 2, projectile.height * 2, ModContent.DustType<GlowDust>(), Alpha: 80, newColor: Color.Orchid);
                                 cloudDust.noGravity = true;
-                                
                                 if (Main.rand.NextBool(3))
                                     RedeParticleManager.CreateRainbowParticle(projectile.Center + projectile.velocity, RedeHelper.Spread(1f), Main.rand.NextFloat(0.4f, 0.6f), projectile.Opacity * 0.5f, Main.rand.Next(20, 40));
-                                HitObjectsAlongChain(owner, projectile, armPosition, 0.75f * anchor.HammerItem.SwingDamage, cutTiles: true);
-                                if (projectile.timeLeft % 4 == 0) Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<CosmosChain_StarProj>(), guardian.GetGuardianDamage(projectile.damage * 0.1f), projectile.knockBack);
                                 projectile.extraUpdates = 3;
+                                
+                                if (projectile.ai[1] < -20)
+                                {
+                                    HitObjectsAlongChain(owner, projectile, armPosition, 0.75f * anchor.HammerItem.SwingDamage, cutTiles: true);
+                                    if (projectile.ai[1] < -40 && ProjTimer % 4 == 0) Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<CosmosChain_StarProj>(), guardian.GetGuardianDamage(projectile.damage * 0.1f), projectile.knockBack);
+                                }
                             }
                             else if (addonGuardian.GuardianOmegaChain)
                             {
                                 Dust cloudDust = Dust.NewDustDirect(projectile.Center, projectile.width * 2, projectile.height * 2, DustID.RedTorch, Scale: 2f);
                                 cloudDust.noGravity = true;
-                                HitObjectsAlongChain(owner, projectile, armPosition, 0.5f * anchor.HammerItem.SwingDamage, ModContent.BuffType<ElectrifiedDebuff>(), 3, cutTiles: true);
-                                SpawnProjectilesAlongChain(owner, projectile, armPosition, ModContent.ProjectileType<OmegaChain_SparkProj>(), Vector2.Zero, 0.1f * anchor.HammerItem.SwingSpeed, 20, 64);           
+                                if (projectile.ai[1] < -20)
+                                {
+                                    HitObjectsAlongChain(owner, projectile, armPosition, 0.5f * anchor.HammerItem.SwingDamage, ModContent.BuffType<ElectrifiedDebuff>(), 3, cutTiles: true);
+                                    if (projectile.ai[1] < -40) SpawnProjectilesAlongChain(owner, projectile, armPosition, ModContent.ProjectileType<OmegaChain_SparkProj>(), Vector2.Zero, 0.1f * anchor.HammerItem.SwingSpeed, 20, 64);           
+                                }
                                 projectile.extraUpdates = 1;
                             }
                             else if (addonGuardian.GuardianXenomiteChain)
@@ -90,12 +97,17 @@ public class GlobalProjectiles : GlobalProjectile
                                     starDust.noGravity = true;
                                 }
                                 
-                                HitObjectsAlongChain(owner, projectile, armPosition, 0.25f * anchor.HammerItem.SwingDamage, ModContent.BuffType<GreenRashesDebuff>(), 5, cutTiles: true);
+                                if (projectile.ai[1] < -20) HitObjectsAlongChain(owner, projectile, armPosition, 0.25f * anchor.HammerItem.SwingDamage, ModContent.BuffType<GreenRashesDebuff>(), 5, cutTiles: true);
                                 
                                 
                             }
                         }
-                        else projectile.extraUpdates = anchor.HammerItem is ThoriumThorsHammerWarhammer ? 1 : 0;
+                        
+                        else
+                        {
+                            ProjTimer = 0;
+                            projectile.extraUpdates = anchor.HammerItem is ThoriumThorsHammerWarhammer ? 1 : 0;
+                        }
                     } 
                 } 
             }
@@ -108,14 +120,14 @@ public class GlobalProjectiles : GlobalProjectile
         if (projectile.owner == Main.myPlayer)
         {
             Player owner = Main.player[projectile.owner];
-            MoRGuardianPlayer modGuardian = owner.GetModPlayer<MoRGuardianPlayer>();
+            RedemptionGuardian addonGuardian = owner.GetModPlayer<RedemptionGuardian>();
             if (projectile.ModProjectile is GuardianHammerAnchor)
             {
-                if (modGuardian.GuardianOmegaChain)
+                if (addonGuardian.GuardianOmegaChain)
                 {
                     target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), Main.rand.Next(1,6) * 60);
                 }
-                else if (modGuardian.GuardianXenomiteChain)
+                else if (addonGuardian.GuardianXenomiteChain)
                 {
                     target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 300);
                     if (Main.rand.NextBool(5)) target.AddBuff(ModContent.BuffType<GlowingPustulesDebuff>(), 180);
