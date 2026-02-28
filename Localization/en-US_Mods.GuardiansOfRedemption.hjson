@@ -96,7 +96,7 @@ Items: {
 
 	ChickenGauntlet: {
 		DisplayName: Haymaker's Haymaker
-		Tooltip: Slain enemies occasionally produce healing eggs that grant Well Fed for 6 seconds
+		Tooltip: Slaying a foe with a charged punch has a chance to produce healing eggs that grant Well Fed for 10 seconds
 	}
 
 	ChickenGauntlet_EggItem.DisplayName: egg

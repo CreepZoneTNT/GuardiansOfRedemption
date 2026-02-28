@@ -16,9 +16,6 @@ namespace GuardiansOfRedemption.Items.Weapons.Quarterstaves
 		{ 
 			ElementID.ItemHoly[Type] = true;
 		}
-
-		public override string QuarterstaffTexture => Texture;
-
 		public override void SafeSetDefaults()
 		{
 			Item.width = 32;
