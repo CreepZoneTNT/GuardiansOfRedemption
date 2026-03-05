@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Content.Guardian;
 using OrchidMod.Utilities;
+using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Weapons.HM.Melee;
 using Terraria;
@@ -37,6 +38,7 @@ public class CyberWarhammer_HologramProj : OrchidModGuardianProjectile
         OldPosition = [];
         OldRotation = [];
         ShouldDrawTrail = false;
+        Projectile.Redemption().IsHammer = false;
     }
 
     public override void OnSpawn(IEntitySource source)

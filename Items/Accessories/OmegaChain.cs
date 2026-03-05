@@ -34,7 +34,7 @@ public class OmegaChain : OrchidModGuardianEquipable
          
             addonPlayer.GuardianOmegaChain = true;
             
-            if (player.HeldItem.ModItem is OrchidModGuardianHammer) player.GetAttackSpeed(DamageClass.Melee) *= 0.5f;
+            if (player.HeldItem.ModItem is OrchidModGuardianHammer) player.GetAttackSpeed(DamageClass.Melee) /= 3f;
         }
     }
 

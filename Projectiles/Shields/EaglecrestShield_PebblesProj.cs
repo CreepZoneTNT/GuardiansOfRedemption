@@ -1,14 +1,23 @@
 using System;
 using System.Collections.Generic;
+using GuardiansOfRedemption.General;
+using GuardiansOfRedemption.General.Global;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
+using Redemption;
+using Redemption.Buffs.NPCBuffs;
+using Redemption.Globals;
+using Redemption.Helpers;
+using Redemption.Items.Weapons.PreHM.Melee;
+using Redemption.NPCs.Critters;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace GuardiansOfRedemption.Projectiles.Shields;
 
@@ -26,16 +35,17 @@ public class EaglecrestShield_PebblesProj : OrchidModGuardianProjectile
     public List<Vector2> OldPosition;
     public List<float> OldRotation;
     
-    public int SelectedItem { get; set; } = -1;
-    public Item GuardianItem => Main.player[Projectile.owner].inventory[SelectedItem];
 
-    private int projVariant = 0;
-    
-    
+    private int projVariant;
+
+    public override void SetStaticDefaults()
+    {
+        ElementID.ProjEarth[Type] = true;
+        ElementID.ProjThunder[Type] = true;
+    }
+
     public override void SafeSetDefaults()
     {
-        Projectile.CloneDefaults(1013);
-        Projectile.aiStyle = ProjAIStyleID.Boulder;
         Projectile.width = 8;
         Projectile.height = 8;
         Projectile.penetrate = 3;
@@ -45,14 +55,14 @@ public class EaglecrestShield_PebblesProj : OrchidModGuardianProjectile
         Projectile.ignoreWater = true;
         Projectile.timeLeft = 300;
         Projectile.scale = 1.5f;
+        Projectile.usesLocalNPCImmunity = true;
+        Projectile.localNPCHitCooldown = 20;
         OldPosition = [];
         OldRotation = [];
     }
 
     public override void OnSpawn(IEntitySource source)
     {
-        
-    
         projVariant = Main.rand.Next(0, 3);
         
         switch (projVariant)
@@ -75,7 +85,15 @@ public class EaglecrestShield_PebblesProj : OrchidModGuardianProjectile
         Projectile.height = DrawTexture.Width;
     }
 
-    public override void SafeOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone, Player player, OrchidGuardian guardian) => Projectile.Kill();
+    public override void AI()
+    {
+        Projectile.ai[0]++;
+        if (Projectile.ai[0] > 10) Projectile.velocity.Y += 0.4f;
+        
+        Projectile.rotation = 0.2f * Projectile.velocity.ToRotation() - MathHelper.PiOver2;
+    }
+
+    
 
     public override bool OnTileCollide(Vector2 oldVelocity)
     {
@@ -85,7 +103,7 @@ public class EaglecrestShield_PebblesProj : OrchidModGuardianProjectile
 
         if (Projectile.velocity.X != oldVelocity.X) Projectile.velocity.X = -oldVelocity.X;
         if (Projectile.velocity.Y != oldVelocity.Y) Projectile.velocity.Y = -oldVelocity.Y;
-        Projectile.velocity *= 0.75f;
+        Projectile.velocity *= 0.6f;
         Projectile.penetrate--;
         
         if (Projectile.penetrate == 0) Projectile.Kill();
@@ -93,10 +111,40 @@ public class EaglecrestShield_PebblesProj : OrchidModGuardianProjectile
         return false;
     }
 
+    public override void SafeOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone, Player player, OrchidGuardian guardian)
+    {
+        Projectile.Kill();
+        
+        RedemptionGuardian addonGuardian = guardian.RedemptionGuardian();
+        if (addonGuardian.EaglecrestShieldTarget == null) addonGuardian.EaglecrestShieldTarget = target;
+        if (target == addonGuardian.EaglecrestShieldTarget)
+        {
+            if (++addonGuardian.EaglecrestShieldHitCount == 5) CombatText.NewText(player.getRect(), Color.Gold, addonGuardian.EaglecrestShieldHitCount, true);
+            else CombatText.NewText(player.getRect(), Color.Yellow, addonGuardian.EaglecrestShieldHitCount);
+            if (addonGuardian.EaglecrestShieldHitCount >= 5)
+            {
+                addonGuardian.EaglecrestShieldTarget = null;
+                addonGuardian.EaglecrestShieldHitCount = 0;
+                
+                
+                SoundEngine.PlaySound(CustomSounds.Thunderstrike, Projectile.Center);
+                
+                for (int i = 0; i < 3; i++) DustHelper.DrawParticleElectricity(Projectile.Center - new Vector2(0.0f, 400f), Projectile.Center, 2f, density: 0.1f, colorType: 1);
+                DustHelper.DrawCircle(Projectile.Center - Vector2.UnitY * 400f, DustID.Sandnado, RatioX: 4f, RatioY: 4f, dustSize: 3f, nogravity: true);
+                RedeHelper.NPCRadiusDamage(48, Projectile, guardian.GetGuardianDamage(90), 8f, 0);
+                target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 60);
+            }
+        }
+        else
+        {
+            addonGuardian.EaglecrestShieldTarget = null;
+            addonGuardian.EaglecrestShieldHitCount = 0;
+        }
+    }
     public override void OnKill(int timeLeft)
     {
         SoundEngine.PlaySound(SoundID.Tink);
-        for (int i = 0; i < 3; i++) Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Stone);
+        for (int i = 0; i < 5; i++) Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Stone);
     }
 
     public override bool OrchidPreDraw(SpriteBatch spriteBatch, ref Color lightColor)

@@ -40,7 +40,7 @@ public class CosmosChain : OrchidModGuardianEquipable
             modPlayer.GuardianChain = chainDistance;
             modPlayer.GuardianChainTexture = Texture + "_Chain";
             
-            if (player.HeldItem.ModItem is OrchidModGuardianHammer) player.GetAttackSpeed(DamageClass.Melee) *= 0.25f;
+            if (player.HeldItem.ModItem is OrchidModGuardianHammer) player.GetAttackSpeed(DamageClass.Melee) /= 4f;
             
         }
     }

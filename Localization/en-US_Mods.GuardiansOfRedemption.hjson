@@ -1,3 +1,5 @@
+# Mods: {
+# GuardiansOfRedemption: {
 Items: {
 	SkeletonWardenShield: {
 		DisplayName: Antique Aegis
@@ -9,7 +11,7 @@ Items: {
 		Tooltip:
 			'''
 			Fires 5 bouncing pebbles on slam
-			Hitting the same target with all 5 pebbles calls lightning over them      
+			Hitting the same target with all 5 pebbles strikes them with lightning, dealing {0} damage
 			'''
 	}
 
@@ -27,11 +29,6 @@ Items: {
 	XeniumShield: {
 		Tooltip: ""
 		DisplayName: Xenium Shield
-	}
-
-	ErhanWarhammer: {
-		DisplayName: Hand of Judgement
-		Tooltip: ""
 	}
 
 	WeaponGraveSteelWarhammer: {
@@ -122,7 +119,12 @@ Items: {
 
 	ErhanStick: {
 		DisplayName: Hand of Judgement
-		Tooltip: "'It wasn't meant to be taken literally!'"
+		Tooltip:
+			'''
+			Deals extra damage against demonic enemies
+			Counterattacks release homing lightmass
+			'It wasn't meant to be taken literally!'
+			'''
 	}
 
 	ThornQuarterstaff: {
@@ -223,19 +225,31 @@ Items: {
 			10% increased opposing critical strike chance
 			'''
 	}
+
+	GirusWarhammer: {
+		Tooltip: ""
+		DisplayName: Girus Warhammer
+	}
+
+	PureIronShield: {
+		Tooltip: ""
+		DisplayName: Pure Iron Shield
+	}
+
+	DragonleadQuarterstaff: {
+		Tooltip: ""
+		DisplayName: Dragonlead Quarterstaff
+	}
 }
 
 Projectiles: {
-	EaglecrestShieldPebblesProj.DisplayName: Eaglecrest Pebble
-	CosmosChain_StarProj.DisplayName: Cosmos Chain_ Star Proj
-	EaglecrestShield_PebblesProj.DisplayName: Eaglecrest Shield_ Pebbles Proj
-	OmegaChain_SparkProj.DisplayName: Omega Chain_ Spark Proj
-	CyberWarhammer_Hologram.DisplayName: Cyber Warhammer_ Hologram
-	LivingGauntlet_Seed.DisplayName: Living Gauntlet_ Seed
-	CyberWarhammer_HologramProj.DisplayName: Cyber Warhammer_ Hologram Proj
-	LivingGauntlet_SeedProj.DisplayName: Living Gauntlet_ Seed Proj
-	ChickenGauntlet_EggProj.DisplayName: Chicken Gauntlet_ Egg Proj
-	Hardlight_ParryDrone.DisplayName: Hardlight_ Parry Drone
+	CosmosChain_StarProj.DisplayName: Astral Twinklestar
+	EaglecrestShield_PebblesProj.DisplayName: Eaglecrest Pebble
+	OmegaChain_SparkProj.DisplayName: Omega Spark
+	CyberWarhammer_HologramProj.DisplayName: Universal Holo-Hammer
+	LivingGauntlet_SeedProj.DisplayName: Punchroot Seed
+	ChickenGauntlet_EggProj.DisplayName: Healing Egg
+	Hardlight_ParryDrone.DisplayName: Parry Drone Mk.I
 }
 
 Buffs: {
@@ -247,5 +261,19 @@ Buffs: {
 	CosmicRendDebuff: {
 		Description: Mods.GuardiansOfRedemption.Buffs.CosmicRendDebuff.Description
 		DisplayName: Cosmic Rend Debuff
+	}
+}
+
+Cutscene: {
+	Erhan: {
+		HandOfJudgement1: I ne'er meant'eth for that to be taken'eth literally??
+		HandOfJudgement2: Thou arest not one in the position to smack'eth MINE buttocks with the Hand of Judgement!
+	}
+}
+
+Achievements: {
+	ErhanSlappedAchievement: {
+		FriendlyName: How the Turntables
+		Description: Defeat Erhan or his Spirit only by bitch-slapping him with the Hand of Judgement until he dies.
 	}
 }

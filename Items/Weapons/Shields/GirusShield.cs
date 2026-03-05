@@ -10,6 +10,7 @@ using OrchidMod.Content.General.Prefixes;
 using OrchidMod.Utilities;
 using OrchidMod.Content.Guardian;
 using Redemption.Globals;
+using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Bosses.Gigapora;
 using Terraria;
 using Terraria.Audio;
@@ -187,6 +188,18 @@ public class GirusShield : OrchidModGuardianShield
     {
         AnimTimer++;
     }
+    
+    
+    public override void AddRecipes()
+    {
+        CreateRecipe()
+            .AddIngredient<OmegaPowerCell>()
+            .AddIngredient<CorruptedXenomite>(7)
+            .AddIngredient<CarbonMyofibre>(4)
+            .AddIngredient<Plating>(6)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
+    }
 
     public override bool PreDrawShield(SpriteBatch spriteBatch, Projectile projectile, Player player, ref Color lightColor)
     {
@@ -216,7 +229,6 @@ public class GirusShield : OrchidModGuardianShield
 
     public override void PostDrawShield(SpriteBatch spriteBatch, Projectile projectile, Player player, Color lightColor)
     {
-
         Texture2D coreTexture = ModContent.Request<Texture2D>(ShieldTexture + "Core").Value;
         Rectangle frame = coreTexture.Frame(1, 10, 0, AnimFrame);
         Vector2 drawPosition = player.MountedCenter + Vector2.UnitX.RotatedBy((projectile.Center - player.MountedCenter).ToRotation()) * 45 - Main.screenPosition + Vector2.UnitY * player.gfxOffY;

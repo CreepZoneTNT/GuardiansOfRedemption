@@ -5,6 +5,7 @@ using OrchidMod.Content.Guardian.Accessories;
 using Redemption.Items.Materials.HM;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.Items.Accessories;
 
@@ -30,7 +31,10 @@ public class XenomiteChain : OrchidModGuardianEquipable
             modPlayer.GuardianChainTexture = Texture + "_Chain";
          
             addonPlayer.GuardianXenomiteChain = true;   
+            
+            if (player.HeldItem.ModItem is OrchidModGuardianHammer) player.GetAttackSpeed(DamageClass.Melee) /= 2f;
         }
+        
     }
 
     public override void AddRecipes()

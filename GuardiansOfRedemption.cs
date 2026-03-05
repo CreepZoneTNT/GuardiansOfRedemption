@@ -2,6 +2,7 @@ using System;
 using System.Numerics;
 using System.Reflection;
 using Microsoft.Xna.Framework.Graphics;
+using OrchidMod;
 using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Guardian.Accessories;
 using OrchidMod.Content.Guardian.Misc;
@@ -14,6 +15,7 @@ using OrchidMod.Content.Guardian.Weapons.Shields;
 using OrchidMod.Content.Guardian.Weapons.Warhammers;
 using Redemption.BaseExtension;
 using Redemption.Globals;
+using Redemption.NPCs.Bosses.Cleaver;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
@@ -63,13 +65,8 @@ namespace GuardiansOfRedemption
 					if (modItem is HellWarhammer)
 						ElementID.ItemExplosive[modItem.Type] = true;
 			}
-
-			foreach (var modProjectile in ModContent.GetContent<ModProjectile>())
-			{
-				if (modProjectile is GuardianHorizonLanceProj)
-					modProjectile.Projectile.Redemption().IsHammer = false;
-					
-			}
+			
+			OrchidGuardian.ProjectilesBlockBlacklist.Add(ModContent.ProjectileType<PhantomCleaver2_Spawner>());
 			
 			Main.QueueMainThreadAction(() =>
 			{

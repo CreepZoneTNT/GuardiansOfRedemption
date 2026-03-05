@@ -27,6 +27,10 @@ namespace GuardiansOfRedemption.General.Global;
 
 public class RedemptionGuardian : ModPlayer
 {
+
+    public NPC EaglecrestShieldTarget;
+    public int EaglecrestShieldHitCount;
+
     public int HardlightParryCooldown;
 
     public bool GuardianIVDripStandard;
@@ -43,7 +47,6 @@ public class RedemptionGuardian : ModPlayer
     public OrchidGuardian guardian => Player.GetModPlayer<OrchidGuardian>();
     public override void SetStaticDefaults()
     {
-        OrchidGuardian.ProjectilesBlockBlacklist.Add(ModContent.ProjectileType<PhantomCleaver2_Spawner>());
     }
 
     public override void ResetEffects()
@@ -60,6 +63,8 @@ public class RedemptionGuardian : ModPlayer
 
     public override void PostUpdateMiscEffects()
     {
+    
+        if (EaglecrestShieldTarget != null && !EaglecrestShieldTarget.active) EaglecrestShieldTarget = null;
         HardlightParryCooldown--;
         if (HardlightParryCooldown < 0) HardlightParryCooldown = 0;
     }
