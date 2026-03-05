@@ -67,12 +67,12 @@ public class ChickenGauntlet_EggItem : ModItem
         if (Main.rand.NextBool(100))
         {
             CombatText.NewText(player.getRect(), Color.Wheat, "eg");
-            player.statLife += 5;
+            player.statLife += 8;
             if (player.statLife > player.statLifeMax2) player.statLife = player.statLifeMax2;
             SoundEngine.PlaySound(new SoundStyle("GuardiansOfRedemption/Sounds/ASDFMovieEgg", 2), player.Center);
         }
-        else player.Heal(5);
-        player.AddBuff(BuffID.WellFed, 360);
+        else player.Heal(8);
+        player.AddBuff(BuffID.WellFed, 400);
         return false;
     }
 }

@@ -1,1 +1,3 @@
-Modify this file with a description of your mod.
+The Guardians of Redemption mod is an addon meant to bridge the gap between Orchid Mod's 
+Guardian class and the content of Mod of Redemption. This addon adds options for all of 
+Guardian's subclasses throughout progression, as well as adding unique ideas for weapons.
