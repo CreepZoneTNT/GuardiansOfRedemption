@@ -75,14 +75,10 @@ Items: {
 			'''
 		ChargeToGlow: Charge to envelop in holy light, right click to swing while charging
 	}
-	
 
 	GirusWarhammer: {
 		DisplayName: Proto-Hammer
-		Tooltip: 
-		    '''
-		    Strikes nearby enemies with red electricity
-		    '''
+		Tooltip: Strikes nearby enemies with red electricity
 	}
 
 	PZWarhammer: {
@@ -117,7 +113,8 @@ Items: {
 		Tooltip:
 			'''
 			Can be charged in 3 stages
-			Punching makes you lunge forward with an explosive punch
+			Charged punches deal burst damage in a small radius
+			Punching while overcharged makes you lunge forward with an explosive strike
 			'''
 	}
 
@@ -140,14 +137,14 @@ Items: {
 		DisplayName: Cursed Walking Stick
 		Tooltip: ""
 	}
-	
+
 	DragonleadQuarterstaff: {
 		DisplayName: Dragonlead Quarterstaff
-		Tooltip: 
-		    '''
-		    Performs a double spin attack when fully charged
-		    Lobs a gravity-affected fireball after charge attacking
-		    '''
+		Tooltip:
+			'''
+			Performs a double spin attack when fully charged
+			Lobs a gravity-affected fireball after charge attacking
+			'''
 	}
 
 	HeavyGuardHelmet: {
@@ -245,8 +242,30 @@ Items: {
 	}
 
 	PureIronShield: {
-		Tooltip: ""
-		DisplayName: Pure Iron Shield
+		DisplayName: Iron Realm Eschutcheon
+		Tooltip:
+			'''
+			Blocking and then attacking an enemy inflicts Pure Chill
+			Killing an enemy afflicted with Pure Chill will make them explode into a shower of piercing ice crystals
+			'''
+	}
+
+	PureIronStandard: {
+		DisplayName: Iron Realm's Crest
+		Tooltip:
+			'''
+			Fully charging increases {0} elemental damage by 5% and {1} elemental resistance by 10%
+			Reinforcing grants all weapons a 33% chance to inflict Pure Chill and occasionally creates damaging ice shards on hit
+			'''
+	}
+
+	DragonLeadStandard: {
+		DisplayName: Warlord's Standard
+		Tooltip:
+			'''
+			Fully charging increases {0} elemental damage by 5% and {1} elemental resistance by 10%
+			Reinforcing grants all weapons a 33% chance to inflict Dragonblaze and occasionally creates damaging fire clouds on hit
+			'''
 	}
 }
 
@@ -258,6 +277,7 @@ Projectiles: {
 	LivingGauntlet_SeedProj.DisplayName: Punchroot Seed
 	ChickenGauntlet_EggProj.DisplayName: Healing Egg
 	Hardlight_ParryDrone.DisplayName: Parry Drone Mk.I
+	PureIronStandard_IceShardProj.DisplayName: Pure Iron Standard_ Ice Shard Proj
 }
 
 Buffs: {
