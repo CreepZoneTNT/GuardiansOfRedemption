@@ -63,6 +63,10 @@ public class GlobalSystem : ModSystem
         RedemptionGuardian addonGuardian = self.Player.GetModPlayer<RedemptionGuardian>();
         if (forceReset || !self.GuardianStandardBuffer)
         {
+            addonGuardian.GuardianPureIronStandard = false;
+            addonGuardian.GuardianPureIronStandardCooldown = 0;
+            addonGuardian.GuardianDragonLeadStandard = false;
+            addonGuardian.GuardianDragonLeadStandardCooldown = 0;
             addonGuardian.GuardianIVDripStandard = false;
         }
         else orig(self, forceReset);
