@@ -267,6 +267,16 @@ Items: {
 			Reinforcing grants all weapons a 33% chance to inflict Dragonblaze and occasionally creates damaging fire clouds on hit
 			'''
 	}
+
+	JanitorQuarterstaff: {
+		DisplayName: Used Mop
+		Tooltip:
+			'''
+			Hitting an enemy with the head of the mop inflicts {0} and {1} damage
+			Can clean up gores
+			'Partially as lethal as Janitor's'
+			'''
+	}
 }
 
 Projectiles: {

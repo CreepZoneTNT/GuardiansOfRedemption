@@ -1,9 +1,12 @@
+using GuardiansOfRedemption.Items.Weapons.Quarterstaves;
 using GuardiansOfRedemption.Items.Weapons.Shields;
 using GuardiansOfRedemption.Items.Weapons.Warhammers;
 using OrchidMod.Utilities;
+using Redemption.Globals;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Friendly.TownNPCs;
+using Redemption.NPCs.Lab.Janitor;
 using Redemption.NPCs.PreHM;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -28,6 +31,8 @@ public class NPCLootAndShop : GlobalNPC
     {
         if (shop.NpcType == ModContent.NPCType<Zephos>())
             shop.Add(ModContent.ItemType<ZephosWarhammer>(), Condition.DownedQueenBee);
+        if (shop.NpcType == ModContent.NPCType<JanitorBot_NPC>())
+            shop.Add(ModContent.ItemType<JanitorQuarterstaff>(), RedeConditions.IsJanitor, Condition.MoonPhaseNew, new Condition("Mods.GuardiansOfRedemption.Conditions.EarlyMorning", () => Main.time is >= 16200 and <= 27000));
     }
 }
 
