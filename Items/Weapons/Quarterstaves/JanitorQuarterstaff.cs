@@ -16,6 +16,15 @@ using Redemption.Globals;
 using Redemption.Globals.Players;
 using Redemption.NPCs.Lab.Janitor;
 using GuardiansOfRedemption.General;
+using Redemption.Items.Placeable.Tiles;
+using Redemption.Tiles.Tiles;
+using Redemption.NPCs.Lab;
+using GuardiansOfRedemption.General.Global;
+using static GuardiansOfRedemption.General.Global.GlobalNPCs;
+using Redemption;
+using Redemption.UI.ChatUI;
+using System.Collections.Generic;
+using GuardiansOfRedemption.Projectiles.Quarterstaves;
 
 namespace GuardiansOfRedemption.Items.Weapons.Quarterstaves;
 public class JanitorQuarterstaff : OrchidModGuardianQuarterstaff {
@@ -27,6 +36,8 @@ public class JanitorQuarterstaff : OrchidModGuardianQuarterstaff {
     /// A timer that increases up to 600 while the tip of the quarterstaff is submerged in water.
     /// </summary>
     public int Sogginess;
+
+    public bool MopYeeted;
 
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.WaterS, ElementID.PsychicS);
 
@@ -42,15 +53,20 @@ public class JanitorQuarterstaff : OrchidModGuardianQuarterstaff {
         Item.rare = ItemRarityID.Pink;
         Item.useTime = 30;
         Item.knockBack = 3f;
-        Item.damage = 69;
+        Item.damage = 76;
         Item.shootSpeed = 10f;
         GuardStacks = 1;
         ParryDuration = 100;
-        JabStyle = 2;
         JabDamage = 1.0f;
 
         Sogginess = 0;
         TipTouchingSurface = false;
+        MopYeeted = false;
+    }
+
+    public override bool CanUseItem(Player player) {
+        if (MopYeeted) return false;
+        return base.CanUseItem(player);
     }
 
     public override void ExtraAIQuarterstaff(Player player, OrchidGuardian guardian, Projectile projectile)
@@ -72,7 +88,7 @@ public class JanitorQuarterstaff : OrchidModGuardianQuarterstaff {
             Sogginess++;
             if (Sogginess > 600) Sogginess = 600;
         }
-        else if (Framing.GetTileSafely(tip) == null) {
+        else if (!Framing.GetTileSafely(tip).HasTile) {
             if (Sogginess > 0 && Main.rand.NextBool(11 - (int)Math.Ceiling(Sogginess / 60f))) 
             {
                 Dust.NewDustPerfect(tip + Vector2.UnitY * 6f, Dust.dustWater(), Vector2.UnitY * 4f);
@@ -93,7 +109,14 @@ public class JanitorQuarterstaff : OrchidModGuardianQuarterstaff {
                 SoundEngine.PlaySound(SoundID.Item21 with {Volume = 0.6f}, gore.position);
             }   
         }
+        Tile tipTile = Framing.GetTileSafely(tip);
+        if (tipTile.HasTile && (tipTile.TileType == ModContent.TileType<HardenedSludgeTile>() || tipTile.TileType == ModContent.TileType<HardenedSludgeTileSafe>()) && player.HasEnoughPickPowerToHurtTile((int)(tip.X / 16f), (int)(tip.Y / 16f))) {
+            WorldGen.KillTile((int)(tip.X / 16f), (int)(tip.Y / 16f));
+            if (Main.netMode == NetmodeID.MultiplayerClient) NetMessage.SendData(MessageID.TileManipulation, number: 0, number2: (int)(tip.X / 16f), number3: (int)(tip.Y / 16f));
+            
         if (Sogginess > 0 && projectile.ai[0] is > -30f and < -10f && Framing.GetTileSafely(tip) == null && Main.rand.NextBool(11 - (int)Math.Ceiling(Sogginess / 60f))) {
+        }
+        if (Sogginess > 0 && projectile.ai[0] is > -25f and < -15f && !Framing.GetTileSafely(tip).HasTile && Main.rand.NextBool(11 - (int)Math.Ceiling(Sogginess / 60f))) {
             Dust.NewDustPerfect(tip, Dust.dustWater(), player.Center.DirectionTo(tip) * 6f, Scale: 1.5f);
             SoundEngine.PlaySound(SoundID.Drip with {Volume = 0.1f, PitchRange = (-0.4f, 0.2f)}, tip);
             Sogginess--;
@@ -103,17 +126,20 @@ public class JanitorQuarterstaff : OrchidModGuardianQuarterstaff {
     public override void OnAttack(Player player, OrchidGuardian guardian, Projectile projectile, bool jabAttack, bool counterAttack)
     {
         if (!jabAttack && !counterAttack) {
-            Projectile bucketProj = Projectile.NewProjectileDirect(
-                projectile.GetSource_FromAI(),
-                player.Center,
-                Vector2.UnitX.RotatedBy((Main.MouseWorld - tip).ToRotation()) * Item.shootSpeed,
-                ModContent.ProjectileType<BucketSplash>(),
-                guardian.GetGuardianDamage(Item.damage * 0.5f),
-                20f,
-                projectile.owner
-            );
-            bucketProj.hostile = false;
-            bucketProj.friendly = true;
+            if (Main.keyState.PressingShift()) {
+                Projectile mopProj = Projectile.NewProjectileDirect(
+                    projectile.GetSource_FromAI(),
+                    tip + Vector2.UnitY * player.gfxOffY,
+                    Vector2.UnitX.RotatedBy((Main.MouseWorld - tip).ToRotation()) * Item.shootSpeed,
+                    ModContent.ProjectileType<JanitorQuarterstaff_ThrownProj>(),
+                    guardian.GetGuardianDamage(Item.damage * 0.8f),
+                    20f,
+                    projectile.owner,
+                    projectile.whoAmI
+                );
+                mopProj.hostile = false;
+                mopProj.friendly = true;
+            }
             SoundEngine.PlaySound(SoundID.NPCDeath19, tip);
         }
     }
@@ -121,7 +147,6 @@ public class JanitorQuarterstaff : OrchidModGuardianQuarterstaff {
     public override void QuarterstaffModifyHitNPC(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, ref NPC.HitModifiers modifiers, bool jabAttack, bool counterAttack, bool firstHit)
     {
         if (Collision.CheckAABBvAABBCollision(target.Center, target.Hitbox.Size(), tip, new(24, 24))) {
-            
             // There's seemingly no way to manually override elemental damage on hit, so I have to bullshit the effects 
             if (NPCLists.Robotic.Contains(target.type) && Main.rand.NextBool(4)) {
                 target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 120);
@@ -129,7 +154,8 @@ public class JanitorQuarterstaff : OrchidModGuardianQuarterstaff {
             }
             target.RedemptionGuard().IgnoreArmour = true;
             ElementalNPC elementalNPC = target.GetGlobalNPC<ElementalNPC>();
-            float npcMult = elementalNPC.elementDmg[ElementID.Water] * elementalNPC.elementDmg[ElementID.Psychic];
+            float npcMult = elementalNPC.elementDmg[ElementID.Psychic];
+            if (target.type != ModContent.NPCType<OozeBlob>()) npcMult *= elementalNPC.elementDmg[ElementID.Water];
 
             if (npcMult >= 1.1f)
                 CombatText.NewText(target.getRect(), Color.CornflowerBlue, npcMult + "x", true, true);
@@ -139,15 +165,23 @@ public class JanitorQuarterstaff : OrchidModGuardianQuarterstaff {
             BuffPlayer buffPlayer = player.RedemptionPlayerBuff();
             float playerMult = (1 + buffPlayer.ElementalDamage[ElementID.Water]) * (1 + buffPlayer.ElementalDamage[ElementID.Psychic]);
 
-            modifiers.NonCritDamage *= npcMult * playerMult;
+            modifiers.FinalDamage *= npcMult * playerMult;
             for (int i = 0; i < 5; i++) Dust.NewDustPerfect(target.Center, Dust.dustWater(), Main.rand.NextVector2Circular(8, 8));
             SoundEngine.PlaySound(SoundID.NPCDeath19, tip);
             target.AddBuff(BuffID.Wet, 240);
+
+            if (target.type == ModContent.NPCType<OozeBlob>()) {
+                modifiers.SetCrit();
+                modifiers.FinalDamage *= 1.5f;
+            }
         }
     }
 
+    public override bool PreDrawQuarterstaff(SpriteBatch spriteBatch, Projectile projectile, Player player, ref Color lightColor) => !MopYeeted;
+
     public override void PostDrawQuarterstaff(SpriteBatch spriteBatch, Projectile projectile, Player player, Color lightColor)
     {
+        if (MopYeeted) return;
         // Drawing code borrowed from Orchid, GuardianStandardAnchor.cs (credits to Verveine and the Orchid team)
         Texture2D textureAir = ModContent.Request<Texture2D>(QuarterstaffTexture + "_Mop", AssetRequestMode.ImmediateLoad).Value;
         Texture2D textureContact = ModContent.Request<Texture2D>(QuarterstaffTexture + "_MopContact", AssetRequestMode.ImmediateLoad).Value;
