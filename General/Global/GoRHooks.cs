@@ -16,7 +16,7 @@ using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.General.Global;
 
-public class GlobalSystem : ModSystem
+public class GoRHooks : ModSystem
 {
     private Hook _onBlockProjectileHook;
     private Hook _ResetStandardsHook;
