@@ -114,7 +114,45 @@ public class JanitorQuarterstaff : OrchidModGuardianQuarterstaff {
             WorldGen.KillTile((int)(tip.X / 16f), (int)(tip.Y / 16f));
             if (Main.netMode == NetmodeID.MultiplayerClient) NetMessage.SendData(MessageID.TileManipulation, number: 0, number2: (int)(tip.X / 16f), number3: (int)(tip.Y / 16f));
             
-        if (Sogginess > 0 && projectile.ai[0] is > -30f and < -10f && Framing.GetTileSafely(tip) == null && Main.rand.NextBool(11 - (int)Math.Ceiling(Sogginess / 60f))) {
+            foreach (var npc in Main.npc) {
+                if (npc.type == ModContent.NPCType<JanitorBot_NPC>() && npc.Sight(player, 144, false, false, canSeeHiding: true)) {
+                    GlobalNPCs globalNPC = npc.GetGlobalNPC<GlobalNPCs>();
+                    
+                    SoundStyle voice = CustomSounds.Voice6 with { Pitch = -0.2f };
+                    string text = Language.GetTextValue("Mods.GuardiansOfRedemption.Cutscene.Janitor.GoodSamaritan.Default");
+
+                    ref JanitorInsultState state = ref globalNPC.janitorInsultState;
+
+                    if (globalNPC.janitorInsultDelay > 0) return;
+
+                    globalNPC.janitorInsultDelay = 240;
+                    globalNPC.janitorInsultCooldown = 900;
+
+                    if (state == JanitorInsultState.Idle && state != JanitorInsultState.GoodSamaritan) {
+                        state = JanitorInsultState.GoodSamaritan;
+                        if (player.invis) text = Language.GetTextValue("Mods.GuardiansOfRedemption.Cutscene.Janitor.GoodSamaritan.Invisible");
+                        else text = Language.GetTextValue("Mods.GuardiansOfRedemption.Cutscene.Janitor.GoodSamaritan.Default");
+                    }
+                    else if (state == JanitorInsultState.Trolled && state != JanitorInsultState.Apology) {
+                        state = JanitorInsultState.Apology;
+                        globalNPC.janitorInsultAngery = false;
+                        if (player.invis)
+                            text = Language.GetTextValue("Mods.GuardiansOfRedemption.Cutscene.Janitor.Apology.Invisible");
+                        else if (RedeWorld.Alignment < 0) 
+                            text = Language.GetTextValue("Mods.GuardiansOfRedemption.Cutscene.Janitor.Apology.BadRoute");
+                        else if (RedeConditions.IsTBotHead.IsMet())
+                            text = Language.GetTextValue("Mods.GuardiansOfRedemption.Cutscene.Janitor.Apology.Android");
+                        else if (RedeConditions.IsJanitor.IsMet())
+                            text = Language.GetTextValue("Mods.GuardiansOfRedemption.Cutscene.Janitor.Apology.Janitor");
+                        else text = Language.GetTextValue("Mods.GuardiansOfRedemption.Cutscene.Janitor.Apology.GoodRoute");
+                    }
+                    else return;
+
+                    Dialogue d = new(npc, text, Color.LightGoldenrodYellow, new Color(100, 86, 0), voice, 0.03f, 2f, 0.5f, true);
+                    ChatUI.Visible = true;
+                    ChatUI.Add(d);
+                }
+            }
         }
         if (Sogginess > 0 && projectile.ai[0] is > -25f and < -15f && !Framing.GetTileSafely(tip).HasTile && Main.rand.NextBool(11 - (int)Math.Ceiling(Sogginess / 60f))) {
             Dust.NewDustPerfect(tip, Dust.dustWater(), player.Center.DirectionTo(tip) * 6f, Scale: 1.5f);

@@ -12,6 +12,7 @@ using Terraria;
 using Terraria.Enums;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -33,11 +34,29 @@ public class NPCLootAndShop : GlobalNPC
     {
         Player player = Main.LocalPlayer;
         if (npc.type == ModContent.NPCType<JanitorBot_NPC>()) {
+            GlobalNPCs globalNPC = npc.GetGlobalNPC<GlobalNPCs>();
+            if (Main.rand.NextBool() && globalNPC.janitorInsultAngery) {
+                if (globalNPC.janitorInsultAware) 
+                    chat = Language.GetTextValue("Mods.GuardiansOfRedemption.Dialogue.Janitor.WTFMan");
+                else
+                    chat = Language.GetTextValue("Mods.GuardiansOfRedemption.Dialogue.Janitor.Peeved");
+            }
+            else 
             if (Main.rand.NextBool(3) && Main.GetMoonPhase() == MoonPhase.Empty && RedeConditions.IsJanitor.IsMet() && Main.time is >= 16200 and <= 27000)
                 chat = Language.GetTextValue("Mods.GuardiansOfRedemption.Dialogue.Janitor.UsedMop");
         }   
     }
 
+    public override void ModifyActiveShop(NPC npc, string shopName, Item[] items)
+    {
+        if (npc.type == ModContent.NPCType<JanitorBot_NPC>() && npc.GetGlobalNPC<GlobalNPCs>().janitorInsultAngery && npc.GetGlobalNPC<GlobalNPCs>().janitorInsultAware)
+            foreach (Item item in items) 
+                if (item != null && item.type != ItemID.None && item.shopCustomPrice != null) {
+                    int currentPrice = item.shopCustomPrice ?? item.value;
+                    item.shopCustomPrice = (int)(currentPrice * 1.5f);
+                }
+                
+    }
 
     public override void ModifyShop(NPCShop shop)
     {
