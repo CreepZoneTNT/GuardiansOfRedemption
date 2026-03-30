@@ -75,14 +75,10 @@ Items: {
 			'''
 		ChargeToGlow: Charge to envelop in holy light, right click to swing while charging
 	}
-	
 
 	GirusWarhammer: {
 		DisplayName: Proto-Hammer
-		Tooltip: 
-		    '''
-		    Strikes nearby enemies with red electricity
-		    '''
+		Tooltip: Strikes nearby enemies with red electricity
 	}
 
 	PZWarhammer: {
@@ -140,14 +136,14 @@ Items: {
 		DisplayName: Cursed Walking Stick
 		Tooltip: ""
 	}
-	
+
 	DragonleadQuarterstaff: {
 		DisplayName: Dragonlead Quarterstaff
-		Tooltip: 
-		    '''
-		    Performs a double spin attack when fully charged
-		    Lobs a gravity-affected fireball after charge attacking
-		    '''
+		Tooltip:
+			'''
+			Performs a double spin attack when fully charged
+			Lobs a gravity-affected fireball after charge attacking
+			'''
 	}
 
 	HeavyGuardHelmet: {
