@@ -16,7 +16,7 @@ using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.General.Global;
 
-public class GlobalSystem : ModSystem
+public class GoRHooks : ModSystem
 {
     private Hook _onBlockProjectileHook;
     private Hook _ResetStandardsHook;
@@ -63,6 +63,10 @@ public class GlobalSystem : ModSystem
         RedemptionGuardian addonGuardian = self.Player.GetModPlayer<RedemptionGuardian>();
         if (forceReset || !self.GuardianStandardBuffer)
         {
+            addonGuardian.GuardianPureIronStandard = false;
+            addonGuardian.GuardianPureIronStandardCooldown = 0;
+            addonGuardian.GuardianDragonLeadStandard = false;
+            addonGuardian.GuardianDragonLeadStandardCooldown = 0;
             addonGuardian.GuardianIVDripStandard = false;
         }
         else orig(self, forceReset);

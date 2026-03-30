@@ -113,7 +113,8 @@ Items: {
 		Tooltip:
 			'''
 			Can be charged in 3 stages
-			Punching makes you lunge forward with an explosive punch
+			Charged punches deal burst damage in a small radius
+			Punching while overcharged makes you lunge forward with an explosive strike
 			'''
 	}
 
@@ -241,8 +242,87 @@ Items: {
 	}
 
 	PureIronShield: {
-		Tooltip: ""
-		DisplayName: Pure Iron Shield
+		DisplayName: Iron Realm Eschutcheon
+		Tooltip:
+			'''
+			Blocking and then attacking an enemy inflicts Pure Chill
+			Killing an enemy afflicted with Pure Chill will make them explode into a shower of piercing ice crystals
+			'''
+	}
+
+	PureIronStandard: {
+		DisplayName: Iron Realm's Crest
+		Tooltip:
+			'''
+			Fully charging increases {0} elemental damage by 5% and {1} elemental resistance by 10%
+			Reinforcing grants all weapons a 33% chance to inflict Pure Chill and occasionally creates damaging ice shards on hit
+			'''
+	}
+
+	DragonLeadStandard: {
+		DisplayName: Warlord's Standard
+		Tooltip:
+			'''
+			Fully charging increases {0} elemental damage by 5% and {1} elemental resistance by 10%
+			Reinforcing grants all weapons a 33% chance to inflict Dragonblaze and occasionally creates damaging fire clouds on hit
+			'''
+	}
+
+	JanitorQuarterstaff: {
+		DisplayName: Used Mop
+		Tooltip:
+			'''
+			Hitting an enemy with the head of the mop inflicts {0} and {1} damage
+			Hold [Shift] while swinging to throw the mop, preventing use while in flight
+			Highly effective against sludge and ooze
+			Can clean up blood and guts that touch the tip
+			'Partially as lethal as Janitor's'
+			'''
+	}
+
+	UraniumQuarterstaff: {
+		DisplayName: Nuclear Rod
+		Tooltip:
+			'''
+			Inflicts Heavy Radiation Sickness on hit
+			Counterattacks create a large explosion
+			'''
+	}
+
+	PlutoniumQuarterstaff: {
+		DisplayName: The Big A-Bomb
+		Tooltip:
+			'''
+			Alternates between an upward swing, a downward swing, and a thrust upon jabbing
+			Inflicts Critical Radiation Sickness on hit
+			Builds up a charge meter on hit
+			At full charge, swinging will eject the warhead from the tip
+			The warhead explodes after 5 seconds, or upon contact
+			Shooting the warhead with a bullet or laser will detonate it early
+			Hitting the warhead midair with a warhammer or Impact Hammer spikes it in the direction of the cursor,
+			turning it into a hitscan-like projectile that explodes more violently on contact
+			Counterattacks create a huge explosion
+			‘Does the “A” stand for “atomic”, or “ass”?’
+			'''
+	}
+
+	DaerelQuarterstaff: {
+		DisplayName: Mythril's Dance
+		Tooltip:
+			'''
+			Alternates between an upward swing, a downward swing, and a thrust while jabbing
+			Jabs and swings thrust the player toward the cursor
+			Hitting an enemy with the tip of the staff deals extra damage and inflicts Broken Armor on hit
+			Grants brief invunerability upon hit, slightly longer if hit with the tip
+			'''
+	}
+
+	ShinkiteWarhammer: {
+		DisplayName: Shinkite Gavel
+		Tooltip:
+			'''
+			Homes onto enemies when thrown
+			'''
 	}
 }
 
@@ -254,6 +334,9 @@ Projectiles: {
 	LivingGauntlet_SeedProj.DisplayName: Punchroot Seed
 	ChickenGauntlet_EggProj.DisplayName: Healing Egg
 	Hardlight_ParryDrone.DisplayName: Parry Drone Mk.I
+	PureIronStandard_IceShardProj.DisplayName: Pure Iron Standard_ Ice Shard Proj
+	JanitorQuarterstaff_ThrownProj.DisplayName: Janitor Quarterstaff_ Thrown Proj
+	UraniumQuarterstaff_RealisticExplosionProj.DisplayName: Uranium Quarterstaff_ Realistic Explosion Proj
 }
 
 Buffs: {
@@ -266,6 +349,11 @@ Buffs: {
 		Description: Mods.GuardiansOfRedemption.Buffs.CosmicRendDebuff.Description
 		DisplayName: Cosmic Rend Debuff
 	}
+
+	DaerelQuarterstaffBuff: {
+		Description: Mods.GuardiansOfRedemption.Buffs.DaerelQuarterstaffBuff.Description
+		DisplayName: Daerel Quarterstaff Buff
+	}
 }
 
 Cutscene: {
@@ -273,11 +361,61 @@ Cutscene: {
 		HandOfJudgement1: I ne'er meant'eth for that to be taken'eth literally??
 		HandOfJudgement2: Thou arest not one in the position to smack'eth MINE buttocks with the Hand of Judgement!
 	}
+
+	Janitor: {
+		GoodSamaritan: {
+			Default: Keep up the good work, kid!
+			Invisible: Am I seeing things? Or did that patch of goop just vanish?
+		}
+
+		Trolled: {
+			GoodRoute: Ha, ha. Very funny. Now please clean that up...
+			BadRoute: Hey! I just cleaned that spot up!
+			Android: Hey, watch where you're stepping! You're giving me more gunk to clean!
+			Janitor: Hey! Us janitors FIGHT grime, not SPREAD it! Clean that up!
+			Invisible: Hey... how did that get there? I thought I cleaned that spot up!
+			Default: Hey! Not cool!
+		}
+
+		Fakeout: {
+			GoodRoute: Hey, what was that for? You just cleaned that up!
+			BadRoute: Not funny. Clean that up, right now.
+			Android: Why'd ya place that goop down again? There something wrong with your code?
+			Janitor: Is this some kinda joke? You know you can get fired for stuff like this...
+			Invisible: The goop has reappeared. Odd...
+		}
+
+		Apology: {
+			GoodRoute: Thank you for listening to me. Now don't do that again.
+			BadRoute: That's better... now don't do that again!
+			Android: Good to see you're still functional enough to clean up after yourself...
+			Janitor: What were you thinking? Please don't do that again!
+			Invisible: And now the sludge is gone. Coulda sworn I cleaned it earlier...
+		}
+
+		Betrayal: {
+			GoodRoute: ...the hell is wrong with you?
+			BadRoute: WHAT DID I JUST SAY?!? Git outta here, ya scoundrel!
+			Android: Okay, there's DEFINITELY something wrong with you. Tell Girus to fix you up, cause I ain't dealing with you no more!
+			Janitor: What the hell?! If I had any administrative power, I'd fire you on the spot! Now scram!
+			Invisible: AND NOW IT'S BACK AGAIN?? Am I on crazy pills??
+		}
+	}
 }
 
 Achievements: {
 	ErhanSlappedAchievement: {
 		FriendlyName: How the Turntables
-		Description: Defeat Erhan or his Spirit only by bitch-slapping him with the Hand of Judgement until he dies.
+		Description: Defeat Erhan or his Spirit solely by slapping him with the Hand of Judgement until he dies.
 	}
 }
+
+Dialogue: {
+	Janitor: {
+		UsedMop: Another week, another mop to replace... Ah, new guy, didn't notice ya there. I see you're eyeballin' my mop... I was gonna change it for a new one, but you look like you're in need of a new mop yourself, eh? I guess I can sell it to you, but it'll cost youse a bit extra for the maintenance.
+		WTFMan: You know what you did! Make my job harder why don't ya...
+		Peeved: The things ya see here... I saw a bit of sludge on the wall, and I went to clean it but it was gone! Then I turned around and it was there again! And then it was gone again! I don't even know if it was real or not!
+	}
+}
+
+Conditions.EarlyMorning: Mods.GuardiansOfRedemption.Conditions.EarlyMorning
