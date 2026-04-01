@@ -4,7 +4,7 @@ using OrchidMod.Content.Guardian;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Armor.HM.Hardlight;
-using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Lab.Janitor;
 using Terraria;
 using Terraria.ID;
