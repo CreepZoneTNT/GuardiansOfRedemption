@@ -22,8 +22,8 @@ public class PureIronStandard : OrchidModGuardianStandard {
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.IceS, ElementID.FireS);
 
     public override void SafeSetDefaults() {
-        Item.width = 42;
-        Item.height = 42;
+        Item.width = 58;
+        Item.height = 58;
         Item.value = Item.sellPrice(0, 1);
         Item.rare = ItemRarityID.Orange;
         Item.useTime = 32;

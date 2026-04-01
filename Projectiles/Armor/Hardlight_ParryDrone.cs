@@ -19,13 +19,13 @@ public class Hardlight_ParryDrone : OrchidModGuardianProjectile
     
     public override void SetStaticDefaults()
     {
-        Main.projFrames[Type] = 4;
+        Main.projFrames[Type] = 5;
     }
     
     public override void SafeSetDefaults()
     {
-        Projectile.width = 26;
-        Projectile.height = 54;
+        Projectile.width = 30;
+        Projectile.height = 46;
         Projectile.penetrate = -1;
         Projectile.tileCollide = false;
         Projectile.ignoreWater = true;
@@ -34,10 +34,10 @@ public class Hardlight_ParryDrone : OrchidModGuardianProjectile
 
     public override void AI()
     {
-        if (++Projectile.frameCounter >= 6)
+        if (++Projectile.frameCounter >= 7)
         {
             Projectile.frameCounter = 0;
-            if (++Projectile.frame >= 4) Projectile.frame = 0;
+            if (++Projectile.frame >= 5) Projectile.frame = 0;
         }
         if (Projectile.soundDelay == 0)
         {

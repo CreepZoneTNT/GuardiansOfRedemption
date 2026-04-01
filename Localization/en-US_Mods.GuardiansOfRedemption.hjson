@@ -35,8 +35,8 @@ Items: {
 		DisplayName: Grave Steel Gavel
 		Tooltip:
 			'''
-			Can pierce once before breaking
-			'Not to be confused with a Grave Steel Warhammer'
+			Can pierce twice  before breaking
+			"Not to be confused with a Grave Steel Warhammer"
 			'''
 	}
 
@@ -44,7 +44,7 @@ Items: {
 		DisplayName: Zephos' Skullsmasher
 		Tooltip:
 			'''
-			Charged throw hits will boost warhammer damage and speed by 25% for 6 seconds
+			Charged throw hits will boost warhammer damage and speed by 25% for 10 seconds
 			Deals increased damage against skeletons
 			'''
 	}
@@ -60,6 +60,7 @@ Items: {
 			'''
 			Shoots a piercing hologram on swing at the cost of charge
 			Pierces infinitely and leaves behind holograms in flight
+			"Capable of hitting any nail, even digital or theoritical!"
 			'''
 	}
 
@@ -149,7 +150,11 @@ Items: {
 
 	HeavyGuardHelmet: {
 		DisplayName: Heavy Guard Helmet
-		Tooltip: ""
+		Tooltip:
+			'''
+			Increases maximum guards by 1
+			Enemies are more likely to target you
+			'''
 		SetBonus: Increases defense after blocking or parrying
 	}
 
@@ -319,10 +324,7 @@ Items: {
 
 	ShinkiteWarhammer: {
 		DisplayName: Shinkite Gavel
-		Tooltip:
-			'''
-			Homes onto enemies when thrown
-			'''
+		Tooltip: Homes onto enemies when thrown
 	}
 }
 

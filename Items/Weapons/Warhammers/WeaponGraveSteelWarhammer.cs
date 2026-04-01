@@ -16,23 +16,23 @@ public class WeaponGraveSteelWarhammer : OrchidModGuardianHammer
         Item.width = 36;
         Item.height = 36;
         Item.value = Item.sellPrice(0, 0, 2, 20);
-        Item.rare = ItemRarityID.Blue;
+        Item.rare = ItemRarityID.Green;
         Item.UseSound = SoundID.Item1;
         Item.knockBack = 8f;
         Item.shootSpeed = 12f;
-        Item.damage = 100;
-        Item.useTime = 18;
+        Item.damage = 50;
+        Item.useTime = 24;
         Range = 30;
         Penetrate = true;
         GuardStacks = 1;
-        SwingSpeed = 1.5f;
+        SwingSpeed = 1.2f;
         BlockDuration = 200;
     }
 
     public override void OnThrow(Player player, OrchidGuardian guardian, Projectile projectile, bool Weak)
     {
-        if (!Weak) projectile.penetrate = 2;
-        else projectile.penetrate = 1;
+        if (!Weak) projectile.penetrate = 3;
+        else projectile.penetrate = 2;
     }
 
     public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile)
