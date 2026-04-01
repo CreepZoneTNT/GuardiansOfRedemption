@@ -6,6 +6,7 @@ using Terraria.Audio;
 using Terraria.ModLoader;
 using OrchidMod.Content.Guardian;
 using Redemption.BaseExtension;
+using Redemption.Items.Materials.HM;
 using GuardiansOfRedemption.General;
 using GuardiansOfRedemption.Projectiles.Quarterstaves;
 using OrchidMod;
@@ -34,8 +35,6 @@ public class UraniumQuarterstaff : OrchidModGuardianQuarterstaff {
         tip = (projectile.ModProjectile as GuardianQuarterstaffAnchor).GetQuarterstaffTip(0.4f);
     }
 
-
-
     public override void OnHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, NPC.HitInfo hit, bool jabAttack, bool counterAttack)
     {
         if (counterAttack)
@@ -43,6 +42,16 @@ public class UraniumQuarterstaff : OrchidModGuardianQuarterstaff {
             Projectile.NewProjectileDirect(projectile.GetSource_FromAI(), target.Center, Vector2.Zero, ModContent.ProjectileType<UraniumQuarterstaff_RealisticExplosionProj>(), guardian.GetGuardianDamage(Item.damage * 1.5f), 16f, projectile.owner);
             player.RedemptionScreen().ScreenShakeIntensity = 6f;
         }
+    }
+
+    public override void AddRecipes()
+    {
+        CreateRecipe()
+            .AddIngredient<Uranium>(10)
+            .AddIngredient<Plating>(4)
+            .AddIngredient<Capacitor>(2)
+            .AddTile(TileID.MythrilAnvil)
+            .Register();
     }
 
 }

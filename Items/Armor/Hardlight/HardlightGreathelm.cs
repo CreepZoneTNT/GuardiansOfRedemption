@@ -67,9 +67,8 @@ namespace GuardiansOfRedemption.Items.Armor.Hardlight
 		public override void AddRecipes()
 		{
 			CreateRecipe()
-			.AddIngredient<Archcloth>(3)
-		.AddIngredient<GraveSteelAlloy>(15)
-			.AddTile(TileID.Anvils)
+			.AddIngredient<CyberPlating>(8)
+			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
 	}

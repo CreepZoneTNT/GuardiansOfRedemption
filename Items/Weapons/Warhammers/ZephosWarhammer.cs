@@ -34,7 +34,7 @@ public class ZephosWarhammer : OrchidModGuardianHammer
 
     public override void OnThrowHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak)
     {
-        if (!Weak) player.AddBuff(ModContent.BuffType<ZephosWarhammerBuff>(), 360);
+        if (!Weak) player.AddBuff(ModContent.BuffType<ZephosWarhammerBuff>(), 600);
     }
 
     public override void OnMeleeHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged)
