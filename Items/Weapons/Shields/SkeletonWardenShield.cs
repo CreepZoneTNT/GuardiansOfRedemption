@@ -12,11 +12,11 @@ public class SkeletonWardenShield : OrchidModGuardianShield
         Item.width = 34;
         Item.height = 42;
         Item.knockBack = 12f;
-        Item.damage = 35;
+        Item.damage = 45;
         Item.rare = ItemRarityID.Blue;
         Item.useTime = 30;
         distance = 30f;
-        slamDistance = 45f;
+        slamDistance = 170f;
         blockDuration = 140;
         shouldFlip = true; 
     }

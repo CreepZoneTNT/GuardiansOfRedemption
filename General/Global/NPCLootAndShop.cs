@@ -1,3 +1,4 @@
+using GuardiansOfRedemption.Items.Weapons.Gauntlets;
 using GuardiansOfRedemption.Items.Weapons.Quarterstaves;
 using GuardiansOfRedemption.Items.Weapons.Shields;
 using GuardiansOfRedemption.Items.Weapons.Warhammers;
@@ -5,6 +6,8 @@ using OrchidMod.Utilities;
 using Redemption.Globals;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Bosses.Erhan;
+using Redemption.NPCs.Bosses.Thorn;
+using Redemption.NPCs.FowlMorning;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.NPCs.Lab.Janitor;
 using Redemption.NPCs.PreHM;
@@ -24,10 +27,22 @@ public class NPCLootAndShop : GlobalNPC
     {
         LeadingConditionRule nonExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
         if (npc.type == ModContent.NPCType<Erhan>())
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<JudgeWarhammer>(), 3));
-        
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<ErhanStick>(), 3));
+
+        if (npc.type == ModContent.NPCType<ErhanSpirit>())
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<ErhanStick>(), 3));
+
+        if (npc.type == ModContent.NPCType<Thorn>())
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<ThornQuarterstaff>(), 3));
+
         if (npc.type == ModContent.NPCType<SkeletonWarden>())
             npcLoot.Add(new CommonDrop(ModContent.ItemType<SkeletonWardenShield>(), 40, chanceNumerator: 3));
+
+        if (npc.type == ModContent.NPCType<Haymaker>())
+            npcLoot.Add(new CommonDrop(ModContent.ItemType<ChickenGauntlet>(), 25));
+
+        /*if (npc.type == ModContent.NPCType<Haymaker>())
+            npcLoot.Add(new CommonDrop(ModContent.ItemType<ChickenGauntlet>(), 200));*/
     }
 
     public override void GetChat(NPC npc, ref string chat)
@@ -75,6 +90,7 @@ public class ItemLoot : GlobalItem
 {
     public override void ModifyItemLoot(Item item, Terraria.ModLoader.ItemLoot itemLoot)
     {
-        if (item.type == ModContent.ItemType<ErhanBag>()) itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<JudgeWarhammer>(), 3));
+        if (item.type == ModContent.ItemType<ErhanBag>()) itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanStick>(), 3));
+        if (item.type == ModContent.ItemType<ThornBag>()) itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThornQuarterstaff>(), 2));
     }
 }

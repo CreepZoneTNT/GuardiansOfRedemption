@@ -20,7 +20,7 @@ public class WeaponGraveSteelWarhammer : OrchidModGuardianHammer
         Item.UseSound = SoundID.Item1;
         Item.knockBack = 8f;
         Item.shootSpeed = 12f;
-        Item.damage = 100;
+        Item.damage = 70;
         Item.useTime = 18;
         Range = 30;
         Penetrate = true;

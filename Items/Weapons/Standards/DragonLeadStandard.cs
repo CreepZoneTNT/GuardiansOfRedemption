@@ -18,8 +18,8 @@ public class DragonLeadStandard : OrchidModGuardianStandard {
     public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.FireS, ElementID.IceS);
 
     public override void SafeSetDefaults() {
-        Item.width = 42;
-        Item.height = 42;
+        Item.width = 54;
+        Item.height = 54;
         Item.value = Item.sellPrice(0, 1);
         Item.rare = ItemRarityID.Orange;
         Item.useTime = 32;

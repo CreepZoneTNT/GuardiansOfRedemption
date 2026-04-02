@@ -4,7 +4,7 @@ using OrchidMod.Content.Guardian;
 using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.Items.Armor.HM.Hardlight;
-using Redemption.Items.Materials.PreHM;
+using Redemption.Items.Materials.HM;
 using Redemption.NPCs.Lab.Janitor;
 using Terraria;
 using Terraria.ID;
@@ -67,9 +67,8 @@ namespace GuardiansOfRedemption.Items.Armor.Hardlight
 		public override void AddRecipes()
 		{
 			CreateRecipe()
-			.AddIngredient<Archcloth>(3)
-		.AddIngredient<GraveSteelAlloy>(15)
-			.AddTile(TileID.Anvils)
+			.AddIngredient<CyberPlating>(8)
+			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
 	}
