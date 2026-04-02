@@ -319,10 +319,7 @@ Items: {
 
 	ShinkiteWarhammer: {
 		DisplayName: Shinkite Gavel
-		Tooltip:
-			'''
-			Homes onto enemies when thrown
-			'''
+		Tooltip: Homes onto enemies when thrown
 	}
 }
 
