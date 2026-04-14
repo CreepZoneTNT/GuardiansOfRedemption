@@ -86,8 +86,7 @@ Items: {
 		DisplayName: Epidemic
 		Tooltip:
 			'''
-			Hit enemies grow tumors that explode into toxic gas
-			Throwing the hammer makes hit enemies grow multiple tumors
+			Hitting enemies spawn cysts that latch onto them
 			Blocking produces a large cloud of toxic gas
 			'''
 	}
@@ -339,6 +338,9 @@ Projectiles: {
 	PureIronStandard_IceShardProj.DisplayName: Pure Iron Standard_ Ice Shard Proj
 	JanitorQuarterstaff_ThrownProj.DisplayName: Janitor Quarterstaff_ Thrown Proj
 	UraniumQuarterstaff_RealisticExplosionProj.DisplayName: Uranium Quarterstaff_ Realistic Explosion Proj
+	EpidemicCloud.DisplayName: Epidemic Cloud
+	PZWarhammer_Cyst.DisplayName: P Z Warhammer_ Cyst
+	PZWarhammer_Cloud.DisplayName: P Z Warhammer_ Cloud
 }
 
 Buffs: {
