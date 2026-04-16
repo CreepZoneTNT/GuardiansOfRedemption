@@ -68,25 +68,6 @@ namespace GuardiansOfRedemption
 			
 			OrchidGuardian.ProjectilesBlockBlacklist.Add(ModContent.ProjectileType<PhantomCleaver2_Spawner>());
 			
-			Main.QueueMainThreadAction(() =>
-			{
-				if (ModLoader.TryGetMod("RecipeBrowser", out Mod recipeBrowser) && !Main.dedServ) {
-					var utilities = recipeBrowser.Code.GetType("RecipeBrowser.Utilities");
-					var method = utilities?.GetMethod("ResizeImage", BindingFlags.Static | BindingFlags.NonPublic);
-					if (method != null)
-					{
-						Asset<Texture2D> classIcon = (Asset<Texture2D>)method?.Invoke(null, [ModContent.Request<Texture2D>("OrchidMod/Content/Guardian/Weapons/Warhammers/HellWarhammer"), 24, 24]);
-						recipeBrowser.Call("AddItemCategory", "Guardian", "Weapons", classIcon, (Predicate<Item>)(item =>
-							{
-								if (!item.accessory && item.damage > 0)
-									return item.CountsAsClass<GuardianDamageClass>() || item.DamageType == ModContent.GetInstance<GuardianDamageClass>();
-								return false;
-							})
-						);
-					}
-				}
-			});
-			
 		}
 		
 	}
