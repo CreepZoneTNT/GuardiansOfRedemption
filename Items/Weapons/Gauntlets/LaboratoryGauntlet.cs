@@ -32,7 +32,7 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
         Item.width = 40;
         Item.height = 42;
         Item.knockBack = 8f;
-        Item.damage = 240;
+        Item.damage = 550;
         Item.value = Item.sellPrice(0, 7, 50);
         Item.rare = ItemRarityID.Purple;
         Item.useTime = 30;

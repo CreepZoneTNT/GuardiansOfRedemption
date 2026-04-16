@@ -28,18 +28,9 @@ namespace GuardiansOfRedemption.Items.Armor.HeavyGuard
 		public override void UpdateEquip(Player player)
 		{
 			OrchidGuardian modPlayer = player.GetModPlayer<OrchidGuardian>();
-      modPlayer.GuardianGuardRecharge += 0.4f;
+			modPlayer.GuardianGuardRecharge += 0.4f;
 			modPlayer.GuardianSlamRecharge += 0.4f;
-      player.moveSpeed += 0.1f;
-		}
-
-		public override void AddRecipes()
-		{
-			CreateRecipe()
-			.AddIngredient<Archcloth>(3)
-			.AddIngredient<GraveSteelAlloy>(20)
-			.AddTile(TileID.Anvils)
-			.Register();
+			player.moveSpeed += 0.1f;
 		}
 	}
 }

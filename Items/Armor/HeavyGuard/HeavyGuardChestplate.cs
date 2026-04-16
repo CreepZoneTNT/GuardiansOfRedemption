@@ -31,13 +31,5 @@ namespace GuardiansOfRedemption.Items.Armor.HeavyGuard
 			modPlayer.GuardianGuardMax++;
 		}
 
-		public override void AddRecipes()
-		{
-			CreateRecipe()
-			.AddIngredient<Archcloth>(3)
-			.AddIngredient<GraveSteelAlloy>(25)
-			.AddTile(TileID.Anvils)
-			.Register();
-		}
 	}
 }

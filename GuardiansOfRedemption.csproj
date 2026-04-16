@@ -11,12 +11,13 @@
 	<!-- References -->
 	<ItemGroup>
 	  <Reference Include="Redemption">
-	    <HintPath>..\ModAssemblies\Redemption_v0.8.0.4110.dll</HintPath>
+	    <HintPath>..\ModAssemblies\Redemption_v0.8.0.4130.dll</HintPath>
 	  </Reference>
 	  <ProjectReference Include="..\OrchidMod\OrchidMod.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Buffs\Debuffs\" />
+	  <Folder Include="Projectiles\Other\" />
 	  <Folder Include="Sounds\" />
 	</ItemGroup>
 

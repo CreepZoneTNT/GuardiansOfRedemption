@@ -45,7 +45,6 @@ public class PZWarhammer : OrchidModGuardianHammer
         // Item.Redemption().TechnicallyHammer = true;
         Item.Redemption().CanSwordClash = true;
     }
-
     public override void OnThrowHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak)
     {
         if (!Weak)

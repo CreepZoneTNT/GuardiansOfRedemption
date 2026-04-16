@@ -53,14 +53,5 @@ namespace GuardiansOfRedemption.Items.Armor.HeavyGuard
 			player.setBonus = SetBonusText.Value;
 			modPlayer.GuardianHeavyGuard = true;
 		}
-
-		public override void AddRecipes()
-		{
-			CreateRecipe()
-			.AddIngredient<Archcloth>(3)
-		.AddIngredient<GraveSteelAlloy>(15)
-			.AddTile(TileID.Anvils)
-			.Register();
-		}
 	}
 }

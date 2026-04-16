@@ -1,5 +1,6 @@
 # Mods: {
 # GuardiansOfRedemption: {
+
 Items: {
 	SkeletonWardenShield: {
 		DisplayName: Antique Aegis
@@ -144,6 +145,16 @@ Items: {
 			'''
 			Performs a double spin attack when fully charged
 			Lobs a gravity-affected fireball after charge attacking
+			'''
+	}
+
+	CommonGuardGreathelm: {
+		DisplayName: Common Guard Greathelm
+		Tooltip: Increases maximum guards by 1
+		SetBonus:
+			'''
+			4 defense
+			5% increased opposing damage
 			'''
 	}
 
@@ -325,6 +336,16 @@ Items: {
 		DisplayName: Shinkite Gavel
 		Tooltip: Homes onto enemies when thrown
 	}
+
+	HottestPotato: {
+		Tooltip:
+			'''
+			Calls down HP-4 bombs that have to be manually detonated with charged attacks
+			HP-4's that are manually detonated deal extra damage based on the weapon used to detonate it
+			[c/ff0000:'WARNING: HP-4s that detonate automatically, harm all living creatures']
+			'''
+		DisplayName: HP-4 Caller
+	}
 }
 
 Projectiles: {
@@ -338,9 +359,12 @@ Projectiles: {
 	PureIronStandard_IceShardProj.DisplayName: Pure Iron Standard_ Ice Shard Proj
 	JanitorQuarterstaff_ThrownProj.DisplayName: Janitor Quarterstaff_ Thrown Proj
 	UraniumQuarterstaff_RealisticExplosionProj.DisplayName: Uranium Quarterstaff_ Realistic Explosion Proj
-	EpidemicCloud.DisplayName: Epidemic Cloud
-	PZWarhammer_Cyst.DisplayName: P Z Warhammer_ Cyst
-	PZWarhammer_Cloud.DisplayName: P Z Warhammer_ Cloud
+	PZWarhammer_Cyst.DisplayName: Infectious Cyst
+	PZWarhammer_Cloud.DisplayName: Toxic Cloud
+	HottestPotato_Projectile.DisplayName: Hottest Potato
+	HottestPotato_Launched.DisplayName: Hottest Potato_ Launched
+	XeniumShield_Projectile.DisplayName: Xenium Shield_ Projectile
+	XeniumShield_ProjectileTrail.DisplayName: Xenium Shield_ Projectile Trail
 }
 
 Buffs: {
@@ -359,6 +383,12 @@ Buffs: {
 		DisplayName: Daerel Quarterstaff Buff
 	}
 }
+
+SpecialTooltips.CommonGuardGreathelm:
+	'''
+	'A heavy bucket helm of Anglon's Common Guard, scavenged by skeletons.
+	The Common Guard serves only the rich and elite, and protects them with their life.'
+	'''
 
 Cutscene: {
 	Erhan: {

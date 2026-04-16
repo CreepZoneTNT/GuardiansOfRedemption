@@ -11,6 +11,7 @@ using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Projectiles.Ranged;
 using Redemption.Projectiles.Magic;
+using Redemption.Projectiles.Misc;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -35,6 +36,7 @@ public class RedemptionGuardian : ModPlayer
 
     public bool GuardianHeavyGuard;
     public bool GuardianHardlight;
+    public bool GuardianCommonGuard;
     
     public bool GuardianSpikeNuclear;
     
@@ -184,20 +186,39 @@ public class RedemptionGuardian : ModPlayer
     {
         if (Redemption.Redemption.RedeSpecialAbility.JustPressed && Player.active && !Player.dead)
         {
-            int count = 0;
-            foreach (var drone in Main.projectile)
-                if (drone.owner == Player.whoAmI && drone.ModProjectile is Hardlight_ParryDrone && drone.active && !Player.dead) count++;
-            if (GuardianHardlight && !Player.HasBuff<HardlightCooldown>() && count == 0)
+            if (GuardianHardlight)
             {
-                Player.AddBuff(ModContent.BuffType<HardlightCooldown>(), 3600);
-                if (!Main.dedServ) SoundEngine.PlaySound(CustomSounds.Alarm2, Player.position);
-                int projType = ModContent.ProjectileType<Hardlight_ParryDrone>();
-                for (int i = 0; i < 3; i++)
+                int count = 0;
+                foreach (var drone in Main.projectile)
+                    if (drone.owner == Player.whoAmI && drone.ModProjectile is Hardlight_ParryDrone && drone.active && !Player.dead) count++;
+                if (GuardianHardlight && !Player.HasBuff<HardlightCooldown>() && count == 0)
                 {
-                    Vector2 spawnPos = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800f);
-                    Projectile drone = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), spawnPos, Vector2.Zero, projType, -1, 0, Main.myPlayer);
-                    drone.timeLeft = ContentSamples.ProjectilesByType[projType].timeLeft + i;
+                    Player.AddBuff(ModContent.BuffType<HardlightCooldown>(), 3600);
+                    if (!Main.dedServ) SoundEngine.PlaySound(CustomSounds.Alarm2, Player.position);
+                    int projType = ModContent.ProjectileType<Hardlight_ParryDrone>();
+                    for (int i = 0; i < 3; i++)
+                    {
+                        Vector2 spawnPos = new(Player.Center.X + Main.rand.Next(-200, 201), Player.Center.Y - 800f);
+                        Projectile drone = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), spawnPos, Vector2.Zero, projType, -1, 0, Main.myPlayer);
+                        drone.timeLeft = ContentSamples.ProjectilesByType[projType].timeLeft + i;
+                    }
                 }
+                    if (GuardianCommonGuard)
+                {
+                    if (GuardianCommonGuard && !Player.HasBuff<CommonGuardFlagCooldown>())
+                    {
+                        Player.AddBuff(ModContent.BuffType<CommonGuardFlagCooldown>(), 600);
+
+                        foreach (Projectile proj in Main.ActiveProjectiles)
+                        {
+                            if (proj.type != ModContent.ProjectileType<CommonGuardFlag_Proj>() || proj.owner != Player.whoAmI)
+                                continue;
+                            proj.timeLeft = 2;
+                        }
+
+                        Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center - new Vector2(0, 96), Vector2.Zero, ModContent.ProjectileType<CommonGuardFlag_Proj>(), 0, 0, Main.myPlayer);
+                    }
+                }                  
             }
         }
     }
