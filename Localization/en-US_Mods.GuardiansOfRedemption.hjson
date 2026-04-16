@@ -362,9 +362,8 @@ Projectiles: {
 	PZWarhammer_Cyst.DisplayName: Infectious Cyst
 	PZWarhammer_Cloud.DisplayName: Toxic Cloud
 	HottestPotato_Projectile.DisplayName: Hottest Potato
-	HottestPotato_Launched.DisplayName: Hottest Potato_ Launched
-	XeniumShield_Projectile.DisplayName: Xenium Shield_ Projectile
-	XeniumShield_ProjectileTrail.DisplayName: Xenium Shield_ Projectile Trail
+	XeniumShield_Projectile.DisplayName: Xenium Helix
+	XeniumShield_ProjectileTrail.DisplayName: Xenium Helix
 }
 
 Buffs: {
