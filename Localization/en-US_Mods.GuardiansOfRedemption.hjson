@@ -359,11 +359,11 @@ Projectiles: {
 	PureIronStandard_IceShardProj.DisplayName: Pure Iron Standard_ Ice Shard Proj
 	JanitorQuarterstaff_ThrownProj.DisplayName: Janitor Quarterstaff_ Thrown Proj
 	UraniumQuarterstaff_RealisticExplosionProj.DisplayName: Uranium Quarterstaff_ Realistic Explosion Proj
-	PZWarhammer_Cyst.DisplayName: Infectious Cyst
-	PZWarhammer_Cloud.DisplayName: Toxic Cloud
 	HottestPotato_Projectile.DisplayName: Hottest Potato
 	XeniumShield_Projectile.DisplayName: Xenium Helix
 	XeniumShield_ProjectileTrail.DisplayName: Xenium Helix
+	PZWarhammer_CloudProj.DisplayName: Infectious Cyst
+	PZWarhammer_CystProj.DisplayName: Toxic Cloud
 }
 
 Buffs: {
