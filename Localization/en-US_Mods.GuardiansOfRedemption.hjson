@@ -136,7 +136,11 @@ Items: {
 
 	ThornQuarterstaff: {
 		DisplayName: Cursed Walking Stick
-		Tooltip: ""
+		Tooltip:
+			'''
+			Counterattacks spawns a lashing mass of tangled roots from within
+			'It's roots coil around your arm possessively'
+			'''
 	}
 
 	DragonleadQuarterstaff: {
@@ -151,11 +155,7 @@ Items: {
 	CommonGuardGreathelm: {
 		DisplayName: Common Guard Greathelm
 		Tooltip: Increases maximum guards by 1
-		SetBonus:
-			'''
-			4 defense
-			5% increased opposing damage
-			'''
+		SetBonus: 4 defense
 	}
 
 	HeavyGuardHelmet: {
@@ -341,7 +341,8 @@ Items: {
 		Tooltip:
 			'''
 			Calls down HP-4 bombs that have to be manually detonated with charged attacks
-			HP-4's that are manually detonated deal extra damage based on the weapon used to detonate it
+			HP-4's that are manually detonated deal damage based on what was used to detonate them
+			Summoning additional HP-4's automatically detonate the rest
 			[c/ff0000:'WARNING: HP-4s that detonate automatically, harm all living creatures']
 			'''
 		DisplayName: HP-4 Caller
@@ -364,6 +365,7 @@ Projectiles: {
 	XeniumShield_ProjectileTrail.DisplayName: Xenium Helix
 	PZWarhammer_CloudProj.DisplayName: Infectious Cyst
 	PZWarhammer_CystProj.DisplayName: Toxic Cloud
+	ThornQuarterstaff_Projectile.DisplayName: Thorn Quarterstaff_ Projectile
 }
 
 Buffs: {

@@ -17,6 +17,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Buffs\Debuffs\" />
+	  <Folder Include="Items\Weapons\Other\" />
 	  <Folder Include="Projectiles\Other\" />
 	  <Folder Include="Sounds\" />
 	</ItemGroup>
