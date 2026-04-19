@@ -1,16 +1,31 @@
 using System;
 using System.Collections.Generic;
+using GuardiansOfRedemption.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
 using OrchidMod.Common;
+using OrchidMod.Common.ModObjects;
 using OrchidMod.Common.UIs;
+using OrchidMod.Content.General.Prefixes;
 using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Guardian.UI;
+using OrchidMod.Content.Guardian.Weapons.Gauntlets;
+using Redemption;
+using Redemption.Base;
+using Redemption.BaseExtension;
+using Redemption.Buffs;
+using Redemption.Dusts;
+using Redemption.Globals;
+using Redemption.Globals.Players;
+using Redemption.Rarities;
 using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
+using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 
@@ -32,12 +47,12 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
         Item.width = 40;
         Item.height = 42;
         Item.knockBack = 8f;
-        Item.damage = 550;
+        Item.damage = 660;
         Item.value = Item.sellPrice(0, 7, 50);
         Item.rare = ItemRarityID.Purple;
-        Item.useTime = 30;
-        StrikeVelocity = 20f;
-        ParryDuration = 120;
+        Item.useTime = 45;
+        StrikeVelocity = 24f;
+        ParryDuration = 180;
         
     }
 
@@ -45,6 +60,8 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
     {
         return new Color(46, 178, 164);
     }
+    
+    
 
     public override void ExtraAIGauntlet(Player player, OrchidGuardian guardian, Projectile anchor, bool offHandGauntlet)
     {
@@ -55,7 +72,7 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
             {
                 BonusCharge += 30f / Item.useTime * (player.GetTotalAttackSpeed(DamageClass.Melee) * 2f - 1f);
                 
-                if ((int)BonusCharge % 10 == 0) CombatText.NewText(player.getRect(), Color.White, (int)BonusCharge);
+                // if ((int)BonusCharge % 10 == 0) CombatText.NewText(player.getRect(), Color.White, (int)BonusCharge);
                 
                 if (BonusCharge > 360f)
                 {
@@ -76,51 +93,74 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
                         else SoundEngine.PlaySound(SoundID.MaxMana with { Pitch = 0.02f }, player.Center);
                         SuperCharged = true;
                     }
-                    if (Main.rand.NextBool(3))
-                    {
-                        Dust dust = Dust.NewDustDirect(anchor.Center, 24, 24, DustID.Electric);
-                        dust.noGravity = true;
-                    }
                 } 
-                else
+                
+                
+                if (Main.rand.NextBool(4))
                 {
-                    if (Main.rand.NextBool(6))
-                    {
-                        Dust dust = Dust.NewDustDirect(anchor.Center, 24, 24, DustID.Electric);
-                        dust.noGravity = true;
-                    }
+                    Dust glow = Dust.NewDustPerfect(anchor.Center, ModContent.DustType<GlowDust>(), Vector2.Zero, 90, Color.LightSkyBlue, 0.2f);
+                    glow.noGravity = true;
                 }
             }
-            else BonusCharge = 0;
+            else
+            {
+                // guardian.SlamCostUI = 0;
+                BonusCharge = 0;
+            }
         }
     }
 
     public override bool OnPunch(Player player, OrchidGuardian guardian, Projectile projectile, bool offHandGauntlet, bool manuallyFullyCharged, ref bool charged, ref int damage)
     {
+        CombatText.NewText(player.getRect(), Color.White, RarityLoader.RarityCount);
+        
+        charged = ((GuardianGauntletAnchor)projectile.ModProjectile).Ding;
         if (manuallyFullyCharged)
         {
-            if (UberCharged)
+            projectile.penetrate = 1;
+            if (UberCharged || SuperCharged)
             {
-                StrikeVelocity = 45f;
-                damage = guardian.GetGuardianDamage(Item.damage * 1.8f);
-                CombatText.NewText(player.getRect(), Color.RoyalBlue, "UberCharged!");
-            }
-            else if (SuperCharged) 
-            {
-                StrikeVelocity = 32.5f;
-                damage = guardian.GetGuardianDamage(Item.damage * 1.4f);
-                CombatText.NewText(player.getRect(), Color.DodgerBlue, "SuperCharged!");
-            }
-            else{
-                StrikeVelocity = 20f;
-                CombatText.NewText(player.getRect(), Color.SkyBlue, "Normal!");
-            }
+                damage = guardian.GetGuardianDamage(Item.damage * (UberCharged ? 2.5f : 1.8f));
+             
+                Vector2 velocity = Vector2.UnitX.RotatedBy((Main.MouseWorld - player.Center).ToRotation()) * 20f;
+                int projectileType = ModContent.ProjectileType<LaboratoryGauntletProjectile>();
+                Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromAI(), projectile.Center, velocity, projectileType, damage, UberCharged ? 10f : 6f, projectile.owner);
+                newProjectile.CritChance = (int)(player.GetCritChance<GuardianDamageClass>() + player.GetCritChance<GenericDamageClass>() + Item.crit);
+                ((LaboratoryGauntletProjectile)newProjectile.ModProjectile).Strong = UberCharged;
+                if (UberCharged) newProjectile.timeLeft = 22;
                 
+                SoundEngine.PlaySound(CustomSounds.Swoosh1, projectile.Center);
+                
+                if (UberCharged) CombatText.NewText(player.getRect(), Color.RoyalBlue, "UberCharged!");
+                else CombatText.NewText(player.getRect(), Color.DodgerBlue, "SuperCharged!");
+                
+                BonusCharge = 0f;
+                SuperCharged = false;
+                UberCharged = false;
+                
+                return false;
+            }
+            
+            CombatText.NewText(player.getRect(), Color.SkyBlue, "Normal!");
         }
+        
         BonusCharge = 0f;
         SuperCharged = false;
         UberCharged = false;
         return true;
+    }
+
+    public override void ModifyHitNPCGauntlet(Player player, NPC target, Projectile projectile, ref NPC.HitModifiers modifiers, bool charged)
+    {
+        if (charged && !SuperCharged && !UberCharged)
+        {
+            SoundEngine.PlaySound(SoundID.Item94);
+            RedeDraw.SpawnRing(projectile.Center, new Color(0, 191, 255), 0.1f, 0.8f);
+            target.immune[player.whoAmI] = 10;
+            RedeHelper.NPCRadiusDamage(80, projectile, player.Guardian().GetGuardianDamage(Item.damage * 0.5f), 4f);
+            
+            projectile.Kill();
+        }
     }
 
     public override void PostDrawGauntlet(SpriteBatch spriteBatch, Projectile projectile, Player player, bool offHandGauntlet, Color lightColor)
@@ -130,15 +170,13 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
         Texture2D textureGauntletOn = ModContent.Request<Texture2D>("OrchidMod/Content/Guardian/UI/Textures/GauntletOn", AssetRequestMode.ImmediateLoad).Value;
         
         OrchidGuardian modPlayer = player.GetModPlayer<OrchidGuardian>();
-        if (!player.dead && modPlayer.GuardianDisplayUI > 0)
+        if (player == Main.LocalPlayer && !player.dead && modPlayer.GuardianDisplayUI > 0)
         {
-        
             bool minHoldTimer = modPlayer.ChargeHoldTimer > ModContent.GetInstance<OrchidClientConfig>().GuardianMinHoldTimer;
             bool maxHoldTimer = modPlayer.ChargeHoldTimer > ModContent.GetInstance<OrchidClientConfig>().GuardianMaxHoldTimer;
             
             bool drawAtCursor = ModContent.GetInstance<OrchidClientConfig>().GuardianChargeCursor;
-            Vector2 position = (player.position + new Vector2(player.width * 0.5f, player.height + player.gfxOffY + 12)).Floor() - Main.screenPosition;;
-            if (player.gravDir < 0) position.Y -= 81;
+    
             SpriteEffects effect = player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
             
             Texture2D chargeTextureOn = null;
@@ -156,12 +194,16 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
             if (chargeTextureOn != null)
             {
                 
-                int offSet = textureGauntletSubOn.Height + 2;
+                int offSet = textureGauntletSubOn.Height + 3;
                 
                 
                 if (drawAtCursor)
                 {
                     
+                    // spriteBatch.End();
+                    // spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, Main.Rasterizer, null, Main.UIScaleMatrix);
+                    
+                    if (player.gravDir < 0) return;
                     for (int i = 0; i < 2; i++)
                     {
                     
@@ -175,35 +217,42 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
                                 val--;
                             }
                         }
-
+    
                         Rectangle rectangle = chargeTextureOn.Bounds;
                         rectangle.Height = val;
                         rectangle.Y = chargeTextureOn.Height - val;
                         
-                        Vector2 drawpos = new Vector2(Main.MouseScreen.X + 18 + textureGauntletSubOn.Width, Main.MouseScreen.Y + 18 - offSet + (textureGauntletSubOn.Height + 2) * i) + textureGauntletOn.Size() * 0.5f;
+                        float zoom = Main.GameViewMatrix.Zoom.X;
+                        
+                        Vector2 drawpos = Main.MouseScreen + new Vector2((18 + textureGauntletSubOn.Width)/zoom, 18 - offSet + (textureGauntletSubOn.Height + 2) * i) + textureGauntletOn.Size() * 0.5f;
+                        // drawpos = Vector2.Transform(drawpos, Main.UIScaleMatrix);
                         
                         if ((int)Math.Floor(BonusCharge / 180f) - 1 >= i)
                         {
-                            spriteBatch.Draw(chargeTextureReady, drawpos - new Vector2(2, 2), null, Color.White * 0.8f, 0f, Vector2.Zero, 1f, effect, 0f);
+                            spriteBatch.Draw(chargeTextureReady, drawpos - new Vector2(2, 2), null, Color.White * 0.8f, 0f, Vector2.Zero, Main.UIScale, effect, 0f);
                         }
-                        spriteBatch.Draw(chargeTextureOff, drawpos, null, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
+                        spriteBatch.Draw(chargeTextureOff, drawpos, null, Color.White, 0f, Vector2.Zero, Main.UIScale, effect, 0f);
                         
                         if ((int)Math.Floor(BonusCharge / 180f) - 1 >= i)
-                        {
-                            spriteBatch.Draw(chargeTextureOn, drawpos, null, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
-                        }
+                            spriteBatch.Draw(chargeTextureOn, drawpos, null, Color.White, 0f, Vector2.Zero, Main.UIScale, effect, 0f);
                         else
                         {
+                            if ((int)Math.Floor(BonusCharge / 180f) != i) return;
                             drawpos.Y += chargeTextureOn.Height - val;
-                            spriteBatch.Draw(chargeTextureOn, drawpos, rectangle, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
+                            spriteBatch.Draw(chargeTextureOn, drawpos, rectangle, Color.White, 0f, Vector2.Zero, Main.UIScale, effect, 0f);
                         }
                     }
+                    
+                    // spriteBatch.End();
+                    // spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
                 }
                 else
                 {
-                    for (int i = 0; i < 2; i++)
+                    Vector2 position = (player.position + new Vector2(player.width * 0.5f, player.height + player.gfxOffY + 12)).Floor();
+                    if (player.gravDir < 0) position.Y -= 81;
+                    
+                    for (int i = 0; i < 2; i ++)
                     {
-                        Vector2 drawpos;
                         int val = chargeTextureOn.Height;
                         if (BonusCharge % 180f < 180f)
                         {
@@ -214,27 +263,28 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
                                 val--;
                             }
                         }
-
+    
                         Rectangle rectangle = chargeTextureOn.Bounds;
                         rectangle.Height = val;
                         rectangle.Y = chargeTextureOn.Height - val;
                         
+                        Vector2 drawpos = new Vector2(position.X - 9 + textureGauntletSubOn.Width, position.Y - 94 * player.gravDir - offSet + (textureGauntletSubOn.Height + 4) * (player.gravDir < 0 ? i : 1 - i)) + textureGauntletOn.Size() * 0.5f - Main.screenPosition;
+                        Vector2 gravOffSet = Vector2.UnitY * (player.gravDir - 1);
+                        
+                        
                         if ((int)Math.Floor(BonusCharge / 180f) - 1 >= i)
                         {
-                            drawpos = new Vector2(position.X - 11, position.Y - 96 * player.gravDir + 5f * (player.gravDir - 1) - offSet + (textureGauntletSubOn.Height + 2) * i) + textureGauntletOn.Size() * 0.5f;
-                            spriteBatch.Draw(chargeTextureReady, drawpos, null, Color.White * 0.8f, 0f, Vector2.Zero, 1f, effect, 0f);
+                            spriteBatch.Draw(chargeTextureReady, drawpos - new Vector2(2, 2) + gravOffSet * 5f * Main.GameViewMatrix.Zoom.Y, null, Color.White * 0.8f, 0f, Vector2.Zero, 1f, effect, 0f);
                         }
-
-                        drawpos = new Vector2(position.X - 9, position.Y - 94 * player.gravDir + 3f * (player.gravDir - 1) - offSet + (textureGauntletSubOn.Height + 2) * i) + textureGauntletOn.Size() * 0.5f;
                         spriteBatch.Draw(chargeTextureOff, drawpos, null, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
-                        drawpos = new Vector2(position.X - 9, position.Y - 94 * player.gravDir + chargeTextureOn.Height - val + 3f * (player.gravDir - 1) - offSet + (textureGauntletSubOn.Height + 2) * i) + textureGauntletOn.Size() * 0.5f;
-                        if (player.gravDir < 0) drawpos.Y -= (chargeTextureOn.Height - rectangle.Height);
+                        
+                        // if (player.gravDir < 0) drawpos.Y -= chargeTextureOn.Height - rectangle.Height;
+                        
                         if ((int)Math.Floor(BonusCharge / 180f) - 1 >= i)
-                        {
-                            spriteBatch.Draw(chargeTextureOn, drawpos, null, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
-                        }
+                            spriteBatch.Draw(chargeTextureOn, drawpos + gravOffSet * 3f * Main.GameViewMatrix.Zoom.Y * player.gravDir, null, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
                         else
                         {
+                            if ((int)Math.Floor(BonusCharge / 180f) != i) return;
                             drawpos.Y += chargeTextureOn.Height - val;
                             spriteBatch.Draw(chargeTextureOn, drawpos, rectangle, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
                         }
@@ -242,5 +292,73 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
                 }
             }
         }
+    }
+}
+
+public class LaboratoryGauntletProjectile : OrchidModGuardianProjectile
+{
+
+    public override string Texture => "Redemption/Empty";
+    public override void SetStaticDefaults()
+    { 
+        ElementID.ProjExplosive[Type] = true;
+        ElementID.ProjThunder[Type] = true;
+    }
+
+    public override void SafeSetDefaults()
+    {
+        Projectile.width = 80;
+        Projectile.height = 80;
+        Projectile.friendly = true;
+        Projectile.timeLeft = 17;
+        Projectile.tileCollide = false;
+        Projectile.stopsDealingDamageAfterPenetrateHits = true;
+    }
+
+    public override void OnSpawn(IEntitySource source) => Owner.GetModPlayer<OrchidPlayer>().PlayerImmunity = 5 * (Owner.longInvince ? 2 : 1);
+
+    public override void AI()
+    {
+        Projectile.Center = Owner.Center;
+        
+        Owner.armorEffectDrawShadow = true;
+        
+        if (Main.rand.NextBool(Strong ? 3 : 6))
+        {
+            Dust dust = Dust.NewDustDirect(Projectile.Center, 24, 24, DustID.Electric);
+            dust.noGravity = true;
+        }
+        if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.NPCHit53 with {Volume = 0.2f}, Projectile.Center);
+        
+        OrchidPlayer orchidPlayer = Owner.GetModPlayer<OrchidPlayer>();
+        orchidPlayer.ForcedVelocityVector = Projectile.velocity;
+        orchidPlayer.ForcedVelocityTimer = 2;
+        orchidPlayer.ForcedVelocityUpkeep = 0.6f;
+        
+        Owner.position += Collision.TileCollision(Owner.position, Projectile.velocity * 0.1f, Owner.width, Owner.height, true, true, (int)Owner.gravDir);
+    }
+
+    public override void SafeOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone, Player player, OrchidGuardian guardian)
+    {
+        SoundEngine.PlaySound(SoundID.Item94);
+        SoundEngine.PlaySound(SoundID.Item14 with {Volume = 1.2f}, Projectile.Center);
+        
+        RedeDraw.SpawnRing(Projectile.Center, new Color(0, 191, 255), Strong ? 0.25f : 0.2f, 0.85f, 4f);
+        RedeDraw.SpawnRing(Projectile.Center, new Color(0, 191, 255), Strong ? 0.25f : 0.2f);
+        
+        for (int i = 0; i < 10; i++) Dust.NewDustPerfect(Projectile.Center, Main.rand.NextBool() ? ModContent.DustType<DustSpark2>() : ModContent.DustType<EnergySphereDust>(), Vector2.UnitX.RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi) * (Strong ? 9f : 7f)), 30, Color.DodgerBlue);
+        
+        player.RedemptionScreen().ScreenShakeIntensity = Strong ? 6f : 4f;
+        Owner.GetModPlayer<OrchidPlayer>().PlayerImmunity = 10 * (player.longInvince ? 2 : 1);
+        
+        target.immune[player.whoAmI] = 10;
+        RedeHelper.NPCRadiusDamage(Strong ? 144 : 112, Projectile, player.Guardian().GetGuardianDamage(Projectile.damage * 0.5f), Strong ? 12f : 8f);
+        
+        Projectile.Kill();
+    }
+
+    public override void OnKill(int timeLeft)
+    {
+        Owner.armorEffectDrawShadow = false;
     }
 }
