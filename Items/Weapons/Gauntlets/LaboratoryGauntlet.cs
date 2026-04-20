@@ -129,8 +129,8 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
                 
                 SoundEngine.PlaySound(CustomSounds.Swoosh1, projectile.Center);
                 
-                if (UberCharged) CombatText.NewText(player.getRect(), Color.RoyalBlue, "UberCharged!");
-                else CombatText.NewText(player.getRect(), Color.DodgerBlue, "SuperCharged!");
+                if (UberCharged) CombatText.NewText(player.getRect(), Color.RoyalBlue, Language.GetTextValue("Mods.GuardiansOfRedemption.Items.LaboratoryGauntlet.Charged3"));
+                else CombatText.NewText(player.getRect(), Color.DodgerBlue, Language.GetTextValue("Mods.GuardiansOfRedemption.Items.LaboratoryGauntlet.Charged2"));
                 
                 BonusCharge = 0f;
                 SuperCharged = false;
@@ -139,7 +139,7 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
                 return false;
             }
             
-            CombatText.NewText(player.getRect(), Color.SkyBlue, "Normal!");
+            CombatText.NewText(player.getRect(), Color.SkyBlue, Language.GetTextValue("Mods.GuardiansOfRedemption.Items.LaboratoryGauntlet.Charged1"));
         }
         
         BonusCharge = 0f;

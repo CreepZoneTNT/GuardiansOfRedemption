@@ -81,7 +81,12 @@ public class JudgeWarhammer : OrchidModGuardianHammer
             else
             {
                 SoundEngine.PlaySound(SoundID.Item16, player.Center);
-                CombatText.NewText(player.getRect(), Color.Red, "Not enough slams" + (Main.rand.NextBool(100) ? ", you idiot!" : "!"));
+
+                string text = Main.rand.NextBool(100)
+                    ? Language.GetTextValue("Mods.GuardiansOfRedemption.Items.JudgeWarhammer.NotEnoughSlamsRare")
+                    : Language.GetTextValue("Mods.GuardiansOfRedemption.Items.JudgeWarhammer.NotEnoughSlams");
+
+                CombatText.NewText(player.getRect(), Color.Red, text);
             }
         }
         projectile.Kill();

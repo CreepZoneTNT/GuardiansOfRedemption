@@ -75,6 +75,8 @@ Items: {
 			Blocking casts a holy aura that slows and damages nearby enemies, more strongly if undead
 			'''
 		ChargeToGlow: Charge to envelop in holy light, right click to swing while charging
+		NotEnoughSlams: Not enough slams!
+		NotEnoughSlamsRare: Not enough slams, you idiot!
 	}
 
 	GirusWarhammer: {
@@ -101,7 +103,10 @@ Items: {
 		Tooltip: Slaying a foe with a charged punch has a chance to produce healing eggs that grant Well Fed for 10 seconds
 	}
 
-	ChickenGauntlet_EggItem.DisplayName: egg
+	ChickenGauntlet_EggItem: {
+		DisplayName: egg
+		PickupText: eg
+	}
 
 	KeeperGauntlet: {
 		DisplayName: Shadow's Grasp
@@ -116,6 +121,9 @@ Items: {
 			Charged punches deal burst damage in a small radius
 			Punching while overcharged makes you lunge forward with an explosive strike
 			'''
+		Charged1: Normal!
+		Charged2: SuperCharged!
+		Charged3: UberCharged!
 	}
 
 	RocketGigahammer: {

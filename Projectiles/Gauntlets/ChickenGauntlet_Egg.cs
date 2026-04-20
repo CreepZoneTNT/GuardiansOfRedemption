@@ -66,7 +66,7 @@ public class ChickenGauntlet_EggItem : ModItem
         SoundEngine.PlaySound(SoundID.Item2);
         if (Main.rand.NextBool(100))
         {
-            CombatText.NewText(player.getRect(), Color.Wheat, "eg");
+            CombatText.NewText(player.getRect(), Color.Wheat, Language.GetTextValue("Mods.GuardiansOfRedemption.Items.ChickenGauntlet_EggItem.PickupText"));
             player.statLife += 8;
             if (player.statLife > player.statLifeMax2) player.statLife = player.statLifeMax2;
             SoundEngine.PlaySound(new SoundStyle("GuardiansOfRedemption/Sounds/ASDFMovieEgg", 2), player.Center);
