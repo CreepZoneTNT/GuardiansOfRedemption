@@ -112,8 +112,6 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
 
     public override bool OnPunch(Player player, OrchidGuardian guardian, Projectile projectile, bool offHandGauntlet, bool manuallyFullyCharged, ref bool charged, ref int damage)
     {
-        CombatText.NewText(player.getRect(), Color.White, RarityLoader.RarityCount);
-        
         charged = ((GuardianGauntletAnchor)projectile.ModProjectile).Ding;
         if (manuallyFullyCharged)
         {

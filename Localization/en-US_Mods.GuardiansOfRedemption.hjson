@@ -1,6 +1,5 @@
 # Mods: {
 # GuardiansOfRedemption: {
-
 Items: {
 	SkeletonWardenShield: {
 		DisplayName: Antique Aegis
@@ -37,7 +36,7 @@ Items: {
 		Tooltip:
 			'''
 			Can pierce twice  before breaking
-			"Not to be confused with a Grave Steel Warhammer"
+			'Not to be confused with a Grave Steel Warhammer'
 			'''
 	}
 
@@ -61,7 +60,7 @@ Items: {
 			'''
 			Shoots a piercing hologram on swing at the cost of charge
 			Pierces infinitely and leaves behind holograms in flight
-			"Capable of hitting any nail, even digital or theoritical!"
+			'Capable of hitting any nail, even digital or theoretical!'
 			'''
 	}
 
@@ -139,7 +138,7 @@ Items: {
 		Tooltip:
 			'''
 			Counterattacks spawns a lashing mass of tangled roots from within
-			'It's roots coil around your arm possessively'
+			'Its roots coil around your arm possessively'
 			'''
 	}
 
@@ -155,7 +154,12 @@ Items: {
 	CommonGuardGreathelm: {
 		DisplayName: Common Guard Greathelm
 		Tooltip: Increases maximum guards by 1
-		SetBonus: 4 defense
+		SetBonus:
+			'''
+			4 defense
+			5% increased opposing damage
+			Press {0} to plant a flag at your location that buffs nearby friendly characters
+			'''
 	}
 
 	HeavyGuardHelmet: {
@@ -183,7 +187,6 @@ Items: {
 	}
 
 	HardlightGreathelm: {
-		SetBonus: Summons 3 protector drones that take major damage for you, triggering your active parry
 		DisplayName: Hardlight Greathelm
 		Tooltip:
 			'''
@@ -192,6 +195,7 @@ Items: {
 			Increases maximum guards and slams by 1
 			Enemies are more likely to target you
 			'''
+		SetBonus: Summons 3 protector drones that take major damage for you, triggering your active parry
 	}
 
 	NuclearSpike: {
@@ -347,6 +351,16 @@ Items: {
 			'''
 		DisplayName: HP-4 Caller
 	}
+
+	PrefixDummy: {
+		DisplayName: Prefix Dummy
+		Tooltip: ""
+	}
+
+	JackhammerGauntlet: {
+		Tooltip: ""
+		DisplayName: Jackhammer Gauntlet
+	}
 }
 
 Projectiles: {
@@ -366,6 +380,8 @@ Projectiles: {
 	PZWarhammer_CloudProj.DisplayName: Infectious Cyst
 	PZWarhammer_CystProj.DisplayName: Toxic Cloud
 	ThornQuarterstaff_Projectile.DisplayName: Thorn Quarterstaff_ Projectile
+	LaboratoryGauntletProjectile.DisplayName: Laboratory Gauntlet Projectile
+	GirusShield_DualcastBallProj.DisplayName: Dualcast Ball
 }
 
 Buffs: {
@@ -442,6 +458,16 @@ Achievements: {
 	ErhanSlappedAchievement: {
 		FriendlyName: How the Turntables
 		Description: Defeat Erhan or his Spirit solely by slapping him with the Hand of Judgement until he dies.
+	}
+}
+
+StatusMessage: {
+	Death: {
+		DualcastBall1: "{0} made a fatal miscalculation."
+		DualcastBall2: "{0} failed their Dexterity saving throw."
+		DualcastBall3: "{0} was hoist by their own petard."
+		DualcastBall4: "{0} forgot to dodge."
+		DualcastBall5: "{0}'s {1} stopped working at the worst possible time."
 	}
 }
 
