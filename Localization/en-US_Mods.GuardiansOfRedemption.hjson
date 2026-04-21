@@ -1,6 +1,5 @@
 # Mods: {
 # GuardiansOfRedemption: {
-
 Items: {
 	SkeletonWardenShield: {
 		DisplayName: Antique Aegis
@@ -99,7 +98,7 @@ Items: {
 
 	ChickenGauntlet: {
 		DisplayName: Haymaker's Haymaker
-		Tooltip: Slaying a foe with a charged punch has a chance to produce healing eggs that grant Well Fed for 10 seconds
+		Tooltip: Charged punches have a chance of spawning healing eggs on hit
 	}
 
 	ChickenGauntlet_EggItem.DisplayName: egg
@@ -155,7 +154,6 @@ Items: {
 	CommonGuardGreathelm: {
 		DisplayName: Common Guard Greathelm
 		Tooltip: Increases maximum guards by 1
-		SetBonus: 4 defense
 	}
 
 	HeavyGuardHelmet: {
@@ -347,7 +345,36 @@ Items: {
 			'''
 		DisplayName: HP-4 Caller
 	}
+
+	MoonflareRune: {
+		DisplayName: Moonflare Rune
+		Tooltip: Summons a moon that grows in power the fuller it gets
+	}
+
+	ProtectiveAmulet: {
+		DisplayName: Protective Amulet
+		Tooltip:
+			'''
+			10% increased parry and block duration
+			Restores life on parry or block
+			'''
+	}
 }
+
+SpecialTooltips: {
+	CommonGuardGreathelm:
+		'''
+		'A heavy bucket helm of Anglon's Common Guard, scavenged by skeletons.
+		The Common Guard serves only the rich and elite, and protects them with their life.'
+		'''
+	TestingTooltip: Big bumx
+}
+
+ArmorSetBonus.CommonGuardGreathelm:
+	'''
+	4 defense
+	5% increased opposing damage
+	'''
 
 Projectiles: {
 	CosmosChain_StarProj.DisplayName: Astral Twinklestar
@@ -357,15 +384,16 @@ Projectiles: {
 	LivingGauntlet_SeedProj.DisplayName: Punchroot Seed
 	ChickenGauntlet_EggProj.DisplayName: Healing Egg
 	Hardlight_ParryDrone.DisplayName: Parry Drone Mk.I
-	PureIronStandard_IceShardProj.DisplayName: Pure Iron Standard_ Ice Shard Proj
-	JanitorQuarterstaff_ThrownProj.DisplayName: Janitor Quarterstaff_ Thrown Proj
-	UraniumQuarterstaff_RealisticExplosionProj.DisplayName: Uranium Quarterstaff_ Realistic Explosion Proj
+	PureIronStandard_IceShardProj.DisplayName: Ice Shard
+	JanitorQuarterstaff_ThrownProj.DisplayName: Mop
+	UraniumQuarterstaff_RealisticExplosionProj.DisplayName: KABOOM
 	HottestPotato_Projectile.DisplayName: Hottest Potato
 	XeniumShield_Projectile.DisplayName: Xenium Helix
 	XeniumShield_ProjectileTrail.DisplayName: Xenium Helix
 	PZWarhammer_CloudProj.DisplayName: Infectious Cyst
 	PZWarhammer_CystProj.DisplayName: Toxic Cloud
-	ThornQuarterstaff_Projectile.DisplayName: Thorn Quarterstaff_ Projectile
+	ThornQuarterstaff_Projectile.DisplayName: Bramble
+	MoonflareRune_Projectile.DisplayName: Moon
 }
 
 Buffs: {
@@ -384,12 +412,6 @@ Buffs: {
 		DisplayName: Daerel Quarterstaff Buff
 	}
 }
-
-SpecialTooltips.CommonGuardGreathelm:
-	'''
-	'A heavy bucket helm of Anglon's Common Guard, scavenged by skeletons.
-	The Common Guard serves only the rich and elite, and protects them with their life.'
-	'''
 
 Cutscene: {
 	Erhan: {

@@ -1,14 +1,16 @@
-using System;
-using System.Reflection;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using MonoMod.RuntimeDetour;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
+using OrchidMod.Content.Guardian.Misc;
 using OrchidMod.Content.Guardian.Projectiles.Misc;
 using Redemption.Globals;
 using Redemption.NPCs.Bosses.Cleaver;
 using Redemption.Projectiles.Melee;
 using Redemption.Projectiles.Ranged;
+using System;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -18,22 +20,50 @@ namespace GuardiansOfRedemption.General.Global;
 
 public class GoRHooks : ModSystem
 {
+    bool ProtectiveAmuletTriggered = false;
+    private Hook _onBlockFirstHook;
     private Hook _onBlockProjectileHook;
+    private Hook _DoParryItemParry;
     private Hook _ResetStandardsHook;
-    
 
+
+    private delegate void orig_OnBlockAnyFirst(OrchidGuardian self, Projectile anchor, ref int toAdd, bool parry = false);
     private delegate void orig_OnBlockProjectile(OrchidGuardian self, Projectile anchor, Projectile blockedProjectile, bool parry = false);
+    private delegate void orig_DoParryItemParry(OrchidGuardian self, Entity aggressor);
     private delegate void orig_ResetStandards(OrchidGuardian self, bool forceReset = false);
     
     public override void Load()
     {
+        MethodInfo onBlockAnyFirst = typeof(OrchidGuardian).GetMethod("OnBlockAnyFirst", BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
+        if (onBlockAnyFirst != null)
+            _onBlockFirstHook = new Hook(onBlockAnyFirst, Detour_OnBlockAnyFirst);
+
         MethodInfo onBlockProjectile = typeof(OrchidGuardian).GetMethod("OnBlockProjectile", BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
         if (onBlockProjectile != null)
             _onBlockProjectileHook = new Hook(onBlockProjectile, Detour_OnBlockProjectile);
+
+        MethodInfo DoParryItemParry = typeof(OrchidGuardian).GetMethod("DoParryItemParry", BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
+        if (DoParryItemParry != null)
+            _DoParryItemParry = new Hook(DoParryItemParry, Detour_DoParryItemParry);
+
         MethodInfo resetStandards = typeof(OrchidGuardian).GetMethod("ResetStandards", BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
         if (resetStandards != null)
             _ResetStandardsHook = new Hook(resetStandards, Detour_ResetStandards);
             
+    }
+
+    private void Detour_OnBlockAnyFirst(orig_OnBlockAnyFirst orig, OrchidGuardian self, Projectile anchor, ref int toAdd, bool parry = false)
+    {
+
+        Player player = self.Player;
+
+        // CombatText.NewText(player.getRect(), Color.Wheat, "test");
+        if(player.GetModPlayer<RedemptionGuardian>().GuardianProtectiveAmulet)
+        {
+           player.Heal(3);
+        }
+
+        orig(self, anchor, ref toAdd, parry);
     }
     private void Detour_OnBlockProjectile(orig_OnBlockProjectile orig, OrchidGuardian self, Projectile anchor, Projectile blockedProjectile, bool parry = false)
     {
@@ -57,7 +87,23 @@ public class GoRHooks : ModSystem
         }
         orig(self, anchor, blockedProjectile, parry);
     }
-    
+
+    private void Detour_DoParryItemParry(orig_DoParryItemParry orig, OrchidGuardian self, Entity aggressor)
+    {
+        Player player = self.Player;
+
+        // CombatText.NewText(player.getRect(), Color.Wheat, "test");
+        if (player.GetModPlayer<RedemptionGuardian>().GuardianProtectiveAmulet)
+        {
+            if (!ProtectiveAmuletTriggered)
+            {
+                player.Heal(3);
+                ProtectiveAmuletTriggered = true;
+            } 
+
+        }
+        orig(self, aggressor);
+    }
     private void Detour_ResetStandards(orig_ResetStandards orig, OrchidGuardian self, bool forceReset = false)
     {
         RedemptionGuardian addonGuardian = self.Player.GetModPlayer<RedemptionGuardian>();
@@ -74,8 +120,14 @@ public class GoRHooks : ModSystem
 
     public override void Unload()
     {
+        _onBlockFirstHook?.Dispose();
+        _onBlockFirstHook = null;
+
         _onBlockProjectileHook?.Dispose();
         _onBlockProjectileHook = null;
+
+        _DoParryItemParry?.Dispose();
+        _DoParryItemParry = null;
         
         _ResetStandardsHook?.Dispose();
         _ResetStandardsHook = null;

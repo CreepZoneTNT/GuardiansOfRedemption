@@ -22,10 +22,15 @@ namespace GuardiansOfRedemption.Projectiles.Runes;
 public class HottestPotato_Projectile : GuardianRuneProjectile
 {
     public int SetOff = 0;
+    public int Countdown = 60;
     float rotation = 0f;
     public List<Vector2> OldPosition;
     public List<float> OldRotation;
 
+    public override void SetStaticDefaults()
+    {
+        ElementID.ProjExplosive[Type] = true;
+    }
     public override void RuneSetDefaults()
     {
         Projectile.width = 22;
@@ -59,18 +64,23 @@ public class HottestPotato_Projectile : GuardianRuneProjectile
         OldPosition.Add(Projectile.Center);
         OldRotation.Add(Projectile.rotation);
 
-        // Loop through the 4 animation frames, spending 5 ticks on each
-        // Projectile.frame — index of current frame
-        if (++Projectile.frameCounter >= 60 && Projectile.timeLeft <= 900 && Projectile.timeLeft >= 300)
+        if (++Projectile.frameCounter >= Countdown && Projectile.timeLeft <= 900 && Projectile.timeLeft > 300)
         {
             Projectile.frameCounter = 0;
-            // Or more compactly Projectile.frame = ++Projectile.frame % Main.projFrames[Type];
+            Countdown -= 3;
+
             if (++Projectile.frame >= Main.projFrames[Type])
                 Projectile.frame = 0;
+
             if (Main.projFrames[Type] == 2)
             {
                 SoundEngine.PlaySound(CustomSounds.DANShot);
             }
+        }
+
+        if (Projectile.timeLeft <= 300)
+        {
+            Projectile.frame = 1;
         }
 
         if (Projectile.timeLeft == 180)
@@ -80,7 +90,7 @@ public class HottestPotato_Projectile : GuardianRuneProjectile
 
         if (Projectile.timeLeft <= 180)
         {
-            Projectile.rotation = Main.rand.NextFloat(0, MathHelper.TwoPi);
+            Projectile.rotation += Main.rand.NextFloat(0, MathHelper.TwoPi) * 0.2f;
             Dust.NewDustDirect(Projectile.Center - new Vector2(10), 5, 20, DustID.Smoke, 0f, -1.4f);
         }
             if (OldPosition.Count > 5)
