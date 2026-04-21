@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Reflection;
+using System.Text;
+using GuardiansOfRedemption.Items.Weapons.Gauntlets;
 using GuardiansOfRedemption.Items.Weapons.Standards;
 using GuardiansOfRedemption.Projectiles.Armor;
 using Microsoft.Xna.Framework;
@@ -25,6 +29,7 @@ namespace GuardiansOfRedemption.General.Global;
 
 public class RedemptionGuardian : ModPlayer
 {
+
     public NPC EaglecrestShieldTarget;
     public int EaglecrestShieldHitCount;
 
@@ -81,8 +86,14 @@ public class RedemptionGuardian : ModPlayer
 
     public override void PostUpdateMiscEffects()
     {
-    
+        if (EaglecrestShieldTarget != null && !EaglecrestShieldTarget.active) EaglecrestShieldTarget = null;
+        HardlightParryCooldown--;
+        if (HardlightParryCooldown < 0) HardlightParryCooldown = 0;
         
+        // bool hasLabGauntletBoost = false;
+        // foreach (var proj in Main.projectile)
+        //     if (proj.ModProjectile is LaboratoryGauntletProjectile && proj.owner == Main.myPlayer) hasLabGauntletBoost = true;
+        // Player.controlDown = hasLabGauntletBoost;
     }
 
     public override void PostUpdateEquips()
@@ -211,7 +222,7 @@ public class RedemptionGuardian : ModPlayer
                         drone.timeLeft = ContentSamples.ProjectilesByType[projType].timeLeft + i;
                     }
                 }
-                    if (GuardianCommonGuard)
+                if (GuardianCommonGuard)
                 {
                     if (GuardianCommonGuard && !Player.HasBuff<CommonGuardFlagCooldown>())
                     {
@@ -224,7 +235,7 @@ public class RedemptionGuardian : ModPlayer
                             proj.timeLeft = 2;
                         }
 
-                        Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center - new Vector2(0, 96), Vector2.Zero, ModContent.ProjectileType<CommonGuardFlag_Proj>(), 0, 0, Main.myPlayer);
+                        Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.Center - new Vector2(0, 96), Vector2.Zero, ModContent.ProjectileType<CommonGuardFlag_Proj>(), 0, 0, Main.myPlayer);
                     }
                 }                  
             }

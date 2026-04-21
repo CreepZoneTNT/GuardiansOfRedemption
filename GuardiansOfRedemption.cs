@@ -18,8 +18,11 @@ using Redemption.Globals;
 using Redemption.NPCs.Bosses.Cleaver;
 using ReLogic.Content;
 using Terraria;
+using Terraria.GameContent.Prefixes;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
+using GuardiansOfRedemption.General;
 
 namespace GuardiansOfRedemption
 {
@@ -27,9 +30,27 @@ namespace GuardiansOfRedemption
 	public class GuardiansOfRedemption : Mod
 	{
 		public static GuardiansOfRedemption Instance { get; private set; }
-		public static OrchidMod.OrchidMod OrchidMod { get; private set;}
-		public static Redemption.Redemption Redemption { get; private set; }
-
+		public static Mod OrchidInstance { get; private set;}
+		public static Mod RedemptionInstance { get; private set; }
+		
+		
+		public GuardiansOfRedemption()
+		{
+			Instance = this;
+		}
+		
+		public override void Load()
+		{
+			OrchidInstance = ModLoader.GetMod("OrchidMod");
+			RedemptionInstance = ModLoader.GetMod("Redemption");
+		}
+		
+		public override void Unload()
+		{
+			OrchidInstance = null;
+			RedemptionInstance = null;
+		}
+		
 		public override void PostSetupContent()
 		{
 			foreach (var modItem in ModContent.GetContent<ModItem>())

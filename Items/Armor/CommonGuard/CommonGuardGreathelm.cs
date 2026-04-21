@@ -8,6 +8,7 @@ using Redemption.Items.Armor.PreHM.CommonGuard;
 using Redemption.Items.Materials.PreHM;
 using System;
 using System.Collections.Generic;
+using GuardiansOfRedemption.General;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -18,13 +19,15 @@ namespace GuardiansOfRedemption.Items.Armor.CommonGuard
     [AutoloadEquip(EquipType.Head)]
     public class CommonGuardGreathelm : ModItem
     {
+    
+        public static LocalizedText SetBonusText { get; private set; }
         public override void SetStaticDefaults()
         {
             // DisplayName.SetDefault("Common Guard Bucket Helm");
             // Tooltip.SetDefault("+1 increased melee damage");
             ArmorIDs.Head.Sets.DrawHead[EquipLoader.GetEquipSlot(Mod, Name, EquipType.Head)] = false;
 
-            Item.ResearchUnlockCount = 1;
+            SetBonusText = this.GetLocalization("SetBonus");
         }
 
         public override void SetDefaults()
@@ -49,13 +52,14 @@ namespace GuardiansOfRedemption.Items.Armor.CommonGuard
 
         public override void UpdateArmorSet(Player player)
         {
-            RedemptionGuardian modPlayer = player.GetModPlayer<RedemptionGuardian>();
+            RedemptionGuardian modPlayer = player.RedemptionGuardian();
 
             if (!Main.dedServ)
             {
-                string keybind = "[" + Language.GetTextValue("Mods.Redemption.Keybinds.SpecialAbilityKey.DisplayName") + "]";
-                foreach (string assignedKey in Redemption.Redemption.RedeSpecialAbility.GetAssignedKeys())       
-                player.setBonus = Language.GetTextValue("Mods.GuardiansOfRedemption.Items.CommonGuardGreathelm", keybind);
+                string str = $"[{Language.GetTextValue("Mods.Redemption.Keybinds.SpecialAbilityKey.DisplayName")}]";
+                foreach (string assignedKey in Redemption.Redemption.RedeSpecialAbility.GetAssignedKeys())
+                    str = assignedKey;
+                player.setBonus = SetBonusText.Format(str);
             }
             player.statDefense += 4;
             player.GetDamage<GuardianDamageClass>() += 0.05f;
@@ -66,10 +70,8 @@ namespace GuardiansOfRedemption.Items.Armor.CommonGuard
 
             if (Main.rand.NextBool(10) && Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y) > 1f && !player.rocketFrame)
             {
-                int index = Dust.NewDust(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height,
-                    DustID.Web);
-                Main.dust[index].noGravity = true;
-                Dust dust = Main.dust[index];
+                Dust dust = Dust.NewDustDirect(new Vector2(player.position.X - player.velocity.X * 2f, player.position.Y - 2f - player.velocity.Y * 2f), player.width, player.height, DustID.Web);
+                dust.noGravity = true;
                 dust.velocity -= player.velocity * 0.5f;
             }
         }
@@ -87,7 +89,7 @@ namespace GuardiansOfRedemption.Items.Armor.CommonGuard
         {
             if (Main.keyState.PressingShift())
             {   
-                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("GuardiansOfRedemption.SpecialTooltips.CommonGuardGreathelm"))
+                TooltipLine line = new(Mod, "Lore", Language.GetTextValue("Mods.GuardiansOfRedemption.SpecialTooltips.CommonGuardGreathelm"))
                 {
                     OverrideColor = Color.LightGray
                 };
@@ -97,7 +99,7 @@ namespace GuardiansOfRedemption.Items.Armor.CommonGuard
             {
                 TooltipLine line = new(Mod, "HoldShift", Language.GetTextValue("Mods.Redemption.SpecialTooltips.Viewer"))
                 {
-                    OverrideColor = Color.Gray,
+                    OverrideColor = Color.Gray
                 };
                 tooltips.Add(line);
             }

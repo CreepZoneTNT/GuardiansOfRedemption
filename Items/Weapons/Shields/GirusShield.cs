@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Text;
+using GuardiansOfRedemption.Projectiles.Shields;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
@@ -97,52 +98,51 @@ public class GirusShield : OrchidModGuardianShield
             Vector2 corePosition = owner.MountedCenter + Vector2.UnitX.RotatedBy((projectile.Center - owner.MountedCenter).ToRotation()) * 45 - Main.screenPosition + Vector2.UnitY * owner.gfxOffY;
             Lighting.AddLight(corePosition, glowColor.ToVector3() * (anchor.isSlamming is 1 or 2 ? 1f : colorMult));
             
-            
-            bool slamButton = ModContent.GetInstance<OrchidClientConfig>().GuardianSwapPaviseImputs ? Main.mouseRight : Main.mouseLeft;
-            bool slamButtonRelease = ModContent.GetInstance<OrchidClientConfig>().GuardianSwapPaviseImputs ? Main.mouseRightRelease : Main.mouseLeftRelease;
-            
-            if (slamButton)
-            {
-                if (slamButtonRelease) AttemptingCharge = true;
-                SlamTimer++;
-                
-                if (SlamTimer is > 15 and <= 120)
-                {
-                    CanReleaseEarly = true;
-                }
-                if (SlamTimer > 120)
-                {
-                    if (!ChargedSlam)
-                    {
-                        SoundEngine.PlaySound(SoundID.MaxMana);
-                        Dust.NewDustDirect(owner.Center, 8, 8, DustID.LifeDrain);
-                        ChargedSlam = true;
-                        CanReleaseEarly = false;
-                        AttemptingCharge = false;
-                    }
-                    SlamTimer = 120;
-                }
-            }
+            // bool slamButton = ModContent.GetInstance<OrchidClientConfig>().GuardianSwapPaviseImputs ? Main.mouseRight : Main.mouseLeft;
+            // bool slamButtonRelease = ModContent.GetInstance<OrchidClientConfig>().GuardianSwapPaviseImputs ? Main.mouseRightRelease : Main.mouseLeftRelease;
+            //
+            // if (slamButton)
+            // {
+            //     if (slamButtonRelease) AttemptingCharge = true;
+            //     SlamTimer++;
+            //     
+            //     if (SlamTimer is > 15 and <= 120)
+            //     {
+            //         CanReleaseEarly = true;
+            //     }
+            //     if (SlamTimer > 120)
+            //     {
+            //         if (!ChargedSlam)
+            //         {
+            //             SoundEngine.PlaySound(SoundID.MaxMana);
+            //             Dust.NewDustDirect(owner.Center, 8, 8, DustID.LifeDrain);
+            //             ChargedSlam = true;
+            //             CanReleaseEarly = false;
+            //             AttemptingCharge = false;
+            //         }
+            //         SlamTimer = 120;
+            //     }
+            // }
         }
     }
 
     public override void Slam(Player player, Projectile shield)
     {
-        if (ChargedSlam)
-        {
+        // if (ChargedSlam)
+        // {
             OrchidGuardian guardian = player.GetModPlayer<OrchidGuardian>();
             SoundEngine.PlaySound(SoundID.Item92);
             DustHelper.DrawCircle(shield.Center, DustID.LifeDrain, 4f, dustSize: 2f, nogravity: true);
-            Projectile dualcastBall = Projectile.NewProjectileDirect(shield.GetSource_FromThis(), shield.Center, Vector2.UnitX.RotatedBy(shield.rotation + MathHelper.Pi) * 16, ModContent.ProjectileType<ShieldCore_DualcastBall>(), guardian.GetGuardianDamage(Item.damage * 0.5f), shield.knockBack, player.whoAmI);
+            Projectile dualcastBall = Projectile.NewProjectileDirect(shield.GetSource_FromThis(), shield.Center, Vector2.UnitX.RotatedBy(shield.rotation + MathHelper.Pi) * 16, ModContent.ProjectileType<GirusShield_DualcastBallProj>(), guardian.GetGuardianDamage(Item.damage * 0.5f), shield.knockBack, player.whoAmI);
             dualcastBall.friendly = true;
-        }
+        // }
         SlamTimer = 0;
-        ChargedSlam = false;
+        // ChargedSlam = false;
     }
 
     public override bool Block(Player player, Projectile shield, Projectile projectile)
     {
-        if (projectile.type == ModContent.ProjectileType<ShieldCore_DualcastBall>())
+        if (projectile.type == ModContent.ProjectileType<GirusShield_DualcastBallProj>())
         {
             OrchidGuardian guardian = player.GetModPlayer<OrchidGuardian>();
             
@@ -217,7 +217,7 @@ public class GirusShield : OrchidModGuardianShield
                 spriteBatch.End(out SpriteBatchSnapshot spriteBatchSnapshot);
                 spriteBatch.Begin(spriteBatchSnapshot with { BlendState = BlendState.Additive });
                 
-                RedeDraw.DrawTreasureBagEffect(spriteBatch, shieldTexture, ref DrawTimer, drawPosition, frame, Color.Red * (anchor.isSlamming is 1 or 2 ? 1f : 0.5f), flippedRotation, frame.Size() * 0.5f, projectile.scale);
+                RedeDraw.DrawTreasureBagEffect(spriteBatch, shieldTexture, ref DrawTimer, drawPosition, frame, Color.Red * (anchor.isSlamming is 1 or 2 ? 1f : 0.5f), flippedRotation, frame.Size() * 0.5f, projectile.scale, effect);
                 spriteBatch.Draw(shieldTexture, drawPosition, frame, lightColor * (0.8f + Math.Abs((1f * Main.LocalPlayer.GetModPlayer<OrchidPlayer>().Timer120 - 60) / 120f)), flippedRotation, frame.Size() * 0.5f, projectile.scale, effect, 0f);
                 
                 spriteBatch.End();

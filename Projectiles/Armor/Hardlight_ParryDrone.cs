@@ -19,7 +19,7 @@ public class Hardlight_ParryDrone : OrchidModGuardianProjectile
     
     public override void SetStaticDefaults()
     {
-        Main.projFrames[Type] = 5;
+        Main.projFrames[Type] = 6;
     }
     
     public override void SafeSetDefaults()
@@ -37,7 +37,7 @@ public class Hardlight_ParryDrone : OrchidModGuardianProjectile
         if (++Projectile.frameCounter >= 7)
         {
             Projectile.frameCounter = 0;
-            if (++Projectile.frame >= 5) Projectile.frame = 0;
+            if (++Projectile.frame >= 6) Projectile.frame = 0;
         }
         if (Projectile.soundDelay == 0)
         {

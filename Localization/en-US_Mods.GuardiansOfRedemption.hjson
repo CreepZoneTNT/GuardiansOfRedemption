@@ -36,7 +36,7 @@ Items: {
 		Tooltip:
 			'''
 			Can pierce twice  before breaking
-			"Not to be confused with a Grave Steel Warhammer"
+			'Not to be confused with a Grave Steel Warhammer'
 			'''
 	}
 
@@ -60,7 +60,7 @@ Items: {
 			'''
 			Shoots a piercing hologram on swing at the cost of charge
 			Pierces infinitely and leaves behind holograms in flight
-			"Capable of hitting any nail, even digital or theoritical!"
+			'Capable of hitting any nail, even digital or theoretical!'
 			'''
 	}
 
@@ -138,7 +138,7 @@ Items: {
 		Tooltip:
 			'''
 			Counterattacks spawns a lashing mass of tangled roots from within
-			'It's roots coil around your arm possessively'
+			'Its roots coil around your arm possessively'
 			'''
 	}
 
@@ -154,6 +154,12 @@ Items: {
 	CommonGuardGreathelm: {
 		DisplayName: Common Guard Greathelm
 		Tooltip: Increases maximum guards by 1
+		SetBonus:
+			'''
+			4 defense
+			5% increased opposing damage
+			Press {0} to plant a flag at your location that buffs nearby friendly characters
+			'''
 	}
 
 	HeavyGuardHelmet: {
@@ -181,7 +187,6 @@ Items: {
 	}
 
 	HardlightGreathelm: {
-		SetBonus: Summons 3 protector drones that take major damage for you, triggering your active parry
 		DisplayName: Hardlight Greathelm
 		Tooltip:
 			'''
@@ -190,6 +195,7 @@ Items: {
 			Increases maximum guards and slams by 1
 			Enemies are more likely to target you
 			'''
+		SetBonus: Summons 3 protector drones that take major damage for you, triggering your active parry
 	}
 
 	NuclearSpike: {
@@ -361,6 +367,17 @@ Items: {
 	}
 }
 
+	PrefixDummy: {
+		DisplayName: Prefix Dummy
+		Tooltip: ""
+	}
+
+	JackhammerGauntlet: {
+		Tooltip: ""
+		DisplayName: Jackhammer Gauntlet
+	}
+}
+
 SpecialTooltips: {
 	CommonGuardGreathelm:
 		'''
@@ -394,6 +411,8 @@ Projectiles: {
 	PZWarhammer_CystProj.DisplayName: Toxic Cloud
 	ThornQuarterstaff_Projectile.DisplayName: Bramble
 	MoonflareRune_Projectile.DisplayName: Moon
+	LaboratoryGauntletProjectile.DisplayName: Laboratory Gauntlet Projectile
+	GirusShield_DualcastBallProj.DisplayName: Dualcast Ball
 }
 
 Buffs: {
@@ -467,6 +486,16 @@ Achievements: {
 	}
 }
 
+StatusMessage: {
+	Death: {
+		DualcastBall1: "{0} made a fatal miscalculation."
+		DualcastBall2: "{0} failed their Dexterity saving throw."
+		DualcastBall3: "{0} was hoist by their own petard."
+		DualcastBall4: "{0} forgot to dodge."
+		DualcastBall5: "{0}'s {1} stopped working at the worst possible time."
+	}
+}
+
 Dialogue: {
 	Janitor: {
 		UsedMop: Another week, another mop to replace... Ah, new guy, didn't notice ya there. I see you're eyeballin' my mop... I was gonna change it for a new one, but you look like you're in need of a new mop yourself, eh? I guess I can sell it to you, but it'll cost youse a bit extra for the maintenance.
@@ -476,3 +505,116 @@ Dialogue: {
 }
 
 Conditions.EarlyMorning: Mods.GuardiansOfRedemption.Conditions.EarlyMorning
+
+Configs: {
+	ClientConfig: {
+		DisplayName: Client Config
+		Headers.ClientTweaks: Client Tweaks Header
+
+		ClassTooltipMode: {
+			Label: Class Tooltip Mode
+			Tooltip: ""
+		}
+	}
+
+	ServerConfig: {
+		DisplayName: Server Config
+		Headers.OpinionatedChanges: Opinionated Changes
+
+		EnableRecipeBrowserCompat: {
+			Label: Enable Recipe Browser Compat
+			Tooltip: "3"
+		}
+
+		RecipeBrowserCompatIcon: {
+			Label: Recipe Browser Compat Icon
+			Tooltip: The item to use as the icon for the Opposing weapon tab for Recipe Browser compatibility.
+		}
+
+		ReforgesGoBeyondPurple: {
+			Label: Reforges Go Beyond Purple
+			Tooltip:
+				'''
+				Ever noticed how [c/B428FF:Purple]-tier items can't have their rarities modified by high-value prefixes, because they're capped to 11? How ugly! 
+				Enabling this adds extra logic to break this barrier and let [c/FF2864:Red]/[c/B428FF:Purple]-tier items achieve the higher rarities they deserve!
+				'''
+		}
+
+		VanillaGoesBeyondPurple: {
+			Label: Vanilla Goes Beyond Purple
+			Tooltip:
+				'''
+				If true, then vanilla items will be able to reach high rarities while prefixed.
+				(As there are no vanilla items that have a base rarity of [c/B428FF:Purple], this will most likely be [c/00FFC8:Turquoise] for [c/FF2864:Red] items)
+				'''
+		}
+
+		ModsToGoBeyondPurple: {
+			Label: Mods To Go Beyond Purple
+			Tooltip:
+				'''
+				If a modded item's source matches one of the mod names listed here,
+				setting its value will enable/disable the ability for that mod's [c/FF2864:Red]/[c/B428FF:Purple]-tier items
+				to achieve [c/00FFC8:Turquoise] or [c/FF7F50:Coral] rarity while prefixed.
+				(A use case is if another mod already adds higher rarity tiers or their own rarity-adjusting mechanics, to avoid conflict.)
+				'''
+		}
+
+		EnableCoralRarityForReforges: {
+			Label: Enable Coral Rarity For Reforges
+			Tooltip:
+				'''
+				Raising the rarity limit up to [c/00FFC8:Turquoise] not good enough for you?
+				Enabling this will add a 13th [c/FF7F50:Coral] rarity for [c/B428FF:Purple]/[c/00FFC8:Turquoise]-tier items to achieve!
+				'''
+		}
+
+		SetModeForBeyondPurple: {
+			Label: Set Mode For Beyond Purple
+			Tooltip: ""
+		}
+	}
+
+	ClassTagModes: {
+		Tooltip: ""
+
+		Show: {
+			Label: Show
+			Tooltip: Force all class tags for Guardians of Redemption's weapons to show
+		}
+
+		Hide: {
+			Label: Hide
+			Tooltip: Force all class tags for Guardians of Redemption's weapons to remain hidden
+		}
+
+		FollowOrchid: {
+			Label: Follow Orchid
+			Tooltip: Display class tags for Guardians of Redemption's weapons only if Orchid's class tags are enabled, or vice versa
+		}
+	}
+
+	BeyondRarityModes: {
+		Tooltip: ""
+
+		Soft: {
+			Label: Soft
+			Tooltip:
+				'''
+				Visually modifies the rarity color of the prefixed item.
+				Since the rarity itself is untouched, this is the safest option. However, the modified rarity only appears in the inventory, not when reforging. 
+				'''
+		}
+
+		Hard: {
+			Label: Hard
+			Tooltip:
+				'''
+				Functionally modifies the rarity value of the prefixed item.
+				Because the rarity itself is modified, the modified rarity will appear in all possible contexts. However, there may be a tiny chance of this system breaking spectacularly, so use caution. 
+				'''
+		}
+	}
+}
+
+DamageClasses.PrefixDummyDamageClass.DisplayName: Prefix Dummy Damage Class

@@ -45,7 +45,8 @@ public class WeaponGraveSteelWarhammer : OrchidModGuardianHammer
     {
         if (projectile.penetrate == 1)
         {
-            for (int i = 0; i < 5; i++) Dust.NewDustDirect(projectile.Center, projectile.width, projectile.height, DustID.Lead, projectile.velocity.X, projectile.velocity.Y);
+            for (int i = 0; i < 5; i++) Dust.NewDustDirect(projectile.Center, projectile.width, projectile.height, DustID.Lead);
+            for (int i = 0; i < 5; i++) Dust.NewDustDirect(projectile.Center, projectile.width, projectile.height, DustID.Lead, projectile.velocity.X * 0.6f, projectile.velocity.Y * 0.6f);
             SoundEngine.PlaySound(CustomSounds.GuardBreak, target.Center);
         }
     }
@@ -54,7 +55,7 @@ public class WeaponGraveSteelWarhammer : OrchidModGuardianHammer
     {
         CreateRecipe()
             .AddIngredient<GraveSteelAlloy>(10)
-            .AddRecipeGroup(RecipeGroupID.Wood)
+            .AddRecipeGroup(RecipeGroupID.Wood, 3)
             .AddTile(TileID.Anvils)
             .Register();
     }

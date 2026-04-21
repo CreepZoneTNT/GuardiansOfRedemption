@@ -31,10 +31,8 @@ public class EaglecrestShield_PebblesProj : OrchidModGuardianProjectile
     private Texture2D TextureVar1 = ModContent.Request<Texture2D>(TexturePath + "6").Value;
     private Texture2D TextureVar2 = ModContent.Request<Texture2D>(TexturePath + "7").Value;
     private Texture2D TextureVar3 = ModContent.Request<Texture2D>(TexturePath + "8").Value;
-
-    public List<Vector2> OldPosition;
-    public List<float> OldRotation;
     
+    public OrchidModGuardianShield ShieldItem;
 
     private int projVariant;
 
@@ -57,8 +55,6 @@ public class EaglecrestShield_PebblesProj : OrchidModGuardianProjectile
         Projectile.scale = 1.5f;
         Projectile.usesLocalNPCImmunity = true;
         Projectile.localNPCHitCooldown = 20;
-        OldPosition = [];
-        OldRotation = [];
     }
 
     public override void OnSpawn(IEntitySource source)
@@ -131,7 +127,7 @@ public class EaglecrestShield_PebblesProj : OrchidModGuardianProjectile
                 
                 for (int i = 0; i < 3; i++) DustHelper.DrawParticleElectricity(Projectile.Center - new Vector2(0.0f, 400f), Projectile.Center, 2f, density: 0.1f, colorType: 1);
                 DustHelper.DrawCircle(Projectile.Center - Vector2.UnitY * 400f, DustID.Sandnado, RatioX: 4f, RatioY: 4f, dustSize: 3f, nogravity: true);
-                RedeHelper.NPCRadiusDamage(48, Projectile, guardian.GetGuardianDamage(90), 8f, 0);
+                RedeHelper.NPCRadiusDamage(48, Projectile, guardian.GetGuardianDamage(ShieldItem.Item.damage), 8f, 0);
                 target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 60);
             }
         }
