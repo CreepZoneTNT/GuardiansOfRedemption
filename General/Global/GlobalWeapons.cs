@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using OrchidMod.Common;
 using OrchidMod.Content.Guardian;
+using OrchidMod.Content.Guardian.Weapons.Gauntlets;
 using OrchidMod.Content.Guardian.Weapons.Misc;
 using OrchidMod.Content.Guardian.Weapons.Warhammers;
 using Redemption.BaseExtension;
+using Redemption.Rarities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -18,14 +19,15 @@ public class GlobalWeapons : GlobalItem
 
     public override void SetDefaults(Item entity)
     {
-        if (entity.ModItem is OrchidModGuardianHammer hammer)
+        if (entity.ModItem is OrchidModGuardianHammer)
         {
             entity.Redemption().TechnicallyHammer = true;
         }
     }
     public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
     {
-        if (ModContent.GetInstance<OrchidClientConfig>().ShowClassTags)
+        ClientConfig addonClientConfig = ModContent.GetInstance<ClientConfig>();
+        if (addonClientConfig.ClassTooltipMode == ClientConfig.ClassTagModes.Show || addonClientConfig.ClassTooltipMode == ClientConfig.ClassTagModes.FollowOrchid && ModContent.GetInstance<OrchidClientConfig>().ShowClassTags)
         {
             ModItem modItem = item?.ModItem;
             if (modItem?.Mod is GuardiansOfRedemption && item.DamageType == ModContent.GetInstance<GuardianDamageClass>())

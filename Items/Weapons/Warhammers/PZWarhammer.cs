@@ -1,23 +1,13 @@
-using GuardiansOfRedemption.Buffs;
 using GuardiansOfRedemption.Projectiles.Warhammers;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
-using Redemption;
 using Redemption.BaseExtension;
-using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
 using Redemption.Rarities;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
 
 namespace GuardiansOfRedemption.Items.Weapons.Warhammers;
 

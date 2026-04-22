@@ -1,4 +1,4 @@
-﻿using GuardiansOfRedemption.Projectiles;
+﻿using GuardiansOfRedemption.Projectiles.Runes;
 using Microsoft.Xna.Framework;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
@@ -11,20 +11,21 @@ using Redemption.Items.Materials.PostML;
 using Redemption.Projectiles.Magic;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace GuardiansOfRedemption.Items.Weapons.Other
+namespace GuardiansOfRedemption.Items.Weapons.Runes
 {
     internal class HottestPotato : OrchidModGuardianRune
     {
         public override void SafeSetDefaults()
         {
-            //Item.damage = 1000;
-            //Item.DamageType = ModContent.GetInstance<GuardianDamageClass>();
+            Item.damage = 1;
+            Item.DamageType = ModContent.GetInstance<GuardianDamageClass>();
             Item.width = 22;
             Item.height = 38;
             Item.useTime = 20;
