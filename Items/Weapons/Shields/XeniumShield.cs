@@ -28,18 +28,19 @@ public class XeniumShield : OrchidModGuardianShield
         Item.shootSpeed = 5f;
         distance = 50f;
         slamDistance = 50f;
-        blockDuration = 420;
+        blockDuration = 300;
         shouldFlip = true; 
     }
     public override void Slam(Player player, Projectile shield)
     {
-        if (IsLocalPlayer(player))
+        if (shield.owner == Main.myPlayer && shield.ModProjectile is GuardianShieldAnchor anchor)
         {
-            Projectile anchor = GetAnchor(player).Projectile;
-            int type = ModContent.ProjectileType<XeniumShield_Projectile>();
-            Vector2 dir = Vector2.Normalize(Main.MouseWorld - player.Center) * 5f;
-            Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromThis(), anchor.Center, dir, type, (int)(shield.damage), Item.knockBack, player.whoAmI);
+            OrchidGuardian guardian = player.Guardian();
+
+            Vector2 dir = Vector2.Normalize(Main.MouseWorld - player.Center) * Item.shootSpeed;
+            Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromThis(), shield.Center, dir, ModContent.ProjectileType<XeniumShield_WaveProj>(), guardian.GetGuardianDamage(shield.damage), Item.knockBack, player.whoAmI);
             newProjectile.CritChance = (int)(player.GetCritChance<GuardianDamageClass>() + player.GetCritChance<GenericDamageClass>() + Item.crit);
+            (newProjectile.ModProjectile as XeniumShield_WaveProj).Strong = true;
         }
     }
 

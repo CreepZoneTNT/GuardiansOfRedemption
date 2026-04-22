@@ -364,6 +364,7 @@ Projectiles: {
 	XeniumShield_ProjectileTrail.DisplayName: Xenium Helix
 	PZWarhammer_CloudProj.DisplayName: Infectious Cyst
 	PZWarhammer_CystProj.DisplayName: Toxic Cloud
+	XeniumShield_WaveProj.DisplayName: Xenium Shield_ Wave Proj
 }
 
 Buffs: {
