@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using GuardiansOfRedemption.General;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,6 +18,8 @@ using Redemption.Globals;
 using Redemption.Globals.Players;
 using Redemption.Rarities;
 using ReLogic.Content;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -44,8 +44,8 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
     
     public override void SafeSetDefaults()
     {
-        Item.width = 40;
-        Item.height = 42;
+        Item.width = 44;
+        Item.height = 24;
         Item.knockBack = 8f;
         Item.damage = 660;
         Item.value = Item.sellPrice(0, 7, 50);
@@ -118,7 +118,7 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
             projectile.penetrate = 1;
             if (UberCharged || SuperCharged)
             {
-                damage = guardian.GetGuardianDamage(Item.damage * (UberCharged ? 2.5f : 1.8f));
+                damage = guardian.GetGuardianDamage(Item.damage * (UberCharged ? 6f : 3f));
              
                 Vector2 velocity = Vector2.UnitX.RotatedBy((Main.MouseWorld - player.Center).ToRotation()) * 20f;
                 int projectileType = ModContent.ProjectileType<LaboratoryGauntletProjectile>();
@@ -148,14 +148,14 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
         return true;
     }
 
-    public override void ModifyHitNPCGauntlet(Player player, NPC target, Projectile projectile, ref NPC.HitModifiers modifiers, bool charged)
+    public override void GauntletModifyHitNPC(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, ref NPC.HitModifiers modifiers, bool charged)
     {
         if (charged && !SuperCharged && !UberCharged)
         {
             SoundEngine.PlaySound(SoundID.Item94);
             RedeDraw.SpawnRing(projectile.Center, new Color(0, 191, 255), 0.1f, 0.8f);
             target.immune[player.whoAmI] = 10;
-            RedeHelper.NPCRadiusDamage(80, projectile, player.Guardian().GetGuardianDamage(Item.damage * 0.5f), 4f);
+            RedeHelper.NPCRadiusDamage(80, projectile, player.Guardian().GetGuardianDamage(Item.damage * 0.8f), 4f);
             
             projectile.Kill();
         }
@@ -290,6 +290,11 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
                 }
             }
         }
+    }
+    public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+    {
+        scale *= 1.2f;
+        return base.PreDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
     }
 }
 

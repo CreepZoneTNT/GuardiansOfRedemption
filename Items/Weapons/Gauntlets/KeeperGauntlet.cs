@@ -56,7 +56,6 @@ namespace GuardiansOfRedemption.Items.Weapons.Gauntlets
 			SoundEngine.PlaySound(CustomSounds.SwordClash, projectile.position);
 			RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, rot: Main.rand.NextFloat(MathHelper.PiOver4, 3 * MathHelper.PiOver4), tex: "Redemption/Textures/SwordClash");
 		}
-
 		public override void OnParryGauntlet(Player player, OrchidGuardian guardian, Entity aggressor, Projectile anchor)
 		{
 			player.AddBuff(BuffID.Swiftness, 300);	

@@ -101,7 +101,7 @@ Items: {
 		Tooltip: Charged punches have a chance of spawning healing eggs on hit
 	}
 
-	ChickenGauntlet_EggItem.DisplayName: egg
+	ChickenGauntlet_EggItem.DisplayName: Egg
 
 	KeeperGauntlet: {
 		DisplayName: Shadow's Grasp
@@ -143,11 +143,11 @@ Items: {
 	}
 
 	DragonleadQuarterstaff: {
-		DisplayName: Dragonlead Quarterstaff
+		DisplayName: Dragon Warrior's Bostaff
 		Tooltip:
 			'''
 			Performs a double spin attack when fully charged
-			Lobs a gravity-affected fireball after charge attacking
+			Releases a floating ember after charge attacking
 			'''
 	}
 
@@ -279,7 +279,7 @@ Items: {
 	}
 
 	DragonLeadStandard: {
-		DisplayName: Warlord's Standard
+		DisplayName: Warlord's Battle Banner
 		Tooltip:
 			'''
 			Fully charging increases {0} elemental damage by 5% and {1} elemental resistance by 10%
@@ -365,17 +365,26 @@ Items: {
 			Restores life on parry or block
 			'''
 	}
-}
+
+	JackhammerGauntlet: {
+		DisplayName: Jackhammer Gauntlet
+		Tooltip: ""
+	}
 
 	PrefixDummy: {
 		DisplayName: Prefix Dummy
 		Tooltip: ""
 	}
+}
 
-	JackhammerGauntlet: {
-		Tooltip: ""
-		DisplayName: Jackhammer Gauntlet
-	}
+PrefixDummy: {
+	DisplayName: Prefix Dummy
+	Tooltip: ""
+}
+
+JackhammerGauntlet: {
+	Tooltip: ""
+	DisplayName: Jackhammer Gauntlet
 }
 
 SpecialTooltips: {
@@ -413,6 +422,7 @@ Projectiles: {
 	MoonflareRune_Projectile.DisplayName: Moon
 	LaboratoryGauntletProjectile.DisplayName: Laboratory Gauntlet Projectile
 	GirusShield_DualcastBallProj.DisplayName: Dualcast Ball
+	DragonleadQuarterstaff_Projectile.DisplayName: Dragonlead Quarterstaff_ Projectile
 }
 
 Buffs: {

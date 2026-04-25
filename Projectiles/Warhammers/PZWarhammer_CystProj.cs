@@ -7,6 +7,7 @@ using OrchidMod.Content.Guardian;
 using Redemption;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
+using Redemption.Dusts;
 using Redemption.Globals;
 using Redemption.Rarities;
 using Terraria;
@@ -50,7 +51,7 @@ public class PZWarhammer_CystProj : OrchidModGuardianProjectile
 
         for (int i = 0; i < 15; i++)
         {
-            int dustIndex = Dust.NewDust(Projectile.Center - new Vector2(10), 20, 20, DustID.GreenBlood);
+            int dustIndex = Dust.NewDust(Projectile.Center - new Vector2(10), 20, 20, ModContent.DustType<SludgeDust>());
         }
     }
 
@@ -69,14 +70,14 @@ public class PZWarhammer_CystProj : OrchidModGuardianProjectile
         if (latchedNPC != null && latchedNPC.active && !latchedNPC.friendly)
         {
             Projectile.Center = latchedNPC.Center + Offset;
-            if (Main.rand.NextBool(12)) Dust.NewDustDirect(Projectile.Center - new Vector2(10), 20, 20, DustID.GreenBlood);
+            if (Main.rand.NextBool(12)) Dust.NewDustDirect(Projectile.Center - new Vector2(10), 20, 20, ModContent.DustType<SludgeDust>());
         }
         if (!latchedNPC.active)
         {
             SoundEngine.PlaySound(SoundID.NPCDeath22, Projectile.position);
             for (int i = 0; i < 25; i++)
             {
-                Dust.NewDustDirect(Projectile.Center - new Vector2(10), 20, 20, DustID.GreenBlood);
+                Dust.NewDustDirect(Projectile.Center - new Vector2(10), 20, 20, ModContent.DustType<SludgeDust>());
             }
             Projectile.Kill();
         }
@@ -91,7 +92,7 @@ public class PZWarhammer_CystProj : OrchidModGuardianProjectile
             SoundEngine.PlaySound(SoundID.NPCDeath22, Projectile.position);
             for (int i = 0; i < 15; i++)
             {
-                int dustIndex = Dust.NewDust(Projectile.Center - new Vector2(10), 20, 20, DustID.GreenBlood);
+                int dustIndex = Dust.NewDust(Projectile.Center - new Vector2(10), 20, 20, ModContent.DustType<SludgeDust>());
             }
             Projectile.Kill();
         }

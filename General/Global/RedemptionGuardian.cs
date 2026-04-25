@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+  using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using GuardiansOfRedemption.Items.Weapons.Gauntlets;
@@ -17,7 +17,6 @@ using Redemption.Globals;
 using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Misc;
 using Redemption.Projectiles.Ranged;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
