@@ -58,7 +58,7 @@ Items: {
 		DisplayName: Universal Hammer
 		Tooltip:
 			'''
-			Shoots a piercing hologram on swing at the cost of charge
+			Shoots a piercing hologram on swing
 			Pierces infinitely and leaves behind holograms in flight
 			'Capable of hitting any nail, even digital or theoretical!'
 			'''
@@ -382,6 +382,7 @@ Projectiles: {
 	ThornQuarterstaff_Projectile.DisplayName: Thorn Quarterstaff_ Projectile
 	LaboratoryGauntletProjectile.DisplayName: Laboratory Gauntlet Projectile
 	GirusShield_DualcastBallProj.DisplayName: Dualcast Ball
+	XeniumShield_WaveProj.DisplayName: Xenium Shield_ Wave Proj
 }
 
 Buffs: {

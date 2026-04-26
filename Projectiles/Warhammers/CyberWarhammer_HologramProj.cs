@@ -76,10 +76,11 @@ public class CyberWarhammer_HologramProj : OrchidModGuardianProjectile
     public override bool OrchidPreDraw(SpriteBatch spriteBatch, ref Color lightColor)
     {
         Texture2D texture = TextureAssets.Projectile[Projectile.type].Value; 
+        SpriteEffects effects = Projectile.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
         for (int i = 0; i < OldPosition.Count; i++)
         {		
             Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length);
-            spriteBatch.Draw(texture, OldPosition[i] - Main.screenPosition, null, color, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, SpriteEffects.None, 0);        
+            spriteBatch.Draw(texture, OldPosition[i] - Main.screenPosition, null, color, Projectile.rotation, texture.Size() * 0.5f, Projectile.scale, effects, 0);        
         }
         return true;
     }
