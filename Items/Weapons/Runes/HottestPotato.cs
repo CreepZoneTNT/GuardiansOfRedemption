@@ -22,6 +22,11 @@ namespace GuardiansOfRedemption.Items.Weapons.Runes
 {
     internal class HottestPotato : OrchidModGuardianRune
     {
+        public Player holder;
+        public override void SetStaticDefaults()
+        {
+            ElementID.ItemExplosive[Type] = true;
+        }
         public override void SafeSetDefaults()
         {
             Item.damage = 1;

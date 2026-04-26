@@ -98,10 +98,10 @@ Items: {
 
 	ChickenGauntlet: {
 		DisplayName: Haymaker's Haymaker
-		Tooltip: Slaying a foe with a charged punch has a chance to produce healing eggs that grant Well Fed for 10 seconds
+		Tooltip: Charged punches have a chance of spawning healing eggs on hit
 	}
 
-	ChickenGauntlet_EggItem.DisplayName: egg
+	ChickenGauntlet_EggItem.DisplayName: Egg
 
 	KeeperGauntlet: {
 		DisplayName: Shadow's Grasp
@@ -143,11 +143,11 @@ Items: {
 	}
 
 	DragonleadQuarterstaff: {
-		DisplayName: Dragonlead Quarterstaff
+		DisplayName: Dragon Warrior's Bostaff
 		Tooltip:
 			'''
 			Performs a double spin attack when fully charged
-			Lobs a gravity-affected fireball after charge attacking
+			Releases a floating ember after charge attacking
 			'''
 	}
 
@@ -279,7 +279,7 @@ Items: {
 	}
 
 	DragonLeadStandard: {
-		DisplayName: Warlord's Standard
+		DisplayName: Warlord's Battle Banner
 		Tooltip:
 			'''
 			Fully charging increases {0} elemental damage by 5% and {1} elemental resistance by 10%
@@ -352,16 +352,55 @@ Items: {
 		DisplayName: HP-4 Caller
 	}
 
+	MoonflareRune: {
+		DisplayName: Moonflare Rune
+		Tooltip: Summons a moon that grows in power the fuller it gets
+	}
+
+	ProtectiveAmulet: {
+		DisplayName: Protective Amulet
+		Tooltip:
+			'''
+			10% increased parry and block duration
+			Restores life on parry or block
+			'''
+	}
+
+	JackhammerGauntlet: {
+		DisplayName: Jackhammer Gauntlet
+		Tooltip: ""
+	}
+
 	PrefixDummy: {
 		DisplayName: Prefix Dummy
 		Tooltip: ""
 	}
-
-	JackhammerGauntlet: {
-		Tooltip: ""
-		DisplayName: Jackhammer Gauntlet
-	}
 }
+
+PrefixDummy: {
+	DisplayName: Prefix Dummy
+	Tooltip: ""
+}
+
+JackhammerGauntlet: {
+	Tooltip: ""
+	DisplayName: Jackhammer Gauntlet
+}
+
+SpecialTooltips: {
+	CommonGuardGreathelm:
+		'''
+		'A heavy bucket helm of Anglon's Common Guard, scavenged by skeletons.
+		The Common Guard serves only the rich and elite, and protects them with their life.'
+		'''
+	TestingTooltip: Big bumx
+}
+
+ArmorSetBonus.CommonGuardGreathelm:
+	'''
+	4 defense
+	5% increased opposing damage
+	'''
 
 Projectiles: {
 	CosmosChain_StarProj.DisplayName: Astral Twinklestar
@@ -371,17 +410,19 @@ Projectiles: {
 	LivingGauntlet_SeedProj.DisplayName: Punchroot Seed
 	ChickenGauntlet_EggProj.DisplayName: Healing Egg
 	Hardlight_ParryDrone.DisplayName: Parry Drone Mk.I
-	PureIronStandard_IceShardProj.DisplayName: Pure Iron Standard_ Ice Shard Proj
-	JanitorQuarterstaff_ThrownProj.DisplayName: Janitor Quarterstaff_ Thrown Proj
-	UraniumQuarterstaff_RealisticExplosionProj.DisplayName: Uranium Quarterstaff_ Realistic Explosion Proj
+	PureIronStandard_IceShardProj.DisplayName: Ice Shard
+	JanitorQuarterstaff_ThrownProj.DisplayName: Mop
+	UraniumQuarterstaff_RealisticExplosionProj.DisplayName: KABOOM
 	HottestPotato_Projectile.DisplayName: Hottest Potato
 	XeniumShield_Projectile.DisplayName: Xenium Helix
 	XeniumShield_ProjectileTrail.DisplayName: Xenium Helix
 	PZWarhammer_CloudProj.DisplayName: Infectious Cyst
 	PZWarhammer_CystProj.DisplayName: Toxic Cloud
-	ThornQuarterstaff_Projectile.DisplayName: Thorn Quarterstaff_ Projectile
+	ThornQuarterstaff_Projectile.DisplayName: Bramble
+	MoonflareRune_Projectile.DisplayName: Moon
 	LaboratoryGauntletProjectile.DisplayName: Laboratory Gauntlet Projectile
 	GirusShield_DualcastBallProj.DisplayName: Dualcast Ball
+	DragonleadQuarterstaff_Projectile.DisplayName: Dragonlead Quarterstaff_ Projectile
 	XeniumShield_WaveProj.DisplayName: Xenium Shield_ Wave Proj
 }
 
@@ -401,12 +442,6 @@ Buffs: {
 		DisplayName: Daerel Quarterstaff Buff
 	}
 }
-
-SpecialTooltips.CommonGuardGreathelm:
-	'''
-	'A heavy bucket helm of Anglon's Common Guard, scavenged by skeletons.
-	The Common Guard serves only the rich and elite, and protects them with their life.'
-	'''
 
 Cutscene: {
 	Erhan: {

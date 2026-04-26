@@ -1,20 +1,22 @@
-using System.Collections.Generic;
+  using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using GuardiansOfRedemption.Items.Weapons.Gauntlets;
 using GuardiansOfRedemption.Items.Weapons.Standards;
 using GuardiansOfRedemption.Projectiles.Armor;
 using Microsoft.Xna.Framework;
+using MonoMod.RuntimeDetour;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
+using OrchidMod.Content.Guardian.Misc;
 using Redemption;
 using Redemption.Buffs.Cooldowns;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Globals;
-using Redemption.Projectiles.Ranged;
 using Redemption.Projectiles.Magic;
 using Redemption.Projectiles.Misc;
+using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -41,7 +43,9 @@ public class RedemptionGuardian : ModPlayer
     public bool GuardianHeavyGuard;
     public bool GuardianHardlight;
     public bool GuardianCommonGuard;
-    
+
+    public bool GuardianProtectiveAmulet;
+
     public bool GuardianSpikeNuclear;
     
     public bool GuardianXenomiteChain;
@@ -69,7 +73,9 @@ public class RedemptionGuardian : ModPlayer
 
         GuardianHeavyGuard = false;
         GuardianHardlight = false;
-        
+
+        GuardianProtectiveAmulet = false;
+
         GuardianSpikeNuclear = false;
     
         GuardianXenomiteChain = false;
@@ -159,6 +165,8 @@ public class RedemptionGuardian : ModPlayer
         if (GuardianDragonLeadStandard && GuardianDragonLeadStandardCooldown == 0 && proj.owner == Player.whoAmI && proj.ModProjectile is not DragonSkullFlames_Proj)
             SpawnDragonLeadStandardFire(target, Guardian.GetGuardianDamage(proj.damage * 0.4f));
     }
+
+    
 
     public void SpawnPureIronStandardCrystals(NPC target, int damage) {
         DustHelper.DrawCircle(target.Center, DustID.IceTorch, 1, 4, 4, nogravity: true);

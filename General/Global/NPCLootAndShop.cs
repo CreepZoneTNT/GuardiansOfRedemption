@@ -7,6 +7,8 @@ using Redemption.Globals;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Thorn;
+using Redemption.NPCs.Bosses.PatientZero;
+using Redemption.NPCs.Minibosses.EaglecrestGolem;
 using Redemption.NPCs.FowlMorning;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.NPCs.Lab.Janitor;
@@ -35,11 +37,17 @@ public class NPCLootAndShop : GlobalNPC
         if (npc.type == ModContent.NPCType<Thorn>())
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<ThornQuarterstaff>(), 3));
 
+        if (npc.type == ModContent.NPCType<PZ>())
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<PZWarhammer>(), 4));
+
         if (npc.type == ModContent.NPCType<SkeletonWarden>())
             npcLoot.Add(new CommonDrop(ModContent.ItemType<SkeletonWardenShield>(), 40, chanceNumerator: 3));
 
         if (npc.type == ModContent.NPCType<Haymaker>())
             npcLoot.Add(new CommonDrop(ModContent.ItemType<ChickenGauntlet>(), 25));
+
+        if (npc.type == ModContent.NPCType<EaglecrestGolem>())
+            npcLoot.Add(new CommonDrop(ModContent.ItemType<EaglecrestShield>(), 1));
 
         /*if (npc.type == ModContent.NPCType<Haymaker>())
             npcLoot.Add(new CommonDrop(ModContent.ItemType<ChickenGauntlet>(), 200));*/
@@ -92,5 +100,6 @@ public class ItemLoot : GlobalItem
     {
         if (item.type == ModContent.ItemType<ErhanBag>()) itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanStick>(), 3));
         if (item.type == ModContent.ItemType<ThornBag>()) itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThornQuarterstaff>(), 2));
+        if (item.type == ModContent.ItemType<PZBag>()) itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PZWarhammer>(), 4));
     }
 }
