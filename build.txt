@@ -1,4 +1,4 @@
 displayName = Guardians of Redemption
 author = GildedWyvern, CreepZoneTNT
 version = 0.1
-modReferences = OrchidMod, Redemption
+modReferences = OrchidMod, Redemption, ParticleLibrary, CollisionLib

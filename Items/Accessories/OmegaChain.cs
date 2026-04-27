@@ -29,8 +29,11 @@ public class OmegaChain : OrchidModGuardianEquipable
         RedemptionGuardian addonPlayer = player.GetModPlayer<RedemptionGuardian>();
         if (player == Main.LocalPlayer)
         {
-            modPlayer.GuardianChain = 192;
-            modPlayer.GuardianChainTexture = Texture + "_Chain";
+			if (modPlayer.GuardianChain < 96)
+			{
+				modPlayer.GuardianChain = 96;
+				modPlayer.GuardianChainTexture = Texture + "_Chain";
+			}
          
             addonPlayer.GuardianOmegaChain = true;
             

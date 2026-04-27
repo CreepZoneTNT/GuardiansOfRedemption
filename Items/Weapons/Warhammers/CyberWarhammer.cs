@@ -5,6 +5,7 @@ using GuardiansOfRedemption.Projectiles.Warhammers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
+using OrchidMod.Common.ModObjects;
 using OrchidMod.Content.Guardian;
 using OrchidMod.Utilities;
 using Redemption;
@@ -40,13 +41,14 @@ public class CyberWarhammer : OrchidModGuardianHammer
         Item.rare = ItemRarityID.LightPurple;
         Item.UseSound = SoundID.DD2_MonkStaffSwing;
         Item.knockBack = 8f;
-        Item.shootSpeed = 12f;
+        Item.shootSpeed = 18f;
         Item.damage = 174;
         Item.useTime = 20;
         Range = 60;
-        SwingChargeGain = 0.8f;
-        ReturnSpeed = 1.5f;
-        BlockDuration = 180;
+        GuardStacks = 1;
+        SlamStacks = 1;
+        ChargeRate = 0.25f;
+        BlockDuration = 160;
         Penetrate = true;
         TileCollide = false;
     }
@@ -56,9 +58,20 @@ public class CyberWarhammer : OrchidModGuardianHammer
         projectile.light = 0.5f;
         if (projectile.ModProjectile is GuardianHammerAnchor anchor)
         {
-            if (projectile.timeLeft < 598 && anchor.range % 10 == 0)
+            if ((projectile.timeLeft < 598 && anchor.range % 10 == 0) || (anchor.BlockDuration > 0 && anchor.BlockDuration % 80 == 0))
             {
-                Projectile hologram = Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.position, Vector2.Zero, ModContent.ProjectileType<CyberWarhammer_HologramProj>(), guardian.GetGuardianDamage(projectile.damage * 0.25f), projectile.knockBack, projectile.owner, projectile.rotation, projectile.direction, (anchor.WeakThrow ? 0.25f : 1.2f * projectile.velocity.Length() / 30f) * (projectile.velocity.X > 0 ? 1 : -1));
+                Projectile hologram = Projectile.NewProjectileDirect(
+                    projectile.GetSource_FromThis(), 
+                    projectile.position, 
+                    (anchor.BlockDuration != 0 ? Vector2.UnitX.RotatedBy(MathHelper.TwoPi / 8f * ((int)(anchor.BlockDuration / 10) % 8) * projectile.direction) * Item.shootSpeed : Vector2.Zero),
+                    ModContent.ProjectileType<CyberWarhammer_HologramProj>(), 
+                    guardian.GetGuardianDamage(Item.damage * 0.25f), 
+                    projectile.knockBack, 
+                    projectile.owner, 
+                    projectile.rotation, 
+                    projectile.direction, 
+                    (anchor.WeakThrow ? 0.25f : 1.2f * projectile.velocity.Length() / 30f) * (projectile.velocity.X > 0 ? 1 : -1)
+                );
                 hologram.scale = projectile.scale;
                 hologram.rotation = projectile.rotation;
             }
@@ -75,28 +88,34 @@ public class CyberWarhammer : OrchidModGuardianHammer
     {
         SoundEngine.PlaySound(SoundID.Item15, projectile.Center);
         Vector2 direction = Vector2.Normalize(Main.MouseWorld - projectile.Center);
-        if (guardian.GuardianItemCharge - 45f >= 0) {
-            Projectile hologram = Projectile.NewProjectileDirect(
-                projectile.GetSource_FromThis(), 
-                projectile.Center + player.velocity, 
-                direction * Item.shootSpeed * (!FullyCharged ? 0.75f : 1.5f), 
-                ModContent.ProjectileType<CyberWarhammer_HologramProj>(), 
-                guardian.GetGuardianDamage(projectile.damage * 0.5f * (FullyCharged ? 2f : 1)), 
-                projectile.knockBack, 
-                projectile.owner, 
-                projectile.rotation, 
-                projectile.direction, 
-                0.6f
-            );
-            hologram.scale = projectile.scale;
-            hologram.rotation = projectile.rotation;
-            if (FullyCharged) ((CyberWarhammer_HologramProj)hologram.ModProjectile).ShouldDrawTrail = true;
-            guardian.GuardianItemCharge -= 45f;
-        }
+        Projectile hologram = Projectile.NewProjectileDirect(
+            projectile.GetSource_FromThis(), 
+            player.Center + player.velocity + direction * (96f + guardian.GuardianChain), 
+            direction * Item.shootSpeed, 
+            ModContent.ProjectileType<CyberWarhammer_HologramProj>(), 
+            guardian.GetGuardianDamage(Item.damage * 0.5f), 
+            projectile.knockBack, 
+            projectile.owner, 
+            projectile.rotation, 
+            projectile.direction, 
+            0.2f
+        );
+        hologram.scale = projectile.scale;
+        hologram.rotation = projectile.rotation;
+        DustHelper.DrawCircle(player.Center + player.velocity + direction * (96f + guardian.GuardianChain), DustID.Electric, 1f, nogravity: true);
+        ((CyberWarhammer_HologramProj)hologram.ModProjectile).ShouldDrawTrail = true;
+    }
+
+
+    public override void OnMeleeHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged)
+    {
+        DustHelper.DrawCircle(target.Center, DustID.Electric, 2f, nogravity: true);
+        SoundEngine.PlaySound(SoundID.NPCHit53 with {Volume = 0.2f}, projectile.Center);
     }
 
     public override void OnMeleeHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged)
     {
+        Dust.NewDustDirect(target.position, target.width, target.height, DustID.Electric);
         target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 180);
     }
 

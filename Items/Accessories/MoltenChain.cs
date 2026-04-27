@@ -26,9 +26,11 @@ public class MoltenChain : OrchidModGuardianEquipable
         {
             player.magmaStone = true;
         
-            modPlayer.GuardianChain = 64;
-            modPlayer.GuardianChainTexture = Texture + "_Chain";
-            
+			if (modPlayer.GuardianChain < 48f)
+			{
+				modPlayer.GuardianChain = 48f;
+				modPlayer.GuardianChainTexture = Texture + "_Chain";
+			}
         }
     }
 

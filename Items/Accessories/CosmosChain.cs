@@ -36,7 +36,7 @@ public class CosmosChain : OrchidModGuardianEquipable
         {
             addonPlayer.GuardianCosmosChain = true;
         
-            float chainDistance = Math.Clamp((Main.MouseWorld - player.Center).Length(), 16f, 960f);
+            float chainDistance = Math.Clamp((Main.MouseWorld - player.Center).Length(), 16f, 640f);
             modPlayer.GuardianChain = chainDistance;
             modPlayer.GuardianChainTexture = Texture + "_Chain";
             

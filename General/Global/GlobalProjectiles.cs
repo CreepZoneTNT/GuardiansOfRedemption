@@ -72,7 +72,7 @@ public class GlobalProjectiles : GlobalProjectile
                     {
                         ProjTimer++;
                         Vector2 armPosition = owner.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, MathHelper.Pi - (guardian.GuardianItemCharge * 0.006f + (float)Math.Sin(MathHelper.Pi / 60f * projectile.ai[1]) * (3f + guardian.GuardianItemCharge * 0.006f)) * projectile.spriteDirection) - (new Vector2(owner.Center.X, owner.Center.Y) - new Vector2(owner.Center.X, owner.Center.Y).Floor());
-                        if (projectile.ai[1] < 0)
+                        if (projectile.ai[1] <= 0)
                         {
                             if (addonGuardian.GuardianCosmosChain)
                             { 

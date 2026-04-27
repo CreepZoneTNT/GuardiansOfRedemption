@@ -27,8 +27,11 @@ public class XenomiteChain : OrchidModGuardianEquipable
         RedemptionGuardian addonPlayer = player.GetModPlayer<RedemptionGuardian>();
         if (player == Main.LocalPlayer)
         {
-            modPlayer.GuardianChain = 128;
-            modPlayer.GuardianChainTexture = Texture + "_Chain";
+			if (modPlayer.GuardianChain < 64f)
+			{
+				modPlayer.GuardianChain = 64f;
+				modPlayer.GuardianChainTexture = Texture + "_Chain";
+			}
          
             addonPlayer.GuardianXenomiteChain = true;   
             
