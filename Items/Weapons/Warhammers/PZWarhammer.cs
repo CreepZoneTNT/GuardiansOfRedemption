@@ -29,9 +29,9 @@ public class PZWarhammer : OrchidModGuardianHammer
         Item.shootSpeed = 20f;
         Item.damage = 770;
         Item.useTime = 50;
-        Range = 60;
+        Range = 50;
         SlamStacks = 2;
-        ReturnSpeed = 0.6f;
+        ReturnSpeed = 0.9f;
         BlockDuration = 480;
         // Item.Redemption().TechnicallyHammer = true;
         Item.Redemption().CanSwordClash = true;

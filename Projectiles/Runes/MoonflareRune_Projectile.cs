@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using GuardiansOfRedemption.General;
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Content.Guardian;
@@ -53,8 +54,6 @@ namespace GuardiansOfRedemption.Projectiles.Runes
         {
             return Color.White;
         }
-
-
         public override void FirstFrame()
         {
             OldPosition = new List<Vector2>();
@@ -75,22 +74,16 @@ namespace GuardiansOfRedemption.Projectiles.Runes
             OldPosition.Add(Projectile.Center);
             OldRotation.Add(Projectile.rotation);
 
-            if (Projectile.frame == 0)
+            float damageMult = Projectile.frame switch
             {
-                Projectile.damage = (int)(Projectile.damage * 0.5f);
-            }
-            if (Projectile.frame == 1 || Projectile.frame == 7)
-            {
-                Projectile.damage = (int)(Projectile.damage * 0.75f);
-            }
-            if (Projectile.frame == 3 || Projectile.frame == 5)
-            {
-                Projectile.damage = (int)(Projectile.damage * 1.25f);
-            }
-            if (Projectile.frame == 4)
-            {
-                Projectile.damage = (int)(Projectile.damage * 1.5f);
-            }
+                0 => 0.5f,
+                1 or 7 => 0.75f,
+                3 or 5 => 1.25f,
+                4 => 1.5f,
+                _ => 1f,
+            };
+
+            Projectile.damage = Owner.Guardian().GetGuardianDamage(baseDamage * damageMult);
 
             if (++Projectile.frameCounter >= 180)
             {

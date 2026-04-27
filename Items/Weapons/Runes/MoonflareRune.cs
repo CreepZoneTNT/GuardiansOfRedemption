@@ -67,7 +67,7 @@ namespace GuardiansOfRedemption.Items.Weapons.Runes
 
         public override void Activate(Player player, OrchidGuardian guardian, int type, int damage, float knockback, int critChance, int duration, float distance, int amount)
         {
-            NewRuneProjectiles(player, guardian, duration, type, damage, knockback, critChance, distance, 1, 90f);
+            NewRuneProjectiles(player, guardian, duration, type, damage + (amount * 8), knockback, critChance, distance, 1, 90f);
 
         }
         public override void AddRecipes()

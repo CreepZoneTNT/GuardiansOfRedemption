@@ -375,6 +375,16 @@ Items: {
 		DisplayName: Prefix Dummy
 		Tooltip: ""
 	}
+
+	KS3Rune: {
+		Tooltip:
+			'''
+			Summons two hologram bodyguards
+			Reinforcing increases damage
+			'Beep boop beep!'
+			'''
+		DisplayName: Cyberspace Projector
+	}
 }
 
 PrefixDummy: {
@@ -420,9 +430,12 @@ Projectiles: {
 	PZWarhammer_CystProj.DisplayName: Toxic Cloud
 	ThornQuarterstaff_Projectile.DisplayName: Bramble
 	MoonflareRune_Projectile.DisplayName: Moon
-	LaboratoryGauntletProjectile.DisplayName: Laboratory Gauntlet Projectile
+	LaboratoryGauntletProjectile.DisplayName: Giga-Impact
 	GirusShield_DualcastBallProj.DisplayName: Dualcast Ball
-	DragonleadQuarterstaff_Projectile.DisplayName: Dragonlead Quarterstaff_ Projectile
+	DragonleadQuarterstaff_Projectile.DisplayName: Ember
+	XeniumShield_WaveProj.DisplayName: Xenium Wave
+	WastelandWarhammer_Blood.DisplayName: Irradiated Blood
+	KS3Rune_Proj.DisplayName: Hologram Man Stan
 }
 
 Buffs: {
