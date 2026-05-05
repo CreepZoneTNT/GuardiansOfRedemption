@@ -24,6 +24,7 @@ namespace GuardiansOfRedemption.Items.Weapons.Runes
 {
     internal class MoonflareRune : OrchidModGuardianRune
     {
+        public static bool Boosted = false;
         public override void SetStaticDefaults()
         {
             ElementID.ItemFire[Type] = true;
@@ -46,7 +47,7 @@ namespace GuardiansOfRedemption.Items.Weapons.Runes
 
             RuneCost = 2;
             RuneNumber = 1;
-            RuneDuration = 27 * 60;
+            RuneDuration = 24 * 60;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -67,6 +68,11 @@ namespace GuardiansOfRedemption.Items.Weapons.Runes
 
         public override void Activate(Player player, OrchidGuardian guardian, int type, int damage, float knockback, int critChance, int duration, float distance, int amount)
         {
+            if (amount > 1)
+            { Boosted = true; }
+            else
+            { Boosted = false; }
+
             NewRuneProjectiles(player, guardian, duration, type, damage + (amount * 8), knockback, critChance, distance, 1, 90f);
 
         }

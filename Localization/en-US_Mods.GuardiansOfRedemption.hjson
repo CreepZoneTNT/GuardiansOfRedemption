@@ -269,6 +269,15 @@ Items: {
 			'''
 	}
 
+	ChickenStandard: {
+		Tooltip:
+			'''
+			Boosts natural health regen
+			While reinforced, you occasionally lay healing eggs, as well as laying a lot of eggs upon consuming a healing item
+			'''
+		DisplayName: Bock Bock Banner
+	}
+
 	PureIronStandard: {
 		DisplayName: Iron Realm's Crest
 		Tooltip:
@@ -385,6 +394,16 @@ Items: {
 			'''
 		DisplayName: Cyberspace Projector
 	}
+
+	WastelandShield: {
+		Tooltip:
+			'''
+			Extremely short range
+			Shoots a burst of three bullets on slam
+			'From Intrusion, with love'
+			'''
+		DisplayName: Shield Turret
+	}
 }
 
 PrefixDummy: {
@@ -403,7 +422,18 @@ SpecialTooltips: {
 		'A heavy bucket helm of Anglon's Common Guard, scavenged by skeletons.
 		The Common Guard serves only the rich and elite, and protects them with their life.'
 		'''
-	TestingTooltip: Big bumx
+	ChickenStandard:
+		'''
+		'The Fowl Morning is a tenacious militia led by the foul Fowl Emperor, but he has not always held this title. 
+		Long ago, the Chicken Empire was once ruled by the Mighty King Chicken, a mystical beast of humanlike intelligence. 
+		As charismatic as he was, the King was ultimately a harmless coward, and was easily usurped by the Fowl Emperor 
+		following an uprising among the Rooster Boosters. Although the Emperor has been largely successful in garnering 
+		the support of his people, there remains a small faction of chickens who remain loyal to the Mighty King. Banners 
+		like this are held by the rebels as a symbol of their allegiance, and it is not uncommon for a chicken to rest 
+		atop the pole to stand guard. Followers of the King are forced to hide their true allegiance in order to 
+		participate in the Emperor's military. However, if presented with their leader, they may be inspired to 
+		present their standard.'
+		'''
 }
 
 ArmorSetBonus.CommonGuardGreathelm:
@@ -436,6 +466,7 @@ Projectiles: {
 	XeniumShield_WaveProj.DisplayName: Xenium Wave
 	WastelandWarhammer_Blood.DisplayName: Irradiated Blood
 	KS3Rune_Proj.DisplayName: Hologram Man Stan
+	WastelandShield_Proj.DisplayName: Bullet
 }
 
 Buffs: {

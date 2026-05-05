@@ -1,4 +1,6 @@
 ﻿using GuardiansOfRedemption.Projectiles.Runes;
+using GuardiansOfRedemption.Projectiles.Shields;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
@@ -24,9 +26,11 @@ namespace GuardiansOfRedemption.Items.Weapons.Runes
 {
     internal class KS3Rune : OrchidModGuardianRune
     {
+        public static bool Boosted = false;
         public override void SetStaticDefaults()
         {
             ElementID.ItemThunder[Type] = true;
+
         }
         public override void SafeSetDefaults()
         {
@@ -51,9 +55,9 @@ namespace GuardiansOfRedemption.Items.Weapons.Runes
             int damageEqualAmount;
 
             if (amount > 2)
-            { damageEqualAmount = damage + (amount * 20); }
+            { damageEqualAmount = damage + (amount * 20); Boosted = true; }
             else
-            { damageEqualAmount = damage; }
+            { damageEqualAmount = damage; Boosted = false; }
             
             NewRuneProjectiles(player, guardian, duration, type, damageEqualAmount, knockback, critChance, distance, 2, 90f);
         }

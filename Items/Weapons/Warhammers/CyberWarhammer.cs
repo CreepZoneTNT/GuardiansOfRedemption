@@ -47,7 +47,7 @@ public class CyberWarhammer : OrchidModGuardianHammer
         Range = 60;
         GuardStacks = 1;
         SlamStacks = 1;
-        ChargeRate = 0.25f;
+        //ChargeRate = 0.25f;
         BlockDuration = 160;
         Penetrate = true;
         TileCollide = false;

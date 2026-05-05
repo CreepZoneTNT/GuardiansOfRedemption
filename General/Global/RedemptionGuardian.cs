@@ -34,6 +34,7 @@ public class RedemptionGuardian : ModPlayer
 
     public int HardlightParryCooldown;
 
+    public bool GuardianChickenStandard;
     public bool GuardianPureIronStandard;
     public int GuardianPureIronStandardCooldown;
     public bool GuardianDragonLeadStandard;
@@ -62,12 +63,12 @@ public class RedemptionGuardian : ModPlayer
     public override void ResetEffects()
     {
         if (EaglecrestShieldTarget != null && !EaglecrestShieldTarget.active) EaglecrestShieldTarget = null;
-        
+
         GuardianPureIronStandardCooldown--;
         if (GuardianPureIronStandardCooldown < 0) GuardianPureIronStandardCooldown = 0;
         GuardianDragonLeadStandardCooldown--;
         if (GuardianDragonLeadStandardCooldown < 0) GuardianDragonLeadStandardCooldown = 0;
-        
+
         HardlightParryCooldown--;
         if (HardlightParryCooldown < 0) HardlightParryCooldown = 0;
 
@@ -85,6 +86,7 @@ public class RedemptionGuardian : ModPlayer
 
     public override void PostUpdateMiscEffects()
     {
+
         if (EaglecrestShieldTarget != null && !EaglecrestShieldTarget.active) EaglecrestShieldTarget = null;
         HardlightParryCooldown--;
         if (HardlightParryCooldown < 0) HardlightParryCooldown = 0;
@@ -138,8 +140,6 @@ public class RedemptionGuardian : ModPlayer
         //     b = 0.6f;
         // }
     }
-
-
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
     {
         if (GuardianPureIronStandard) {
@@ -165,8 +165,6 @@ public class RedemptionGuardian : ModPlayer
         if (GuardianDragonLeadStandard && GuardianDragonLeadStandardCooldown == 0 && proj.owner == Player.whoAmI && proj.ModProjectile is not DragonSkullFlames_Proj)
             SpawnDragonLeadStandardFire(target, Guardian.GetGuardianDamage(proj.damage * 0.4f));
     }
-
-    
 
     public void SpawnPureIronStandardCrystals(NPC target, int damage) {
         DustHelper.DrawCircle(target.Center, DustID.IceTorch, 1, 4, 4, nogravity: true);
@@ -199,7 +197,6 @@ public class RedemptionGuardian : ModPlayer
         SoundEngine.PlaySound(SoundID.Item34, target.Center);
         GuardianDragonLeadStandardCooldown = 12;
     }
-
     public override void ProcessTriggers(TriggersSet triggersSet)
     {
         if (Redemption.Redemption.RedeSpecialAbility.JustPressed && Player.active && !Player.dead)

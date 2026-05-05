@@ -49,7 +49,7 @@ public class ChickenGauntlet : OrchidModGuardianGauntlet
         {
             SoundEngine.PlaySound(SoundID.Item129);
             Vector2 position = target.Center + Vector2.UnitY * target.height * 0.5f;
-            Vector2 velocity = Vector2.UnitY.RotatedByRandom(MathHelper.Pi / 3) * -20;
+            Vector2 velocity = Vector2.UnitY.RotatedByRandom(MathHelper.Pi / 3) * -5;
             for (int i = 0; i < 5; i++) Dust.NewDustPerfect(position, DustID.BeachShell, velocity.RotatedByRandom(MathHelper.Pi / 12) * 0.5f);
             Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), position, velocity, ModContent.ProjectileType<ChickenGauntlet_EggProj>(), 0, 0, projectile.owner);
         }

@@ -99,8 +99,7 @@ public class GoRHooks : ModSystem
             {
                 player.Heal(3);
                 ProtectiveAmuletTriggered = true;
-            } 
-
+            }
         }
         orig(self, aggressor);
     }
@@ -109,6 +108,7 @@ public class GoRHooks : ModSystem
         RedemptionGuardian addonGuardian = self.Player.GetModPlayer<RedemptionGuardian>();
         if (forceReset || !self.GuardianStandardBuffer)
         {
+            addonGuardian.GuardianChickenStandard = false;
             addonGuardian.GuardianPureIronStandard = false;
             addonGuardian.GuardianPureIronStandardCooldown = 0;
             addonGuardian.GuardianDragonLeadStandard = false;

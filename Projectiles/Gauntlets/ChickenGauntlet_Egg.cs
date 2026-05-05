@@ -40,6 +40,7 @@ public class ChickenGauntlet_EggProj : OrchidModGuardianProjectile
 
 public class ChickenGauntlet_EggItem : ModItem
 {
+    public int goingBad = 0;
     public override LocalizedText Tooltip => LocalizedText.Empty;
     
     public override string Texture => "Redemption/Items/Weapons/PreHM/Ranged/ChickenEgg";
@@ -61,6 +62,19 @@ public class ChickenGauntlet_EggItem : ModItem
         Item.rare = ItemRarityID.White;
     }
 
+    public override void Update(ref float gravity, ref float maxFallSpeed)
+    {
+        if (goingBad <= 900)
+        {
+            goingBad += 1;
+        }
+        else
+        {
+            SoundEngine.PlaySound(SoundID.Item16);
+            Item.TurnToAir();
+            goingBad = 0;
+        }
+    }
     public override bool OnPickup(Player player)
     {
         SoundEngine.PlaySound(SoundID.Item2);
@@ -73,6 +87,11 @@ public class ChickenGauntlet_EggItem : ModItem
         }
         else player.Heal(8);
         player.AddBuff(BuffID.WellFed, 400);
+
+        for (int i = 0; i < 6; i++)
+        { 
+            Dust.NewDust(player.position, player.width, player.height, DustID.MothronEgg, player.velocity.X * 0.3f, player.velocity.Y * 0.3f, Scale: 2);
+        }
         return false;
     }
 }

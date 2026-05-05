@@ -1,4 +1,5 @@
 ﻿using GuardiansOfRedemption.General;
+using GuardiansOfRedemption.Items.Weapons.Runes;
 using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,7 +26,6 @@ namespace GuardiansOfRedemption.Projectiles.Runes
         public List<Vector2> OldPosition;
         public List<float> OldRotation;
         public Texture2D texture;
-        float SpinSpeed = 1f;
 
         public override void SetStaticDefaults()
         {
@@ -59,6 +59,10 @@ namespace GuardiansOfRedemption.Projectiles.Runes
             OldPosition = new List<Vector2>();
             OldRotation = new List<float>();
             texture = TextureAssets.Projectile[this.Type].Value;
+            if (MoonflareRune.Boosted)
+            {
+                Projectile.scale = 1.3f;
+            }
 
         }
 
@@ -67,7 +71,7 @@ namespace GuardiansOfRedemption.Projectiles.Runes
             Player owner = Owner;
             Vector2 pointToPlayer = Owner.Center - Projectile.Center;
             float rotation = pointToPlayer.ToRotation();
-            Spin(SpinSpeed);
+            Spin(1f);
             SetDistance(150f);
 
             Projectile.rotation = rotation;

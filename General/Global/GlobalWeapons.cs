@@ -1,11 +1,16 @@
-using System.Collections.Generic;
+using GuardiansOfRedemption.General.Global;
+using GuardiansOfRedemption.Items.Weapons.Standards;
+using GuardiansOfRedemption.Projectiles.Gauntlets;
+using Microsoft.Xna.Framework;
 using OrchidMod.Common;
 using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Guardian.Weapons.Gauntlets;
 using OrchidMod.Content.Guardian.Weapons.Misc;
 using OrchidMod.Content.Guardian.Weapons.Warhammers;
 using Redemption.BaseExtension;
+using Redemption.Dusts;
 using Redemption.Rarities;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -40,4 +45,20 @@ public class GlobalWeapons : GlobalItem
             }
         }
     }
+    /*public override void OnConsumeItem(Item item, Player player)
+    {   
+        if (item.healLife > 0) { 
+
+            if (player.RedemptionGuardian().GuardianChickenStandard)
+            {
+                int EggSplosion = item.healLife / 20;
+                for (int EggMinimum = 0; EggMinimum < EggSplosion; EggMinimum++)
+                {
+                Vector2 velocity = Vector2.UnitY.RotatedByRandom(MathHelper.Pi / 3) * -15;
+                Vector2 position = player.Center + Vector2.UnitY * player.height * 0.5f;
+                Projectile.NewProjectileDirect(player.GetSource_FromThis(), position, velocity, ModContent.ProjectileType<ChickenGauntlet_EggProj>(), 0, 0);
+                }
+            }
+        }
+    }*/
 }
