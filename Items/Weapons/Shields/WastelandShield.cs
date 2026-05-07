@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Guardian.Projectiles.Shields;
+using Redemption;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Tiles.Furniture.Lab;
@@ -25,17 +26,19 @@ public class WastelandShield : OrchidModGuardianShield
         Item.knockBack = 10f;
         Item.damage = 175;
         Item.rare = ItemRarityID.LightRed;
-        Item.useTime = 50;
+        Item.useTime = 40;
         Item.shootSpeed = 18f;
         distance = 32f;
-        slamDistance = 10f;
+        slamDistance = 15f;
         blockDuration = 480;
         shouldFlip = true;
     }
+
     public override void Slam(Player player, Projectile shield)
     {
         timer = 30;
     }
+
     public override void ExtraAIShield(Projectile shield) 
     {
         if (shield.owner == Main.myPlayer && shield.ModProjectile is GuardianShieldAnchor anchor)
@@ -44,8 +47,9 @@ public class WastelandShield : OrchidModGuardianShield
 
             if (timer % 10 == 0 && timer > 0)
             {
-                SoundEngine.PlaySound(SoundID.Item11);
+                SoundEngine.PlaySound(CustomSounds.Gun1);
                 Vector2 dir = Vector2.Normalize(Main.MouseWorld - Main.LocalPlayer.Center) * Item.shootSpeed;
+                Dust.NewDustDirect(shield.Center, 20, 20, DustID.Torch, dir.X * 0.4f, dir.Y * 0.4f);
                 Projectile newProjectile = Projectile.NewProjectileDirect(Item.GetSource_FromThis(), shield.Center, dir, ModContent.ProjectileType<WastelandShield_Proj>(), guardian.GetGuardianDamage(shield.damage / 2.5f), Item.knockBack / 5, Main.LocalPlayer.whoAmI);
                 newProjectile.rotation = (dir.ToRotation());
                 newProjectile.CritChance = (int)(Main.LocalPlayer.GetCritChance<GuardianDamageClass>() + Main.LocalPlayer.GetCritChance<GenericDamageClass>() + Item.crit);

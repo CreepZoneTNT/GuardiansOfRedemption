@@ -20,7 +20,7 @@ using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.Projectiles.Runes
 {
-    internal class MoonflareRune_Projectile : GuardianRuneProjectile
+    public class MoonflareRune_Projectile : GuardianRuneProjectile
     {
         public Player owner;
         public List<Vector2> OldPosition;

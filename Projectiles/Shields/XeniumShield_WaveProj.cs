@@ -18,7 +18,7 @@ using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.Projectiles.Shields;
 
-    internal class XeniumShield_WaveProj : OrchidModGuardianProjectile
+    public class XeniumShield_WaveProj : OrchidModGuardianProjectile
     {
 		public int TimeSpent = 0;
         Vector2 SpawnPosition;

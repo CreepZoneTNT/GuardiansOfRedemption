@@ -18,7 +18,7 @@ using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.Projectiles.Quarterstaves
 {
-    internal class DragonleadQuarterstaff_Projectile : OrchidModGuardianProjectile
+    public class DragonleadQuarterstaff_Projectile : OrchidModGuardianProjectile
     {
         public override string Texture => "Redemption/Empty";
         public override void SetStaticDefaults()
