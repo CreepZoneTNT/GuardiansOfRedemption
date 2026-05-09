@@ -1,5 +1,5 @@
 ﻿using GuardiansOfRedemption.General;
-using GuardiansOfRedemption.Items.Weapons.Runes;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Runes;
 using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

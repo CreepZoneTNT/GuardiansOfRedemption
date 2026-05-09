@@ -1,8 +1,8 @@
   using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using GuardiansOfRedemption.Items.Weapons.Gauntlets;
-using GuardiansOfRedemption.Items.Weapons.Standards;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Gauntlets;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Standards;
 using GuardiansOfRedemption.Projectiles.Armor;
 using Microsoft.Xna.Framework;
 using MonoMod.RuntimeDetour;

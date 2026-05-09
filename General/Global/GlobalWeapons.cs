@@ -1,5 +1,5 @@
 using GuardiansOfRedemption.General.Global;
-using GuardiansOfRedemption.Items.Weapons.Standards;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Standards;
 using GuardiansOfRedemption.Projectiles.Gauntlets;
 using Microsoft.Xna.Framework;
 using OrchidMod.Common;

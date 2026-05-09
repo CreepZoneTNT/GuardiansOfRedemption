@@ -1,8 +1,8 @@
-using GuardiansOfRedemption.Items.Weapons.Gauntlets;
-using GuardiansOfRedemption.Items.Weapons.Quarterstaves;
-using GuardiansOfRedemption.Items.Weapons.Shields;
-using GuardiansOfRedemption.Items.Weapons.Warhammers;
-using GuardiansOfRedemption.Items.Weapons.Standards;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Gauntlets;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Quarterstaves;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Shields;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Warhammers;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Standards;
 using OrchidMod.Utilities;
 using Redemption.Globals;
 using Redemption.Items.Usable;

@@ -1,5 +1,5 @@
 using GuardiansOfRedemption.Achievements;
-using GuardiansOfRedemption.Items.Weapons.Quarterstaves;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Quarterstaves;
 using GuardiansOfRedemption.Projectiles.Shields;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

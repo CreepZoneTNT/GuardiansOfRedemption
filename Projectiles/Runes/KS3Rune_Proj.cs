@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Content.Guardian;
 using OrchidMod.Utilities;
 using Redemption.Globals;
-using GuardiansOfRedemption.Items.Weapons.Runes;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Runes;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -44,6 +44,7 @@ namespace GuardiansOfRedemption.Projectiles.Runes
             Projectile.localNPCHitCooldown = 20;
             Main.projFrames[Projectile.type] = 14;
         }
+        
         public override bool? CanCutTiles()
         {
             return false;
@@ -56,14 +57,9 @@ namespace GuardiansOfRedemption.Projectiles.Runes
 
         public override bool SafeAI()
         {
-            Player owner = Owner;
-
-            TimeSpent++;
-            if (KS3Rune.Boosted)
-            { SetDistance(120 + (float)Math.Sin(TimeSpent * (MathHelper.Pi / 120f)) * 80f); }
-            else 
-            { SetDistance(90 + (float)Math.Sin(TimeSpent * (MathHelper.Pi / 120f)) * 50f); }
+            SetDistance(KS3Rune.Boosted ? 120 + (float)Math.Sin(TimeSpent * (MathHelper.Pi / 120f)) * 80f : 90 + (float)Math.Sin(TimeSpent * (MathHelper.Pi / 120f)) * 50f);
             
+            TimeSpent++;
 
             for (int i = 0; i < OldPosition.Count; i++)
             {
@@ -80,6 +76,7 @@ namespace GuardiansOfRedemption.Projectiles.Runes
                 OldPosition.RemoveAt(0);
                 OldRotation.RemoveAt(0);
             }
+
             if (++Projectile.frameCounter >= 3)
             {
                 Projectile.frameCounter = 0;
@@ -87,36 +84,17 @@ namespace GuardiansOfRedemption.Projectiles.Runes
                     Projectile.frame = 0;
             }
 
-                return true;
+            return true;
         }
         public override bool OrchidPreDraw(SpriteBatch spriteBatch, ref Color lightColor)
         {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            int frameHeight = texture.Height / 14;
 
-            if (Projectile.position.X < Owner.position.X)
-            {
-                Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, frameHeight * Projectile.frame, texture.Width, frameHeight), Projectile.GetAlpha(new Color(255, 255, 255, 0)), Projectile.rotation, new Vector2(texture.Width, frameHeight) * .5f, Vector2.One, SpriteEffects.FlipHorizontally, 0);
-            }
-            else if (Projectile.position.X > Owner.position.X)
-            { 
-                Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, frameHeight * Projectile.frame, texture.Width, frameHeight), Projectile.GetAlpha(new Color(255, 255, 255, 0)), Projectile.rotation, new Vector2(texture.Width, frameHeight) * .5f, Vector2.One, SpriteEffects.None, 0);
-            }
+            SpriteEffects effects = (Projectile.velocity.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None);
 
-            if (KS3Rune.Boosted)
-            {
-                Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, Projectile.height * 0.5f);
-                for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
-                {
-                    Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
-                    Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+            Rectangle frame = texture.Frame(1, 14, 0, Projectile.frame);
 
-                    if (Projectile.position.X < Owner.position.X)
-                        { Main.EntitySpriteDraw(texture, drawPos, new Rectangle(0, frameHeight * Projectile.frame, texture.Width, frameHeight), color, Projectile.rotation, new Vector2(texture.Width, frameHeight) * .5f, Vector2.One, SpriteEffects.FlipHorizontally, 0); }
-                    else if (Projectile.position.X > Owner.position.X)
-                        { Main.EntitySpriteDraw(texture, drawPos, new Rectangle(0, frameHeight * Projectile.frame, texture.Width, frameHeight), color, Projectile.rotation, new Vector2(texture.Width, frameHeight) * .5f, Vector2.One, SpriteEffects.None, 0); }
-                }
-            }
+            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, frame, lightColor, Projectile.rotation, frame.Size() * 0.5f, Projectile.scale, effects, 0f);            
             return false;
         }
     }

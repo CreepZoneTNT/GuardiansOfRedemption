@@ -405,6 +405,11 @@ Items: {
 		DisplayName: Shield Turret
 	}
 
+	SeedRune: {
+		Tooltip: ""
+		DisplayName: Seed Rune
+	}
+
 	WastelandStandard: {
 		Tooltip: ""
 		DisplayName: Fallout Banner

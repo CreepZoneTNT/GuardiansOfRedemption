@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using GuardiansOfRedemption.Items.Weapons.Warhammers;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Warhammers;
 using GuardiansOfRedemption.Projectiles.Accessories;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

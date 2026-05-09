@@ -1,6 +1,6 @@
 
 using System.Collections.Generic;
-using GuardiansOfRedemption.Items.Weapons.Quarterstaves;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Quarterstaves;
 using Microsoft.Xna.Framework;
 using OrchidMod.Content.Guardian;
 using Redemption;
