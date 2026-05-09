@@ -2,6 +2,7 @@ using GuardiansOfRedemption.Items.Weapons.Gauntlets;
 using GuardiansOfRedemption.Items.Weapons.Quarterstaves;
 using GuardiansOfRedemption.Items.Weapons.Shields;
 using GuardiansOfRedemption.Items.Weapons.Warhammers;
+using GuardiansOfRedemption.Items.Weapons.Standards;
 using OrchidMod.Utilities;
 using Redemption.Globals;
 using Redemption.Items.Usable;
@@ -20,14 +21,18 @@ using Terraria.ID;
 using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using GuardiansOfRedemption.Items.Weapons.Runes;
+using Redemption.Items.Placeable.Banners;
+using Redemption.BaseExtension;
 
 namespace GuardiansOfRedemption.General.Global;
 
 public class NPCLootAndShop : GlobalNPC
-{
-    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+{    public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
     {
+
         LeadingConditionRule nonExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+        
         if (npc.type == ModContent.NPCType<Erhan>())
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<ErhanStick>(), 3));
 
@@ -46,13 +51,12 @@ public class NPCLootAndShop : GlobalNPC
         if (npc.type == ModContent.NPCType<Haymaker>())
             npcLoot.Add(new CommonDrop(ModContent.ItemType<ChickenGauntlet>(), 25));
 
+        if (npc.type == ModContent.NPCType<ChickenBomber>() || npc.type == ModContent.NPCType<ChickenScratcher>() || npc.type == ModContent.NPCType<Haymaker>() || npc.type == ModContent.NPCType<HeadlessChicken>() || npc.type == ModContent.NPCType<RoosterBooster>())
+            npcLoot.Add(new CommonDrop(ModContent.ItemType<ChickenStandard>(), 200));
+
         if (npc.type == ModContent.NPCType<EaglecrestGolem>())
             npcLoot.Add(new CommonDrop(ModContent.ItemType<EaglecrestShield>(), 1));
-
-        /*if (npc.type == ModContent.NPCType<Haymaker>())
-            npcLoot.Add(new CommonDrop(ModContent.ItemType<ChickenGauntlet>(), 200));*/
     }
-
     public override void GetChat(NPC npc, ref string chat)
     {
         Player player = Main.LocalPlayer;
@@ -87,8 +91,8 @@ public class NPCLootAndShop : GlobalNPC
             shop.Add(ModContent.ItemType<ZephosWarhammer>(), Condition.DownedQueenBee);
         if (shop.NpcType == ModContent.NPCType<JanitorBot_NPC>())
             shop.Add(ModContent.ItemType<JanitorQuarterstaff>(), RedeConditions.IsJanitor, Condition.MoonPhaseNew, new Condition("Mods.GuardiansOfRedemption.Conditions.EarlyMorning", () => Main.time is >= 16200 and <= 27000));
-        if (shop.NpcType == ModContent.NPCType<Zephos>())
-            shop.Add(ModContent.ItemType<ZephosWarhammer>(), Condition.DownedQueenBee);
+        if (shop.NpcType == ModContent.NPCType<Daerel>())
+            shop.Add(ModContent.ItemType<DaerelGauntlet>(), Condition.DownedQueenBee);
         if (shop.NpcType == ModContent.NPCType<Daerel>())
             shop.Add(ModContent.ItemType<DaerelQuarterstaff>(), Condition.DownedDukeFishron);
     }
@@ -100,6 +104,7 @@ public class ItemLoot : GlobalItem
     {
         if (item.type == ModContent.ItemType<ErhanBag>()) itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ErhanStick>(), 3));
         if (item.type == ModContent.ItemType<ThornBag>()) itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThornQuarterstaff>(), 2));
+        if (item.type == ModContent.ItemType<SoIBag>()) itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<SeedRune>(), 3));
         if (item.type == ModContent.ItemType<PZBag>()) itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PZWarhammer>(), 4));
     }
 }

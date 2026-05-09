@@ -20,6 +20,7 @@ using Terraria.ModLoader;
 using Redemption.NPCs.Lab.Janitor;
 using Terraria.Enums;
 using Terraria.DataStructures;
+using GuardiansOfRedemption.Buffs.Debuffs;
 
 namespace GuardiansOfRedemption.General.Global;
 
@@ -27,6 +28,7 @@ public class GlobalNPCs : GlobalNPC
 {
     public override bool InstancePerEntity => true;
 
+    public bool FalloutDebuff = false;
     public enum JanitorInsultState {
         /// <summary> Default state </summary>
         Idle,
@@ -105,6 +107,12 @@ public class GlobalNPCs : GlobalNPC
         }
     }
 
+    public override void HitEffect(NPC npc, NPC.HitInfo hit)
+    {
+        if(npc.HasBuff<FalloutDebuff>())
+        {
+        }
+    }
     public override void OnKill(NPC npc)
     {
         

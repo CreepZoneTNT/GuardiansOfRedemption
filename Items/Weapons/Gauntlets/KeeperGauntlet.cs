@@ -20,12 +20,12 @@ namespace GuardiansOfRedemption.Items.Weapons.Gauntlets
 			Item.width = 44;
 			Item.height = 50;
 			Item.knockBack = 4f;
-			Item.damage = 120;
+			Item.damage = 60;
 			Item.value = Item.sellPrice(0, 1);
 			Item.rare = ItemRarityID.Blue;
 			Item.useTime = 20;
 			StrikeVelocity = 16f;
-			ParryDuration = 60;
+			ParryDuration = 40;
 			PunchSpeed = 1.3f;
 		}
 
@@ -55,10 +55,6 @@ namespace GuardiansOfRedemption.Items.Weapons.Gauntlets
 			if (charged) target.AddBuff(ModContent.BuffType<NecroticGougeDebuff>(), 300);
 			SoundEngine.PlaySound(CustomSounds.SwordClash, projectile.position);
 			RedeDraw.SpawnExplosion(RedeHelper.CenterPoint(projectile.Center, target.Center), Color.White, shakeAmount: 0, scale: 1f, noDust: true, rot: Main.rand.NextFloat(MathHelper.PiOver4, 3 * MathHelper.PiOver4), tex: "Redemption/Textures/SwordClash");
-		}
-		public override void OnParryGauntlet(Player player, OrchidGuardian guardian, Entity aggressor, Projectile anchor)
-		{
-			player.AddBuff(BuffID.Swiftness, 300);	
 		}
 
 		public override void AddRecipes()

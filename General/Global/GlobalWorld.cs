@@ -15,6 +15,7 @@ using Redemption.Items.Placeable.Containers;
 using Redemption.Tiles.Containers;
 using GuardiansOfRedemption.Items.Weapons.Gauntlets;
 using GuardiansOfRedemption.Items.Weapons.Warhammers;
+using GuardiansOfRedemption.Items.Weapons.Runes;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.WorldGeneration;
 using Redemption.Items.Tools.PostML;
@@ -37,6 +38,7 @@ namespace GuardiansOfRedemption.General.Global
 
             bool GathicItem = false;
             bool LabItem = false;
+            bool HolochestItem = false;
 
             for (int chestIndex = 0; chestIndex < Main.maxChests; chestIndex++)
             {
@@ -59,6 +61,19 @@ namespace GuardiansOfRedemption.General.Global
                     {
                         chest.item[0].SetDefaults(ModContent.ItemType<LaboratoryGauntlet>());
                         LabItem = true;
+                    }
+                }
+            }
+
+            for (int chestIndex = 0; chestIndex < Main.maxChests; chestIndex++)
+            {
+                Chest chest = Main.chest[chestIndex];
+                if (chest != null && Main.tile[chest.x, chest.y].TileType == ModContent.TileType<HolochestTile>())
+                {
+                    if (!HolochestItem)
+                    {
+                        chest.item[0].SetDefaults(ModContent.ItemType<KS3Rune>());
+                        HolochestItem = true;
                     }
                 }
             }

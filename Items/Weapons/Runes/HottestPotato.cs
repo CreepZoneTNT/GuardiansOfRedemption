@@ -20,7 +20,7 @@ using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.Items.Weapons.Runes
 {
-    internal class HottestPotato : OrchidModGuardianRune
+    public class HottestPotato : OrchidModGuardianRune
     {
         public Player holder;
         public override void SetStaticDefaults()
@@ -43,7 +43,7 @@ namespace GuardiansOfRedemption.Items.Weapons.Runes
 
             RuneCost = 2;
             RuneNumber = 4;
-            RuneDuration = 30 * 60;
+            RuneDuration = 45 * 60;
         }
         public override void AddRecipes()
         {

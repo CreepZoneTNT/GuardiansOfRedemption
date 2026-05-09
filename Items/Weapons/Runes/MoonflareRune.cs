@@ -22,7 +22,7 @@ using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.Items.Weapons.Runes
 {
-    internal class MoonflareRune : OrchidModGuardianRune
+    public class MoonflareRune : OrchidModGuardianRune
     {
         public static bool Boosted = false;
         public override void SetStaticDefaults()

@@ -17,7 +17,7 @@ public class ZephosWarhammer : OrchidModGuardianHammer
     {
         Item.width = 46;
         Item.height = 44;
-        Item.value = Item.sellPrice(0, 5);
+        Item.value = Item.sellPrice(0, 35);
         Item.rare = ItemRarityID.Orange;
         Item.UseSound = SoundID.Item1;
         Item.knockBack = 10f;

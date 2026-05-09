@@ -404,6 +404,21 @@ Items: {
 			'''
 		DisplayName: Shield Turret
 	}
+
+	WastelandStandard: {
+		Tooltip: ""
+		DisplayName: Fallout Banner
+	}
+
+	SeedRune: {
+		Tooltip: Summons small shards of xenomite to shred nearby enemies
+		DisplayName: Petri Dish
+	}
+
+	DaerelGauntlet: {
+		Tooltip: Gain increased movement speed on parry
+		DisplayName: Daerel's Fisticuffs
+	}
 }
 
 PrefixDummy: {
@@ -467,6 +482,7 @@ Projectiles: {
 	WastelandWarhammer_Blood.DisplayName: Irradiated Blood
 	KS3Rune_Proj.DisplayName: Hologram Man Stan
 	WastelandShield_Proj.DisplayName: Bullet
+	SeedRune_Proj.DisplayName: Seed Rune_ Proj
 }
 
 Buffs: {
@@ -483,6 +499,11 @@ Buffs: {
 	DaerelQuarterstaffBuff: {
 		Description: Mods.GuardiansOfRedemption.Buffs.DaerelQuarterstaffBuff.Description
 		DisplayName: Daerel Quarterstaff Buff
+	}
+
+	FalloutDebuff: {
+		Description: Mods.GuardiansOfRedemption.Buffs.FalloutDebuff.Description
+		DisplayName: Fallout Debuff
 	}
 }
 

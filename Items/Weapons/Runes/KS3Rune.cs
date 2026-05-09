@@ -24,7 +24,7 @@ using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.Items.Weapons.Runes
 {
-    internal class KS3Rune : OrchidModGuardianRune
+    public class KS3Rune : OrchidModGuardianRune
     {
         public static bool Boosted = false;
         public override void SetStaticDefaults()
