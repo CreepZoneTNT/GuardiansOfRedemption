@@ -419,6 +419,15 @@ Items: {
 		Tooltip: Gain increased movement speed on parry
 		DisplayName: Daerel's Fisticuffs
 	}
+
+	SageBasan: {
+		DisplayName: Bucket of Chicken
+		LeftClick: Flap your wings to release gusts of hot air
+		RightClick: Release a incinerating blast of fire from your beak!
+		Jump: Jump to preform a triple jump, sending hot air below
+		Passive: Tbd
+		Tooltip: Transforms you into a young Basan, granting unique abilities
+	}
 }
 
 PrefixDummy: {
@@ -482,7 +491,7 @@ Projectiles: {
 	WastelandWarhammer_Blood.DisplayName: Irradiated Blood
 	KS3Rune_Proj.DisplayName: Hologram Man Stan
 	WastelandShield_Proj.DisplayName: Bullet
-	SeedRune_Proj.DisplayName: Seed Rune_ Proj
+	SeedRune_Proj.DisplayName: Xenomite Shard
 }
 
 Buffs: {
