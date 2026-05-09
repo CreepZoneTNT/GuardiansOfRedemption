@@ -22,22 +22,21 @@ namespace GuardiansOfRedemption.Items.Weapons.Runes
 {
     public class HottestPotato : OrchidModGuardianRune
     {
-        public Player holder;
         public override void SetStaticDefaults()
         {
             ElementID.ItemExplosive[Type] = true;
         }
+
         public override void SafeSetDefaults()
         {
             Item.damage = 1;
-            Item.DamageType = ModContent.GetInstance<GuardianDamageClass>();
             Item.width = 22;
             Item.height = 38;
             Item.useTime = 20;
 
             Item.knockBack = 0f;
             Item.rare = ItemRarityID.Cyan;
-            Item.value = Item.sellPrice(0, 50, 0, 0);
+            Item.value = Item.sellPrice(0, 50);
             Item.UseSound = CustomSounds.AlarmItem;
             Item.shoot = ModContent.ProjectileType<HottestPotato_Projectile>();
 
@@ -45,6 +44,7 @@ namespace GuardiansOfRedemption.Items.Weapons.Runes
             RuneNumber = 4;
             RuneDuration = 45 * 60;
         }
+
         public override void AddRecipes()
         {
             CreateRecipe()
