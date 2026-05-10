@@ -18,7 +18,7 @@ using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.Buffs.Debuffs
 {
-    internal class FalloutDebuff : ModBuff
+    public class FalloutDebuff : ModBuff
     {
         public override string Texture => "Redemption/Buffs/Debuffs/_DebuffTemplate";
         public override void SetStaticDefaults()
@@ -27,9 +27,11 @@ namespace GuardiansOfRedemption.Buffs.Debuffs
             Main.debuff[Type] = true;
             BuffID.Sets.GrantImmunityWith[Type].Add(BuffID.Ichor);
         }
+
         public override void Update(NPC npc, ref int buffIndex)
         {
-            Dust.NewDust(npc.Center, npc.width, npc.height, DustID.GreenBlood);
+            // npc.GetGlobalNPC<GlobalNPCs>().WastelandStandardEffect = true;
+            if (Main.rand.NextBool(6)) Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.GreenBlood);
         }
     }
 }
