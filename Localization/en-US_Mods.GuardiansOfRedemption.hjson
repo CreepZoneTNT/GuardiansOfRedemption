@@ -492,6 +492,8 @@ Projectiles: {
 	KS3Rune_Proj.DisplayName: Hologram Man Stan
 	WastelandShield_Proj.DisplayName: Bullet
 	SeedRune_Proj.DisplayName: Xenomite Shard
+	SageBasan_Proj.DisplayName: Sage Basan_ Proj
+	SageBasan_ProjAlt.DisplayName: Sage Basan_ Proj Alt
 }
 
 Buffs: {
@@ -513,6 +515,11 @@ Buffs: {
 	FalloutDebuff: {
 		Description: Mods.GuardiansOfRedemption.Buffs.FalloutDebuff.Description
 		DisplayName: Fallout Debuff
+	}
+
+	BasanBurnDebuff: {
+		Description: Mods.GuardiansOfRedemption.Buffs.BasanBurnDebuff.Description
+		DisplayName: Basan Burn Debuff
 	}
 }
 

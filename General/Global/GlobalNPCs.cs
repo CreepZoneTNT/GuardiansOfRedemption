@@ -1,4 +1,5 @@
 using GuardiansOfRedemption.Achievements;
+using GuardiansOfRedemption.Buffs.Debuffs;
 using GuardiansOfRedemption.Items.Weapons.Quarterstaves;
 using GuardiansOfRedemption.Projectiles.Shields;
 using Microsoft.Xna.Framework;
@@ -7,20 +8,21 @@ using OrchidMod;
 using OrchidMod.Content.Guardian;
 using Redemption;
 using Redemption.Base;
+using Redemption.Globals;
 using Redemption.Helpers;
+using Redemption.Items.Armor.Vanity.TBot;
 using Redemption.NPCs.Bosses.Erhan;
+using Redemption.NPCs.Lab.Janitor;
+using Redemption.Particles;
 using Redemption.Textures;
 using Redemption.UI.ChatUI;
-using Redemption.Items.Armor.Vanity.TBot;
-using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.Enums;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Redemption.NPCs.Lab.Janitor;
-using Terraria.Enums;
-using Terraria.DataStructures;
-using GuardiansOfRedemption.Buffs.Debuffs;
 
 namespace GuardiansOfRedemption.General.Global;
 
@@ -29,6 +31,8 @@ public class GlobalNPCs : GlobalNPC
     public override bool InstancePerEntity => true;
 
     public bool FalloutDebuff = false;
+    public bool BasanDebuff = false;
+    public int BasanDebuffDuration = 0;
     public enum JanitorInsultState {
         /// <summary> Default state </summary>
         Idle,
@@ -105,12 +109,50 @@ public class GlobalNPCs : GlobalNPC
         if (npc.type == ModContent.NPCType<JanitorBot_NPC>() && janitorInsultAngery) {
             drawColor = drawColor.MultiplyRGB(Color.Tomato);
         }
+
+
+        if (npc.HasBuff<BasanBurnDebuff>())
+        {
+            drawColor = Color.Lerp(drawColor, new Color(220, 150, 150), 0.5f);
+        }
     }
 
     public override void HitEffect(NPC npc, NPC.HitInfo hit)
     {
         if(npc.HasBuff<FalloutDebuff>())
         {
+        }
+    }
+
+    public override void UpdateLifeRegen(NPC npc, ref int damage)
+    {
+        if(npc.HasBuff<BasanBurnDebuff>())
+        {            
+            if (npc.lifeRegen > 0)
+                npc.lifeRegen = 0;
+
+            if (BasanDebuffDuration > 624)
+            {
+                BasanDebuffDuration = 624;
+            }
+
+                if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
+            {
+                npc.lifeRegen -= 8 + (BasanDebuffDuration / 4);
+                damage = 8 + (BasanDebuffDuration / 12);
+            }
+            else
+                npc.lifeRegen -= 8 + (BasanDebuffDuration / 4);
+                damage = 4 + (BasanDebuffDuration / 24);
+            /*
+            if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
+            {
+                npc.lifeRegen -= (6 + BasanDebuffCount * 6);
+                damage = 6 + (int)(BasanDebuffCount * 1.5);
+            }
+            else
+                npc.lifeRegen -= (4 + BasanDebuffCount * 3);
+                damage = 4 + BasanDebuffCount;*/
         }
     }
     public override void OnKill(NPC npc)
