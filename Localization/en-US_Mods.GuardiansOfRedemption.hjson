@@ -296,17 +296,15 @@ Items: {
 			'''
 	}
 
-
 	WastelandStandard: {
 		DisplayName: Fallout Banner
-		Tooltip: 
+		Tooltip:
 			'''
 			Fully charging increases {0} elemental resistance by 12%
 			and grants protection against low-level radiation
 			Reinforcing weakens nearby enemies' {0} elemental resistance by half if less than 100%
 			'''
 	}
-
 
 	JanitorQuarterstaff: {
 		DisplayName: Used Mop
@@ -417,7 +415,6 @@ Items: {
 		DisplayName: Shield Turret
 	}
 
-
 	SeedRune: {
 		Tooltip: Summons small shards of xenomite to shred nearby enemies
 		DisplayName: Petri Dish
@@ -429,7 +426,7 @@ Items: {
 	}
 
 	SageBasan: {
-		DisplayName: Bucket of Chicken
+		DisplayName: Basan Totem
 		LeftClick: Flap your wings to release gusts of hot air
 		RightClick: Release a incinerating blast of fire from your beak!
 		Jump: Jump to preform a triple jump, sending hot air below

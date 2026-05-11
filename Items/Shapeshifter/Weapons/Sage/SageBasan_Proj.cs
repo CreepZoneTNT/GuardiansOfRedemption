@@ -51,7 +51,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             int additiveDuration = target.GetGlobalNPC<GlobalNPCs>().BasanDebuffDuration;
 
             if (target.HasBuff(ModContent.BuffType<BasanBurnDebuff>()))
-                target.AddBuff(ModContent.BuffType<BasanBurnDebuff>(), additiveDuration + 60);
+                target.AddBuff(ModContent.BuffType<BasanBurnDebuff>(), additiveDuration + 80);
         }
 
         public override void AI()

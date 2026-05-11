@@ -51,7 +51,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
         }
         public override void SafeOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone, Player player, OrchidShapeshifter shapeshifter)
         {
-            target.AddBuff(ModContent.BuffType<BasanBurnDebuff>(), 600);
+            target.AddBuff(ModContent.BuffType<BasanBurnDebuff>(), 300);
         }
     }
 }

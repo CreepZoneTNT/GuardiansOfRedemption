@@ -221,19 +221,19 @@ public class GlobalNPCs : GlobalNPC
             if (npc.lifeRegen > 0)
                 npc.lifeRegen = 0;
 
-            if (BasanDebuffDuration > 624)
+            if (BasanDebuffDuration > 480)
             {
-                BasanDebuffDuration = 624;
+                BasanDebuffDuration = 480;
             }
 
                 if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
             {
                 npc.lifeRegen -= 8 + (BasanDebuffDuration / 4);
-                damage = 8 + (BasanDebuffDuration / 12);
+                damage = BasanDebuffDuration / 12;
             }
             else
                 npc.lifeRegen -= 8 + (BasanDebuffDuration / 4);
-                damage = 4 + (BasanDebuffDuration / 24);
+                damage = BasanDebuffDuration / 24;
             /*
             if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
             {

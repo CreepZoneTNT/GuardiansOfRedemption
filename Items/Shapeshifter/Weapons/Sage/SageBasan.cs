@@ -24,6 +24,9 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
         public bool Attacking = false;
         public int Jumps = 0;
 
+        public int FlameCharge = 0;
+        public bool FlameCue = true;
+
         public override void SafeSetDefaults()
         {
             Item.width = 30;
@@ -42,11 +45,23 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             MeleeSpeedRight = true;
             GroundedWildshape = true;
         }
-
+        public override void ShapeshiftGetUIInfo(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter, ref int uiCount, ref int uiCountMax)
+        {
+            uiCount = 0;
+            uiCountMax = 1;
+            if (anchor.ai[2] > 0)
+            { // shell
+                uiCount = (int)anchor.ai[2];
+            }
+        }
         public override void ShapeshiftAnchorOnShapeshift(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
         {
+
             anchor.Frame = 1;
             anchor.Timespent = 0;
+            if (FlameCue)
+                anchor.ai[2] = 1;
+
             projectile.direction = player.direction;
             projectile.spriteDirection = player.direction;
 
@@ -84,7 +99,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * Item.shootSpeed;
             ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, Item.damage / 2, Item.crit, Item.knockBack, player.whoAmI);
             
-            SoundEngine.PlaySound(CustomSounds.ChickenCluck, projectile.Center);
+            SoundEngine.PlaySound(SoundID.DD2_FlameburstTowerShot, projectile.Center);
             anchor.LeftCLickCooldown = Item.useTime;
             projectile.ai[0] = 20;
 
@@ -97,14 +112,9 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
         }
        
         public override void ShapeshiftOnRightClick(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
-        { 
-            int projectileType = ModContent.ProjectileType<SageBasan_ProjAlt>();
-            Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * Item.shootSpeed / 8;
-            ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, Item.damage, Item.crit, Item.knockBack, player.whoAmI);
-
-            anchor.ai[0] += 40f;
-            anchor.RightCLickCooldown = 30;
-            anchor.NeedNetUpdate = true;
+        {
+            if(FlameCue && IsGrounded(projectile, player, 8))
+                SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, projectile.Center);
         }
 
         public override void ShapeshiftOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone, Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
@@ -136,10 +146,11 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             // ai[0] is used as a timer for attack animations
             // ai[1] is used to flip the sprite in the correct direction while attacking
             // ai[2] is used as a cooldown for the dash (jump)
-            // anchor.ai[0] is used as an exhaustion for right click attack
+
+            // anchor.ai[0]
             // anchor.ai[1]
-            // anchor.ai[2]
-            // anchor.ai[3]
+            // anchor.ai[2] is used for the UI
+            // anchor.ai[3] is used for time inbetween attacks of right click.
             // anchor.ai[4]
 
             // checking for if attacking
@@ -151,53 +162,88 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             if (anchor.IsInputUp) GravityMult -= 0.3f;
 
 
-    if (anchor.RightCLickCooldown > 0)
-            { // Right click cd is set to 10 seconds when used, this makes it to touching the ground "resets" it
-                speedMult *= 0.5f;
-
-                switch (anchor.RightCLickCooldown)
-                {
-                    case > 20:
-                        anchor.Frame = 12;
-                        break;
-                    case 20:
-                        anchor.Frame = 13;
-                        Vector2 dir = Vector2.UnitX * projectile.direction;
-                        Projectile wave = Projectile.NewProjectileDirect(projectile.GetSource_FromAI(), projectile.Center + dir * 24f, dir * Item.shootSpeed, ModContent.ProjectileType<Basan_HeatWave>(), Item.damage, 4f);
-                        wave.friendly = true;
-                        break;
-
-                }
-            
+            if (anchor.RightCLickCooldown > 0)
+            {
+                anchor.RightCLickCooldown--;
             }
 
             // ANIMATION
 
-            if (!grounded)
+            if (!grounded && projectile.velocity.Y < 0)
             { // moving up frame
                 anchor.Timespent = 0;
-                if (projectile.velocity.Y < 0)
-                    anchor.Frame = 10;
-                else if (projectile.velocity.Y > 0)
-                    anchor.Frame = 11;
+                anchor.Frame = 10;
             }
-            else if (LateralMovement)
-                if (anchor.Frame < 1)
-                    anchor.Frame = 1;
+            else if (!grounded && projectile.velocity.Y > 0)
+            {
+                anchor.Timespent = 0;
+                anchor.Frame = 11;
+            }
+            else if (LateralMovement && grounded)
+            {
+                if (anchor.Timespent % 8 == 0 && anchor.Timespent > 0)
+                {
+                    if (anchor.Frame > 10)
+                    {
+                        anchor.Frame = 0;
+                    }
+
                     anchor.Frame++;
 
-                WalkFrameCounter += projectile.velocity.X * 0.75f;
-                if (WalkFrameCounter is >= 5 or <= -5)
-                {
-                    WalkFrameCounter = 0;
-                    anchor.Frame ++;
-                    if (anchor.Frame > 9)
+                    if (anchor.Frame == 10)
+                    { 
                         anchor.Frame = 1;
+                    }
                 }
-            else
+            }
+            else if (!LateralMovement && grounded)
             { // idle frame
                 anchor.Timespent = 0;
                 anchor.Frame = 0;
+            }
+
+            // Attacks
+
+            if (anchor.IsRightClick && grounded && FlameCharge <= 180 && FlameCue)
+            {
+                anchor.Frame = 15;
+                Attacking = true;
+                FlameCharge++;
+                anchor.ai[3]++;
+                int projectileType = ModContent.ProjectileType<SageBasan_ProjAlt>();
+                Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * (Item.shootSpeed / (8 + (anchor.ai[3] / 22.5f)));
+                if (FlameCharge % 6 == 0)
+                {
+                    //CombatText.NewText(player.getRect(), Color.Black, (int)(anchor.ai[3]));
+                    ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, Item.damage / 3, Item.crit, Item.knockBack, player.whoAmI);  
+                }             
+
+            } 
+            else if (FlameCharge >= 180 && FlameCue) 
+            {
+                anchor.ai[2] = 0;
+                SoundEngine.PlaySound(SoundID.AbigailAttack, projectile.Center);
+                FlameCue = false;
+            }
+            
+            else if (!anchor.IsRightClick && grounded && FlameCharge >= 0)
+            {
+
+                Attacking = false;
+                anchor.ai[3]--;
+                if (anchor.ai[3] <= 0)
+                {
+                    anchor.ai[3] = 0;
+                    FlameCharge--;
+                    if (FlameCharge == 0 && !FlameCue)
+                    {
+                        anchor.ai[2] = 1;
+                        FlameCharge = 0;
+                        FlameCue = true;
+                        anchor.Blink(true);
+                        SoundEngine.PlaySound(SoundID.Item20, projectile.Center);
+                    }
+                }
             }
 
             // MOVEMENT
@@ -207,7 +253,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
                 Vector2 intendedVelocity = projectile.velocity;
                 GravityCalculations(ref intendedVelocity, player, shapeshifter);
 
-                if (anchor.JumpWithControlRelease(player) && Jumps > 0)
+                if (anchor.JumpWithControlRelease(player) && Jumps > 0 && !Attacking)
                 { // Jump
                     Jumps--;
                     TryJump(ref intendedVelocity, 6.5f, player, shapeshifter, anchor, false);
@@ -216,7 +262,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
                 }
 
                 // Normal movement
-                if (anchor.IsInputLeft || anchor.IsInputRight)
+                if ((anchor.IsInputLeft || anchor.IsInputRight) && !Attacking)
                 { // Player is inputting a movement key
                     float acceleration = speedMult;
                     if (!grounded) acceleration *= 0.5f;
