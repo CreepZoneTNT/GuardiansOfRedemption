@@ -1,3 +1,4 @@
+using System;
 using GuardiansOfRedemption.Achievements;
 using GuardiansOfRedemption.Buffs.Debuffs;
 using GuardiansOfRedemption.Items.Weapons.Quarterstaves;
@@ -116,13 +117,100 @@ public class GlobalNPCs : GlobalNPC
             drawColor = Color.Lerp(drawColor, new Color(220, 150, 150), 0.5f);
         }
     }
+        else if (npc.HasBuff<FalloutDebuff>())
+            drawColor = drawColor.MultiplyRGB(Color.SeaGreen * 0.5f);
+    }
 
-    public override void HitEffect(NPC npc, NPC.HitInfo hit)
+
+    public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
+    {   
+    }
+
+    public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
     {
-        if(npc.HasBuff<FalloutDebuff>())
+        if (!RedeConfigServer.Instance.ElementDisable && !ItemLists.NoElement.Contains(item.type) && item.HasElement(ElementID.Poison) && npc.HasBuff<FalloutDebuff>())
         {
+            ElementalNPC elementalNPC = npc.GetGlobalNPC<ElementalNPC>();
+            float poisonResist = elementalNPC.elementDmg[ElementID.Poison];
+            
+            float mult = 1;
+            if (poisonResist < 1) mult = poisonResist + (1 - poisonResist) / 2f;
+
+            // Code borrowed from Redemption for calculating and adjusting CombatText value
+            float baseMult = 1;
+            ElementalNPC.ElementalEffects(npc, player, item, ref baseMult, ref modifiers);
+            ElementalNPC.SetElementalMultipliers(npc, ref npc.GetGlobalNPC<ElementalNPC>().elementDmg);
+            for (int j = 0; j < npc.GetGlobalNPC<ElementalNPC>().elementDmg.Length; j++)
+            {
+                if (elementalNPC.elementDmg[j] is 1 || !item.HasElement(j))
+                    continue;
+                baseMult *= elementalNPC.elementDmg[j];
+            }
+            baseMult = (int)Math.Round(baseMult * 100);
+            baseMult /= 100f;
+            if (npc.boss && !elementalNPC.uncappedBossMultiplier)
+                baseMult = MathHelper.Clamp(baseMult, .75f, 1.25f);
+
+
+            foreach (CombatText combatText in Main.combatText)
+            {
+                if (combatText.active && combatText.alpha == 1f && combatText.color == Color.IndianRed && combatText.crit && combatText.dot && combatText.text == baseMult + "x")
+                {
+                    baseMult = (int)Math.Round(baseMult * (mult / poisonResist) * 100) / 100f;
+                    if (npc.boss && !elementalNPC.uncappedBossMultiplier)
+                        baseMult = MathHelper.Clamp(baseMult, .75f, 1.25f);
+
+                    combatText.color = Color.SeaGreen;
+                    combatText.text = baseMult + "x";
+                }
+            }
+
+            modifiers.FinalDamage *= mult / poisonResist;
         }
     }
+
+    public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
+    {
+        if (!RedeConfigServer.Instance.ElementDisable && projectile.active && projectile.owner == Main.myPlayer && !ItemLists.NoElement.Contains(projectile.type) && projectile.HasElement(ElementID.Poison) && npc.HasBuff<FalloutDebuff>())
+        {
+            ElementalNPC elementalNPC = npc.GetGlobalNPC<ElementalNPC>();
+            float poisonResist = elementalNPC.elementDmg[ElementID.Poison];
+
+            float mult = 1;
+            if (poisonResist < 1) mult = poisonResist + (1 - poisonResist) / 2f;
+
+
+            // Code borrowed from Redemption for calculating and adjusting CombatText value
+            float baseMult = 1;
+            ElementalNPC.ElementalEffects(npc, projectile, ref baseMult, ref modifiers);
+            ElementalNPC.SetElementalMultipliers(npc, ref npc.GetGlobalNPC<ElementalNPC>().elementDmg);
+            for (int j = 0; j < npc.GetGlobalNPC<ElementalNPC>().elementDmg.Length; j++)
+            {
+                if (elementalNPC.elementDmg[j] is 1 || !projectile.HasElement(j))
+                    continue;
+                baseMult *= elementalNPC.elementDmg[j];
+            }
+            baseMult = (int)Math.Round(baseMult * 100);
+            baseMult /= 100;
+            if (npc.boss && !elementalNPC.uncappedBossMultiplier)
+                baseMult = MathHelper.Clamp(baseMult, .75f, 1.25f);
+
+
+            foreach (CombatText combatText in Main.combatText)
+            {
+                if (combatText.active && combatText.alpha == 1f && combatText.color == Color.IndianRed && combatText.crit && combatText.dot && combatText.text == baseMult + "x")
+                {
+                    baseMult = (int)Math.Round(baseMult * (mult / poisonResist) * 100) / 100f;
+                    if (npc.boss && !elementalNPC.uncappedBossMultiplier)
+                        baseMult = MathHelper.Clamp(baseMult, .75f, 1.25f);
+
+                    combatText.color = Color.SeaGreen;
+                    combatText.text = baseMult + "x";
+                }
+            }
+
+            modifiers.FinalDamage *= mult / poisonResist;
+        }
 
     public override void UpdateLifeRegen(NPC npc, ref int damage)
     {
@@ -155,6 +243,7 @@ public class GlobalNPCs : GlobalNPC
                 damage = 4 + BasanDebuffCount;*/
         }
     }
+
     public override void OnKill(NPC npc)
     {
         

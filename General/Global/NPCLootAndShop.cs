@@ -3,6 +3,7 @@ using GuardiansOfRedemption.Items.Weapons.Quarterstaves;
 using GuardiansOfRedemption.Items.Weapons.Shields;
 using GuardiansOfRedemption.Items.Weapons.Warhammers;
 using GuardiansOfRedemption.Items.Weapons.Standards;
+using GuardiansOfRedemption.Items.Weapons.Runes;
 using OrchidMod.Utilities;
 using Redemption.Globals;
 using Redemption.Items.Usable;
@@ -21,7 +22,6 @@ using Terraria.ID;
 using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using GuardiansOfRedemption.Items.Weapons.Runes;
 using Redemption.Items.Placeable.Banners;
 using Redemption.BaseExtension;
 
@@ -92,9 +92,10 @@ public class NPCLootAndShop : GlobalNPC
         if (shop.NpcType == ModContent.NPCType<JanitorBot_NPC>())
             shop.Add(ModContent.ItemType<JanitorQuarterstaff>(), RedeConditions.IsJanitor, Condition.MoonPhaseNew, new Condition("Mods.GuardiansOfRedemption.Conditions.EarlyMorning", () => Main.time is >= 16200 and <= 27000));
         if (shop.NpcType == ModContent.NPCType<Daerel>())
+        {
             shop.Add(ModContent.ItemType<DaerelGauntlet>(), Condition.DownedQueenBee);
-        if (shop.NpcType == ModContent.NPCType<Daerel>())
             shop.Add(ModContent.ItemType<DaerelQuarterstaff>(), Condition.DownedDukeFishron);
+        }
     }
 }
 

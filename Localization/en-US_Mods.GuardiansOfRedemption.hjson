@@ -272,7 +272,7 @@ Items: {
 	ChickenStandard: {
 		Tooltip:
 			'''
-			Boosts natural health regen
+			Fully charging increases natural health regeneration
 			While reinforced, you occasionally lay healing eggs, as well as laying a lot of eggs upon consuming a healing item
 			'''
 		DisplayName: Bock Bock Banner
@@ -295,6 +295,18 @@ Items: {
 			Reinforcing grants all weapons a 33% chance to inflict Dragonblaze and occasionally creates damaging fire clouds on hit
 			'''
 	}
+
+
+	WastelandStandard: {
+		DisplayName: Fallout Banner
+		Tooltip: 
+			'''
+			Fully charging increases {0} elemental resistance by 12%
+			and grants protection against low-level radiation
+			Reinforcing weakens nearby enemies' {0} elemental resistance by half if less than 100%
+			'''
+	}
+
 
 	JanitorQuarterstaff: {
 		DisplayName: Used Mop
@@ -405,10 +417,6 @@ Items: {
 		DisplayName: Shield Turret
 	}
 
-	WastelandStandard: {
-		Tooltip: ""
-		DisplayName: Fallout Banner
-	}
 
 	SeedRune: {
 		Tooltip: Summons small shards of xenomite to shred nearby enemies

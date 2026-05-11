@@ -13,23 +13,27 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Redemption.Items.Placeable.Tiles;
+using Redemption.Items.Materials.HM;
 
 namespace GuardiansOfRedemption.Items.Weapons.Standards;
 
 public class WastelandStandard : OrchidModGuardianStandard
 {
+    public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(ElementID.PoisonS);
+
     public override void SafeSetDefaults()
     {
         Item.width = 38;
         Item.height = 38;
-        Item.value = Item.sellPrice(0, 0, 0, 25);
-        Item.rare = ItemRarityID.White;
+        Item.value = Item.sellPrice(0, 1);
+        Item.rare = ItemRarityID.LightRed;
         Item.useTime = 40;
         Item.UseSound = SoundID.DD2_BetsyWindAttack;
-        SlamStacks = 1;
+        GuardStacks = 2;
         FlagOffset = 14;
         AuraRange = 12;
-        StandardDuration = 20 * 60;
+        StandardDuration = 1800;
         AffectNearbyPlayers = true;
         AffectNearbyNPCs = true;
     }
@@ -47,12 +51,31 @@ public class WastelandStandard : OrchidModGuardianStandard
 
         return false;
     }
+
     public override bool NearbyNPCEffect(Player player, OrchidGuardian guardian, NPC npc, bool isLocalPlayer, bool reinforced)
     {
-        if (reinforced && npc.GetGlobalNPC<ElementalNPC>().elementDmg[11] < 1)
+        // ElementalNPC elementalNPC = npc.GetGlobalNPC<ElementalNPC>();
+        // if (npc.friendly)
+        // {
+        //     float origResist = elementalNPC.elementDmg[ElementID.Poison];
+        //     elementalNPC.elementDmg[ElementID.Poison] -= 0.12f;
+        //     if (elementalNPC.elementDmg[ElementID.Poison] != origResist) DustHelper.DrawCircle(npc.Center, DustID.GreenTorch);
+
+        // }
+        if (reinforced && npc.GetGlobalNPC<ElementalNPC>().elementDmg[ElementID.Poison] < 1f)
         { 
             npc.AddBuff(ModContent.BuffType<FalloutDebuff>(), 30);
         }
         return true;
+    }
+
+    public override void AddRecipes()
+    {
+        CreateRecipe()
+        .AddIngredient(ModContent.ItemType<PetrifiedWood>(), 30)
+        .AddIngredient(ItemID.Silk, 5)
+        .AddIngredient(ModContent.ItemType<ToxicBile>(), 3)
+        .AddTile(TileID.MythrilAnvil)
+        .Register();
     }
 }

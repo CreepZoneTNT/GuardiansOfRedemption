@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework;
 using OrchidMod;
 using OrchidMod.Content.Shapeshifter;
 using Redemption;
+using Redemption.Globals;
+using Redemption.NPCs.FowlMorning;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +17,17 @@ using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 {
-    internal class SageBasan : OrchidModShapeshifterShapeshift
+    public class SageBasan : OrchidModShapeshifterShapeshift
     {
+        public float WalkFrameCounter;
         public bool LateralMovement = false;
         public bool Attacking = false;
         public int Jumps = 0;
 
         public override void SafeSetDefaults()
         {
-            Item.width = 36;
-            Item.height = 38;
+            Item.width = 30;
+            Item.height = 30;
             Item.value = Item.sellPrice(0, 2, 0, 0);
             Item.rare = ItemRarityID.Orange;
             Item.UseSound = CustomSounds.ChickenCluck;
@@ -32,9 +35,11 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             Item.shootSpeed = 16f;
             Item.knockBack = 5f;
             Item.damage = 60;
-            ShapeshiftWidth = 40;
+            ShapeshiftWidth = 20;
             ShapeshiftHeight = 40;
             ShapeshiftType = ShapeshifterShapeshiftType.Sage;
+            ShapeshiftTypeUI = ShapeshifterShapeshiftTypeUI.List;
+            MeleeSpeedRight = true;
             GroundedWildshape = true;
         }
 
@@ -47,15 +52,16 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 
             LateralMovement = false;
             Jumps = 0;
+            player.position.Y -= 12;
 
             for (int i = 0; i < 5; i++)
             {
-                Main.dust[Dust.NewDust(projectile.Center, 0, 0, DustID.Smoke)].velocity *= 0.5f;
+                Dust.NewDustDirect(projectile.Center, 0, 0, DustID.Smoke).velocity *= 0.5f;
             }
 
             for (int i = 0; i < 10; i++)
             {
-                Main.dust[Dust.NewDust(projectile.Center, 0, 0, DustID.Torch)].velocity *= 0.75f;
+                Dust.NewDustDirect(projectile.Center, 0, 0, DustID.Torch).velocity *= 0.75f;
             }
         }
 
@@ -63,12 +69,12 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
         {
             for (int i = 0; i < 5; i++)
             {
-                Main.dust[Dust.NewDust(projectile.Center, 0, 0, DustID.Smoke)].velocity *= 0.5f;
+                Dust.NewDustDirect(projectile.Center, 0, 0, DustID.Smoke).velocity *= 0.5f;
             }
 
             for (int i = 0; i < 8; i++)
             {
-                Main.dust[Dust.NewDust(projectile.Center, 0, 0, DustID.Torch)].velocity *= 0.75f;
+                Dust.NewDustDirect(projectile.Center, 0, 0, DustID.Torch).velocity *= 0.75f;
             }
         }
 
@@ -89,9 +95,9 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 
             anchor.NeedNetUpdate = true;
         }
+        }
 
         public override void ShapeshiftOnRightClick(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
-        {
             int projectileType = ModContent.ProjectileType<SageBasan_ProjAlt>();
             Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * Item.shootSpeed / 8;
             ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, Item.damage, Item.crit, Item.knockBack, player.whoAmI);
@@ -101,108 +107,16 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 
             anchor.NeedNetUpdate = true;
 
-            /*Vector2 position = projectile.Center;
-            Vector2 offSet = Main.MouseWorld - projectile.Center;
 
-            // Spawn the wall at the correct position, on the ground below the player cursor, up to 10 tiles away
-            if (offSet.Length() > 160f)
-            {
-                offSet = Vector2.Normalize(offSet) * 160f;
-            }
-
-            for (int i = 0; i < 10; i++)
-            {
-                position += TileCollideShapeshifter(position, offSet * 0.1f, 2, 2, true, true, (int)player.gravDir);
-            }
-
-            for (int i = 0; i < 75; i++)
-            {
-                position += TileCollideShapeshifter(position, Vector2.UnitY * 15f, 18, 2, false, false, (int)player.gravDir);
-            }
-
-            position.Y -= 78; // half the wall height
-
-            // Delete existing walls
-            int projectileType = ModContent.ProjectileType<SageImpProjAlt>();
-            foreach (Projectile proj in Main.projectile)
-            {
-                if (proj.type == projectileType && proj.owner == player.whoAmI)
-                {
-                    proj.Kill();
-                }
-            }
-
-            ShapeshifterNewProjectile(shapeshifter, position, Vector2.Zero, projectileType, Item.damage * 2f, Item.crit, 0f, player.whoAmI);
-
-            SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, projectile.Center);
-
-            anchor.RightCLickCooldown = 60;
-            projectile.ai[0] = 15;
-            projectile.ai[1] = (Main.MouseWorld.X < projectile.Center.X ? -1f : 1f);
-            anchor.NeedNetUpdate = true;*/
+                anchor.ai[0] += 40f;
+                anchor.RightCLickCooldown = 30;
+                anchor.NeedNetUpdate = true;
+            
         }
+
         public override void ShapeshiftOnJump(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
          {
-            /*    float rotation = MathHelper.Pi * (1f + projectile.direction * 0.5f);
-
-                // 8 dir input
-                if (anchor.IsInputLeft && !anchor.IsInputRight)
-                {
-                    rotation = MathHelper.Pi * 1.5f; // Left
-                    if (anchor.IsInputUp && !anchor.IsInputDown)
-                    {
-                        rotation += MathHelper.Pi * 0.25f; // Top Left
                     }
-                    else if (!anchor.IsInputUp && anchor.IsInputDown)
-                    {
-                        rotation -= MathHelper.Pi * 0.25f; // Bottom Left
-                    }
-                }
-                else if (!anchor.IsInputLeft && anchor.IsInputRight)
-                {
-                    rotation = MathHelper.Pi * 0.5f; // Right
-                    if (anchor.IsInputUp && !anchor.IsInputDown)
-                    {
-                        rotation -= MathHelper.Pi * 0.25f; // Top Right
-                    }
-                    else if (!anchor.IsInputUp && anchor.IsInputDown)
-                    {
-                        rotation += MathHelper.Pi * 0.25f; // Bottom Right
-                    }
-                }
-                else if (anchor.IsInputUp && !anchor.IsInputDown)
-                {
-                    rotation = 0f; // Up
-                }
-                else if (!anchor.IsInputUp && anchor.IsInputDown)
-                {
-                    rotation = MathHelper.Pi; // Down
-                }
-
-                anchor.LeftCLickCooldown = Item.useTime * 4f;
-                anchor.NeedNetUpdate = true;
-                CanDash = false;
-
-                Vector2 position = projectile.position;
-                Vector2 offSet = Vector2.UnitY.RotatedBy(rotation) * -6f * GetSpeedMult(player, shapeshifter, anchor);
-
-                // helps with dush spawn sync in mp
-                ShapeshifterNewProjectile(shapeshifter, projectile.Center, offSet, ModContent.ProjectileType<SageImpDash>(), 0, 0, 0, player.whoAmI);
-
-                for (int i = 0; i < 32; i++)
-                {
-                    position += TileCollideShapeshifter(position, offSet, projectile.width, projectile.height, true, true, (int)player.gravDir);
-                }
-
-                anchor.Teleport(position + new Vector2(projectile.width, projectile.height) * 0.5f);
-                projectile.position = position;
-                projectile.velocity = offSet;
-                projectile.velocity *= 0.75f;
-                anchor.NeedNetUpdate = true;
-                anchor.LeftCLickCooldown = Item.useTime;
-                projectile.ai[2] = 30;
-                SetCameraLerp(player, 0.1f, 5);*/
-        }
 
         public override void ShapeshiftOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone, Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
         {
@@ -221,6 +135,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             }
         }
 
+
         public override void ShapeshiftBuffs(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
         {
             player.fireWalk = true;
@@ -232,85 +147,63 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             // ai[0] is used as a timer for attack animations
             // ai[1] is used to flip the sprite in the correct direction while attacking
             // ai[2] is used as a cooldown for the dash (jump)
+            // anchor.ai[0] is used as an exhaustion for right click attack
+            // anchor.ai[1]
+            // anchor.ai[2]
+            // anchor.ai[3]
+            // anchor.ai[4]
 
             // checking for if attacking
 
             bool grounded = IsGrounded(projectile, player, 8f);
             float speedMult = GetSpeedMult(player, shapeshifter, anchor, grounded);
-
             GravityMult = 0.7f;
             if (anchor.IsInputDown) GravityMult += 0.3f;
             if (anchor.IsInputUp) GravityMult -= 0.3f;
 
+
+    if (anchor.RightCLickCooldown > 0)
+            { // Right click cd is set to 10 seconds when used, this makes it to touching the ground "resets" it
+                speedMult *= 0.5f;
+
+                switch (anchor.RightCLickCooldown)
+                {
+                    case > 20:
+                        anchor.Frame = 12;
+                        break;
+                    case 20:
+                        anchor.Frame = 13;
+                        Vector2 dir = Vector2.UnitX * projectile.direction;
+                        Projectile wave = Projectile.NewProjectileDirect(projectile.GetSource_FromAI(), projectile.Center + dir * 24f, dir * Item.shootSpeed, ModContent.ProjectileType<Basan_HeatWave>(), Item.damage, 4f);
+                        wave.friendly = true;
+                        break;
+
+                }
+            
+            }
+
             // ANIMATION
 
-            if (anchor.Projectile.ai[0] < 0)
-            { // dashing
-                anchor.Timespent = 0;
-                anchor.Frame = 11;
-
-                projectile.direction = (int)anchor.Projectile.ai[1];
-                projectile.spriteDirection = projectile.direction;
-            }
-            else if (anchor.Projectile.ai[0] > 0)
-            { // Override animation during left click attack
-                anchor.Projectile.ai[0]--;
-
-                if (anchor.Projectile.ai[2] != 0)
-                { // Is hooked to a target
-                    projectile.direction = (Main.npc[(int)projectile.ai[1]].Center.X - projectile.Center.X) > 0 ? 1 : -1;
-                    anchor.Frame = (anchor.Projectile.ai[0] > 5 ? 10 : 11);
-                }
-                else
-                { // Is not hooked
-                    projectile.direction = (int)anchor.Projectile.ai[1];
-                    anchor.Frame = (anchor.Projectile.ai[0] > 5 ? 8 : 9);
-                }
-
-                if (anchor.Projectile.ai[0] < 0)
-                {
-                    anchor.Projectile.ai[0] = 0;
-                }
-
-                if (anchor.Projectile.ai[0] == 0)
-                { // Puts the animation back on track
-                    anchor.Frame = 0;
-                }
-
-                projectile.spriteDirection = projectile.direction;
-            }
-            else if (anchor.Projectile.ai[2] != 0)
-            { // Is hooked to a target & not attacking
-                anchor.Frame = 10;
-                anchor.Timespent = 0;
-                projectile.direction = (Main.npc[(int)projectile.ai[1]].Center.X - projectile.Center.X) > 0 ? 1 : -1;
-                projectile.spriteDirection = projectile.direction;
-            }
-            else if (!grounded && projectile.velocity.Y < 0)
+            if (!grounded)
             { // moving up frame
                 anchor.Timespent = 0;
-                anchor.Frame = 10;
-            }
-            else if (!grounded && projectile.velocity.Y > 0)
-            { // falling frame
-                anchor.Timespent = 0;
-                anchor.Frame = 11;
+                if (projectile.velocity.Y < 0)
+                    anchor.Frame = 10;
+                else if (projectile.velocity.Y > 0)
+                    anchor.Frame = 11;
             }
             else if (LateralMovement)
-            { // Player is moving left or right, cycle through frames
-                if (anchor.Timespent % 6 == 0 && anchor.Timespent > 0)
-                {
-                    if (anchor.Frame > 10)
-                    {
-                        anchor.Frame = 1;
-                    }
-
+                if (anchor.Frame < 1)
+                    anchor.Frame = 1;
                     anchor.Frame++;
 
-                    if (anchor.Frame == 10)
-                    {
+                WalkFrameCounter += projectile.velocity.X * 0.75f;
+                if (WalkFrameCounter is >= 5 or <= -5)
+                {
+                    WalkFrameCounter = 0;
+                    anchor.Frame ++;
+                    if (anchor.Frame > 9)
                         anchor.Frame = 1;
-                    }
                 }
             }
             else
