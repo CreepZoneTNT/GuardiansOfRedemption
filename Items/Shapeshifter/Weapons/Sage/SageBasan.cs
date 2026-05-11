@@ -95,28 +95,17 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 
             anchor.NeedNetUpdate = true;
         }
-        }
-
+       
         public override void ShapeshiftOnRightClick(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
+        { 
             int projectileType = ModContent.ProjectileType<SageBasan_ProjAlt>();
             Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * Item.shootSpeed / 8;
             ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, Item.damage, Item.crit, Item.knockBack, player.whoAmI);
 
-            anchor.RightCLickCooldown = Item.useTime / 4;
-            projectile.ai[0] = 5;
-
+            anchor.ai[0] += 40f;
+            anchor.RightCLickCooldown = 30;
             anchor.NeedNetUpdate = true;
-
-
-                anchor.ai[0] += 40f;
-                anchor.RightCLickCooldown = 30;
-                anchor.NeedNetUpdate = true;
-            
         }
-
-        public override void ShapeshiftOnJump(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
-         {
-                    }
 
         public override void ShapeshiftOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone, Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
         {
@@ -205,7 +194,6 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
                     if (anchor.Frame > 9)
                         anchor.Frame = 1;
                 }
-            }
             else
             { // idle frame
                 anchor.Timespent = 0;
@@ -264,7 +252,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
                     Jumps = 6;
                 }
 
-                    FinalVelocityCalculations(ref intendedVelocity, projectile, player, true);
+                FinalVelocityCalculations(ref intendedVelocity, projectile, player, true);
             }
 
             // POSITION AND ROTATION VISUALS

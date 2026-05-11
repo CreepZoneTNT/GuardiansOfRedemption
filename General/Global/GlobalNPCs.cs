@@ -116,9 +116,10 @@ public class GlobalNPCs : GlobalNPC
         {
             drawColor = Color.Lerp(drawColor, new Color(220, 150, 150), 0.5f);
         }
-    }
-        else if (npc.HasBuff<FalloutDebuff>())
+        if (npc.HasBuff<FalloutDebuff>())
+        {
             drawColor = drawColor.MultiplyRGB(Color.SeaGreen * 0.5f);
+        }
     }
 
 
@@ -211,6 +212,7 @@ public class GlobalNPCs : GlobalNPC
 
             modifiers.FinalDamage *= mult / poisonResist;
         }
+    }
 
     public override void UpdateLifeRegen(NPC npc, ref int damage)
     {
