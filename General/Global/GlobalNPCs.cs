@@ -1,27 +1,20 @@
 using System;
 using GuardiansOfRedemption.Achievements;
-using GuardiansOfRedemption.Buffs.Debuffs;
-using GuardiansOfRedemption.Items.Guardian.Weapons.Quarterstaves;
-using GuardiansOfRedemption.Items.Guardian.Projectiles.Shields;
+using GuardiansOfRedemption.Content.Guardian.Buffs.Debuffs;
+using GuardiansOfRedemption.Content.Guardian.Weapons.Quarterstaves;
+using GuardiansOfRedemption.Content.Shapeshifter.Buffs.Debuffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using OrchidMod;
 using OrchidMod.Content.Guardian;
 using Redemption;
-using Redemption.Base;
 using Redemption.Globals;
-using Redemption.Helpers;
-using Redemption.Items.Armor.Vanity.TBot;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Lab.Janitor;
-using Redemption.Particles;
 using Redemption.Textures;
 using Redemption.UI.ChatUI;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Enums;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -110,7 +103,6 @@ public class GlobalNPCs : GlobalNPC
         if (npc.type == ModContent.NPCType<JanitorBot_NPC>() && janitorInsultAngery) {
             drawColor = drawColor.MultiplyRGB(Color.Tomato);
         }
-
 
         if (npc.HasBuff<BasanBurnDebuff>())
         {

@@ -1,0 +1,50 @@
+using GuardiansOfRedemption.General.Global;
+using OrchidMod;
+using OrchidMod.Content.Guardian;
+using Terraria;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+
+
+namespace GuardiansOfRedemption.Content.Guardian.Armor.HeavyGuard
+{
+	[AutoloadEquip(EquipType.Head)]
+	public class HeavyGuardHelmet : OrchidModGuardianEquipable
+	{
+		public static LocalizedText SetBonusText { get; private set; }
+
+		public override void SetStaticDefaults()
+		{
+			SetBonusText = this.GetLocalization("SetBonus");
+		}
+
+		public override void SafeSetDefaults()
+		{
+			Item.width = 24;
+			Item.height = 26;
+			Item.value = Item.sellPrice(0, 3, 0, 0);
+			Item.rare = ItemRarityID.Orange;
+			Item.defense = 6;
+		}
+
+		public override void UpdateEquip(Player player)
+		{
+			OrchidGuardian modPlayer = player.GetModPlayer<OrchidGuardian>();
+			modPlayer.GuardianGuardMax++;
+			player.aggro += 250;
+		}
+
+		public override bool IsArmorSet(Item head, Item body, Item legs)
+		{
+			return body.type == ModContent.ItemType<HeavyGuardChestplate>() && legs.type == ModContent.ItemType<HeavyGuardLeggings>();
+		}
+
+		public override void UpdateArmorSet(Player player)
+		{
+			RedemptionGuardian modPlayer = player.GetModPlayer<RedemptionGuardian>();
+			player.setBonus = SetBonusText.Value;
+			modPlayer.GuardianHeavyGuard = true;
+		}
+	}
+}

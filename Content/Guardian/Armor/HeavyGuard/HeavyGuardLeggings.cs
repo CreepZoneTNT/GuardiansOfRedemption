@@ -1,0 +1,29 @@
+using OrchidMod;
+using OrchidMod.Content.Guardian;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace GuardiansOfRedemption.Content.Guardian.Armor.HeavyGuard
+{
+	[AutoloadEquip(EquipType.Legs)]
+	public class HeavyGuardLeggings : OrchidModGuardianEquipable
+	{
+		public override void SafeSetDefaults()
+		{
+			Item.width = 26;
+			Item.height = 18;
+			Item.value = Item.sellPrice(0, 3, 0, 0);
+			Item.rare = ItemRarityID.Orange;
+			Item.defense = 6;
+		}
+
+		public override void UpdateEquip(Player player)
+		{
+			OrchidGuardian modPlayer = player.GetModPlayer<OrchidGuardian>();
+			modPlayer.GuardianGuardRecharge += 0.4f;
+			modPlayer.GuardianSlamRecharge += 0.4f;
+			player.moveSpeed += 0.1f;
+		}
+	}
+}

@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Redemption;
-using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.NPCs.Lab.Janitor;
 using Redemption.Tiles.Tiles;

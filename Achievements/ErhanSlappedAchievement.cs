@@ -1,10 +1,7 @@
-using GuardiansOfRedemption.General.Global;
 using Redemption.Globals;
 using Redemption.NPCs.Bosses.Erhan;
-using Terraria;
 using Terraria.Achievements;
 using Terraria.GameContent.Achievements;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.Achievements;

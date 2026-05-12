@@ -1,13 +1,7 @@
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using MonoMod.RuntimeDetour;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
-using OrchidMod.Content.Guardian.Misc;
-using OrchidMod.Content.Guardian.Projectiles.Misc;
-using Redemption.Globals;
-using Redemption.NPCs.Bosses.Cleaver;
-using Redemption.Projectiles.Melee;
 using Redemption.Projectiles.Ranged;
 using System;
 using System.Reflection;

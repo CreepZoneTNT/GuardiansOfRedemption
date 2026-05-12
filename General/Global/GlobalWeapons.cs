@@ -1,17 +1,10 @@
-using GuardiansOfRedemption.General.Global;
-using GuardiansOfRedemption.Items.Guardian.Weapons.Standards;
+using GuardiansOfRedemption.Content.Guardian.Projectiles.Gauntlets;
 using Microsoft.Xna.Framework;
 using OrchidMod.Common;
 using OrchidMod.Content.Guardian;
-using OrchidMod.Content.Guardian.Weapons.Gauntlets;
-using OrchidMod.Content.Guardian.Weapons.Misc;
-using OrchidMod.Content.Guardian.Weapons.Warhammers;
 using Redemption.BaseExtension;
-using Redemption.Dusts;
-using Redemption.Rarities;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
@@ -24,9 +17,9 @@ public class GlobalWeapons : GlobalItem
     public override void SetDefaults(Item entity)
     {
         if (entity.ModItem is OrchidModGuardianHammer)
-        {
             entity.Redemption().TechnicallyHammer = true;
-        }
+        else if (entity.ModItem is OrchidModGuardianKatar)
+            entity.Redemption().TechnicallySlash = true;
     }
     public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
     {

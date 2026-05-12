@@ -513,22 +513,22 @@ Buffs: {
 	}
 
 	CosmicRendDebuff: {
-		Description: Mods.GuardiansOfRedemption.Buffs.CosmicRendDebuff.Description
+		Description: Mods.GuardiansOfRedemption.Content.Guardian.Buffs.CosmicRendDebuff.Description
 		DisplayName: Cosmic Rend Debuff
 	}
 
 	DaerelQuarterstaffBuff: {
-		Description: Mods.GuardiansOfRedemption.Buffs.DaerelQuarterstaffBuff.Description
+		Description: Mods.GuardiansOfRedemption.Content.Guardian.Buffs.DaerelQuarterstaffBuff.Description
 		DisplayName: Daerel Quarterstaff Buff
 	}
 
 	FalloutDebuff: {
-		Description: Mods.GuardiansOfRedemption.Buffs.FalloutDebuff.Description
+		Description: Mods.GuardiansOfRedemption.Content.Guardian.Buffs.FalloutDebuff.Description
 		DisplayName: Fallout Debuff
 	}
 
 	BasanBurnDebuff: {
-		Description: Mods.GuardiansOfRedemption.Buffs.BasanBurnDebuff.Description
+		Description: Mods.GuardiansOfRedemption.Content.Guardian.Buffs.BasanBurnDebuff.Description
 		DisplayName: Basan Burn Debuff
 	}
 }
