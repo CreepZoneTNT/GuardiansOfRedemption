@@ -15,7 +15,7 @@ using XPT.Core.Audio.MP3Sharp.Decoding.Decoders.LayerIII;
 
 namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 {
-    internal class SageBasan_ProjAlt : OrchidModShapeshifterProjectile
+    public class SageBasan_ProjAlt : OrchidModShapeshifterProjectile
     {
         public override string Texture => "Redemption/Empty";
         public override void SetStaticDefaults()

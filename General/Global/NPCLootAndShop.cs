@@ -1,9 +1,3 @@
-using GuardiansOfRedemption.Items.Weapons.Gauntlets;
-using GuardiansOfRedemption.Items.Weapons.Quarterstaves;
-using GuardiansOfRedemption.Items.Weapons.Shields;
-using GuardiansOfRedemption.Items.Weapons.Warhammers;
-using GuardiansOfRedemption.Items.Weapons.Standards;
-using GuardiansOfRedemption.Items.Weapons.Runes;
 using OrchidMod.Utilities;
 using Redemption.Globals;
 using Redemption.Items.Usable;
@@ -24,6 +18,13 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Redemption.Items.Placeable.Banners;
 using Redemption.BaseExtension;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Gauntlets;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Quarterstaves;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Runes;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Shields;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Standards;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Warhammers;
+using GuardiansOfRedemption.Items.Other.Materials;
 
 namespace GuardiansOfRedemption.General.Global;
 
@@ -48,14 +49,8 @@ public class NPCLootAndShop : GlobalNPC
         if (npc.type == ModContent.NPCType<SkeletonWarden>())
             npcLoot.Add(new CommonDrop(ModContent.ItemType<SkeletonWardenShield>(), 40, chanceNumerator: 3));
 
-        if (npc.type == ModContent.NPCType<Haymaker>())
-            npcLoot.Add(new CommonDrop(ModContent.ItemType<ChickenGauntlet>(), 25));
-
-        if (npc.type == ModContent.NPCType<ChickenBomber>() || npc.type == ModContent.NPCType<ChickenScratcher>() || npc.type == ModContent.NPCType<Haymaker>() || npc.type == ModContent.NPCType<HeadlessChicken>() || npc.type == ModContent.NPCType<RoosterBooster>())
-            npcLoot.Add(new CommonDrop(ModContent.ItemType<ChickenStandard>(), 200));
-
-        if (npc.type == ModContent.NPCType<EaglecrestGolem>())
-            npcLoot.Add(new CommonDrop(ModContent.ItemType<EaglecrestShield>(), 1));
+        if (npc.type == ModContent.NPCType<Basan>())
+            npcLoot.Add(new CommonDrop(ModContent.ItemType<BasanMaterial>(), 1, 15, 35));
     }
     public override void GetChat(NPC npc, ref string chat)
     {

@@ -426,12 +426,17 @@ Items: {
 	}
 
 	SageBasan: {
-		DisplayName: Basan Totem
+		DisplayName: Basan Effigy
 		LeftClick: Shoot heatwaves to prolong the burning effect
 		RightClick: Breath fire with a powerful burning effect
 		Jump: Jump to preform a triple jump, sending heatwaves below
 		Passive: While attacking, you are immune to knockback
 		Tooltip: Transforms you into a young Basan, granting unique abilities
+	}
+
+	BasanMaterial: {
+		Tooltip: "'Smells of cinders'"
+		DisplayName: Burnt Feather
 	}
 }
 

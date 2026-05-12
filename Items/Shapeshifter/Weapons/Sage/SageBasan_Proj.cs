@@ -1,45 +1,55 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GuardiansOfRedemption.Buffs.Debuffs;
+using GuardiansOfRedemption.General.Global;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Core.Utils;
 using OrchidMod;
+using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Shapeshifter;
 using OrchidMod.Utilities;
+using Redemption;
+using Redemption.Globals;
+using Redemption.Projectiles.Melee;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GuardiansOfRedemption.Buffs.Debuffs;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using GuardiansOfRedemption.General.Global;
-using Steamworks;
 
 namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 {
-    internal class SageBasan_Proj : OrchidModShapeshifterProjectile
+    public class SageBasan_Proj : OrchidModShapeshifterProjectile
     {
-        private static Texture2D TextureMain;
         public List<Vector2> OldPosition;
         public List<float> OldRotation;
+        public float squish;
         public int Timespent = 0;
 
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
+            ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+            ElementID.ProjFire[Type] = true;
+            ElementID.ProjWind[Type] = true;
+        }
         public override void SafeSetDefaults()
         {
-            Projectile.width = 22;
-            Projectile.height = 20;
-            Projectile.alpha = 96;
-            Projectile.scale = 1.8f;
-            Main.projFrames[Projectile.type] = 2;
+            Projectile.DamageType = ModContent.GetInstance<ShapeshifterDamageClass>();
+            Projectile.width = 52;
+            Projectile.height = 98;
+            Projectile.scale = 0.5f;
 
             Projectile.friendly = true;
             Projectile.tileCollide = false;
-            Projectile.alpha = 96;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
-            Projectile.timeLeft = 81;
+            Projectile.timeLeft = 40;
 
             OldPosition = new List<Vector2>();
             OldRotation = new List<float>();
@@ -53,63 +63,41 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             if (target.HasBuff(ModContent.BuffType<BasanBurnDebuff>()))
                 target.AddBuff(ModContent.BuffType<BasanBurnDebuff>(), additiveDuration + 80);
         }
-
         public override void AI()
         {
-            OldPosition.Add(Projectile.Center);
-            OldRotation.Add(Projectile.rotation);
-
-            if (!Initialized)
-            {
-                Initialized = true;
-
-                for (int i = 0; i < 15; i++)
-                {
-                    Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.Torch);
-                    dust.scale = Main.rand.NextFloat(1.5f, 2f);
-                    dust.noGravity = true;
-                    dust.velocity *= 0.5f;
-                    dust.velocity += Vector2.Normalize(Projectile.velocity).RotatedByRandom(MathHelper.ToRadians(30f)) * Main.rand.NextFloat(5f, 8f);
-                }
-
-                for (int i = 0; i < 5; i++)
-                {
-                    Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.Torch);
-                    dust.scale = Main.rand.NextFloat(1.5f, 2f);
-                    dust.noGravity = true;
-                    dust.velocity *= 0.5f;
-                    dust.velocity += Vector2.Normalize(Projectile.velocity).RotatedByRandom(MathHelper.ToRadians(20f)) * Main.rand.NextFloat(10f, 15f);
-                }
-            }
+            Projectile.LookByVelocity();
 
             Projectile.rotation = Projectile.velocity.ToRotation();
-            Projectile.velocity *= 0.94574f;
-            Projectile.alpha -= Timespent;
+            
 
+            squish += 0.01f;
+            Projectile.alpha += 5;
+            if (Projectile.alpha >= 255)
+                Projectile.Kill();
+        }
+        public override bool OrchidPreDraw(SpriteBatch spriteBatch, ref Color lightColor)
+        {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 drawOrigin = new(texture.Width / 2, texture.Height / 2);
+            SpriteEffects effects = SpriteEffects.None;
+            Vector2 scale = new(Projectile.scale + squish, Projectile.scale - squish);
 
-            if (OldPosition.Count > 10)
+            Main.spriteBatch.End();
+            Main.spriteBatch.BeginAdditive();
+
+            for (int k = Projectile.oldPos.Length - 1; k > 0; k--)
             {
-                OldPosition.RemoveAt(0);
-                OldRotation.RemoveAt(0);
-            }
+                Vector2 drawPos = (Projectile.oldPos[k] - Main.screenPosition) + drawOrigin + new Vector2(0f, Projectile.gfxOffY);
+                Color color = Projectile.GetAlpha(lightColor) * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 
-            if (Main.rand.NextBool(4 - (int)Projectile.ai[1]))
-            {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
-                dust.velocity *= 0.25f;
-                dust.velocity.Y -= 1f;
-                dust.velocity += Projectile.velocity * 0.2f;
-                dust.noLight = true;
-            }
+                Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, drawOrigin, scale, effects, 0);
 
-            if (Main.rand.NextBool(2))
-            {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Torch);
-                dust.velocity *= 0.25f;
-                dust.velocity += Projectile.velocity * 0.3f;
-                dust.scale = Main.rand.NextFloat(1f, 1.5f);
-                dust.noGravity = true;
             }
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White) * 0.5f, Projectile.rotation, drawOrigin, new Vector2(scale.X + 0.2f, scale.Y + 0.2f), effects, 0);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.BeginDefault();
+            return false;
         }
     }
 }

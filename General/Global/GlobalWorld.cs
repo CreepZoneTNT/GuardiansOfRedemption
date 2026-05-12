@@ -10,16 +10,16 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
-using GuardiansOfRedemption.Items.Accessories;
 using Redemption.Items.Placeable.Containers;
 using Redemption.Tiles.Containers;
-using GuardiansOfRedemption.Items.Weapons.Gauntlets;
-using GuardiansOfRedemption.Items.Weapons.Warhammers;
-using GuardiansOfRedemption.Items.Weapons.Runes;
 using Redemption.Tiles.Furniture.Lab;
 using Redemption.WorldGeneration;
 using Redemption.Items.Tools.PostML;
 using Redemption.Items.Materials.PostML;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Gauntlets;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Runes;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Warhammers;
+using GuardiansOfRedemption.Items.Guardian.Accessories;
 
 namespace GuardiansOfRedemption.General.Global
 {

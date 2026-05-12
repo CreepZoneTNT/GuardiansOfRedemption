@@ -1,9 +1,8 @@
-  using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using GuardiansOfRedemption.Items.Weapons.Gauntlets;
-using GuardiansOfRedemption.Items.Weapons.Standards;
-using GuardiansOfRedemption.Projectiles.Armor;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Standards;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Gauntlets;
 using Microsoft.Xna.Framework;
 using MonoMod.RuntimeDetour;
 using OrchidMod;
@@ -23,6 +22,7 @@ using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
+using GuardiansOfRedemption.Items.Guardian.Projectiles.Armor;
 
 namespace GuardiansOfRedemption.General.Global;
 

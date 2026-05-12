@@ -1,11 +1,15 @@
-﻿using JetBrains.Annotations;
+﻿using GuardiansOfRedemption.Items.Other.Materials;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Shapeshifter;
+using OrchidMod.Content.Shapeshifter.Misc;
 using Redemption;
 using Redemption.Globals;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PostML;
 using Redemption.NPCs.FowlMorning;
 using System;
 using System.Collections.Generic;
@@ -23,7 +27,10 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
     {
         public float WalkFrameCounter;
         public bool LateralMovement = false;
-        public bool Attacking = false;
+
+        public bool LeftClickAttacking = false;
+        public bool RightClickAttacking = false;
+
         public int Jumps = 0;
 
         public int FlameCharge = 0;
@@ -37,7 +44,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             Item.rare = ItemRarityID.Orange;
             Item.UseSound = CustomSounds.ChickenCluck;
             Item.useTime = 40;
-            Item.shootSpeed = 16f;
+            Item.shootSpeed = 8f;
             Item.knockBack = 5f;
             Item.damage = 60;
             ShapeshiftWidth = 20;
@@ -97,19 +104,11 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 
         public override void ShapeshiftOnLeftClick(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
         {
-            anchor.Frame = 12;
-            int projectileType = ModContent.ProjectileType<SageBasan_Proj>();
-            Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * Item.shootSpeed;
-            ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, Item.damage / 2, Item.crit, Item.knockBack, player.whoAmI);
-            
-            SoundEngine.PlaySound(SoundID.DD2_FlameburstTowerShot, projectile.Center);
             anchor.LeftCLickCooldown = Item.useTime;
-            projectile.ai[0] = 20;
+            LeftClickAttacking = true;
+            projectile.ai[0] = 30;
 
             projectile.ai[1] = (Main.MouseWorld.X < projectile.Center.X ? -1f : 1f);
-
-            Vector2 intendedVelocity = projectile.velocity;
-            TrySlowDown(ref intendedVelocity, 0.7f, player, shapeshifter, projectile);
 
             anchor.NeedNetUpdate = true;
         }
@@ -142,7 +141,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
         {
             player.fireWalk = true;
             player.noFallDmg = true;
-            if (Attacking)
+            if (RightClickAttacking)
                 player.noKnockback = true;
         }
 
@@ -152,7 +151,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             // ai[1] is used to flip the sprite in the correct direction while attacking
             // ai[2] is used as a cooldown for the dash (jump)
 
-            // anchor.ai[0]
+            // anchor.ai[0] is used for animation for left click
             // anchor.ai[1]
             // anchor.ai[2] is used for the UI
             // anchor.ai[3] is used for time inbetween attacks of right click.
@@ -166,6 +165,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             if (anchor.IsInputDown) GravityMult += 0.3f;
             if (anchor.IsInputUp) GravityMult -= 0.3f;
 
+            projectile.ai[0]--;
 
             if (anchor.RightCLickCooldown > 0)
             {
@@ -174,12 +174,12 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 
             // ANIMATION
 
-            if (!grounded && projectile.velocity.Y < 0)
+            if (!grounded && projectile.velocity.Y < 0 && !LeftClickAttacking)
             { // moving up frame
                 anchor.Timespent = 0;
                 anchor.Frame = 10;
             }
-            else if (!grounded && projectile.velocity.Y > 0)
+            else if (!grounded && projectile.velocity.Y > 0 && !LeftClickAttacking)
             {
                 anchor.Timespent = 0;
                 anchor.Frame = 11;
@@ -208,17 +208,44 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             }
 
             // Attacks
+            if (anchor.Projectile.ai[0] >= 0f)
+            {
+                if (anchor.Projectile.ai[0] == 0)
+                {
+                    anchor.Frame = 1;
+                }
+                else if (anchor.Projectile.ai[0] >= 17)
+                {
+                    anchor.Frame = 12;
+                }
+                else if (anchor.Projectile.ai[0] < 17 && anchor.Projectile.ai[0] > 0)
+                {
+                    anchor.Frame = 13;
+                }
+            }
 
+            if (LeftClickAttacking)
+            {
+                if (anchor.Projectile.ai[0] == 17)
+                {
+                    int projectileType = ModContent.ProjectileType<SageBasan_Proj>();
+                    Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * Item.shootSpeed;
+                    ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, Item.damage / 2, Item.crit, Item.knockBack, player.whoAmI);
+                    SoundEngine.PlaySound(SoundID.DD2_FlameburstTowerShot, projectile.Center);
+                }
+
+                if (anchor.Projectile.ai[0] == 17)
+                    LeftClickAttacking = false;
+            }
             if (anchor.IsRightClick && grounded && FlameCharge <= 180 && FlameCue)
             {
-                projectile.ai[1] = (Main.MouseWorld.X < projectile.Center.X ? -1f : 1f);
-                Attacking = true;
+                RightClickAttacking = true;
                 FlameCharge++;
                 anchor.ai[3]++;
 
                 anchor.Frame = 15;
                 int projectileType = ModContent.ProjectileType<SageBasan_ProjAlt>();
-                Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * (Item.shootSpeed / 6);
+                Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * (Item.shootSpeed / 3);
                 if (FlameCharge % 6 == 0)
                 {
                     //CombatText.NewText(player.getRect(), Color.Black, (int)(anchor.ai[3]));
@@ -241,7 +268,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             else if (!anchor.IsRightClick && grounded && FlameCharge >= 0)
             {
                 //Recharging
-                Attacking = false;
+                RightClickAttacking = false;
                 anchor.ai[3]--;
                 if (anchor.ai[3] <= 0)
                 {
@@ -272,7 +299,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
                 Vector2 intendedVelocity = projectile.velocity;
                 GravityCalculations(ref intendedVelocity, player, shapeshifter);
 
-                if (anchor.JumpWithControlRelease(player) && Jumps > 0 && !Attacking)
+                if (anchor.JumpWithControlRelease(player) && Jumps > 0 && !RightClickAttacking)
                 { // Jump
                     Jumps--;
                     TryJump(ref intendedVelocity, 6.5f, player, shapeshifter, anchor, false);
@@ -281,7 +308,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
                 }
 
                 // Normal movement
-                if ((anchor.IsInputLeft || anchor.IsInputRight) && !Attacking)
+                if ((anchor.IsInputLeft || anchor.IsInputRight) && !RightClickAttacking)
                 { // Player is inputting a movement key
                     float acceleration = speedMult;
                     if (!grounded) acceleration *= 0.5f;
@@ -335,6 +362,14 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
                     anchor.OldFrame.RemoveAt(0);
                 }
             }
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<ShapeshifterBlankEffigy>())
+                .AddIngredient(ModContent.ItemType<BasanMaterial>(), 10)
+                .AddTile(TileID.Hellforge)
+                .Register();
         }
     }
 }

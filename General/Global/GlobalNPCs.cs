@@ -1,8 +1,8 @@
 using System;
 using GuardiansOfRedemption.Achievements;
 using GuardiansOfRedemption.Buffs.Debuffs;
-using GuardiansOfRedemption.Items.Weapons.Quarterstaves;
-using GuardiansOfRedemption.Projectiles.Shields;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Quarterstaves;
+using GuardiansOfRedemption.Items.Guardian.Projectiles.Shields;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
@@ -234,15 +234,6 @@ public class GlobalNPCs : GlobalNPC
             else
                 npc.lifeRegen -= 8 + (BasanDebuffDuration / 4);
                 damage = BasanDebuffDuration / 24;
-            /*
-            if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
-            {
-                npc.lifeRegen -= (6 + BasanDebuffCount * 6);
-                damage = 6 + (int)(BasanDebuffCount * 1.5);
-            }
-            else
-                npc.lifeRegen -= (4 + BasanDebuffCount * 3);
-                damage = 4 + BasanDebuffCount;*/
         }
     }
 
