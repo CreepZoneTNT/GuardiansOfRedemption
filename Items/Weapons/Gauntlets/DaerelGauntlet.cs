@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using GuardiansOfRedemption.Projectiles.Gauntlets;
 
 namespace GuardiansOfRedemption.Items.Weapons.Gauntlets
 {
@@ -28,9 +29,15 @@ namespace GuardiansOfRedemption.Items.Weapons.Gauntlets
 			ParryDuration = 60;
 			PunchSpeed = 2f;
 		}
+
 		public override void OnParryGauntlet(Player player, OrchidGuardian guardian, Entity aggressor, Projectile anchor)
 		{
 			player.AddBuff(BuffID.Swiftness, 600);	
 		}
+
+        public override void ExtraAIGauntlet(Player player, OrchidGuardian guardian, Projectile anchor, bool offHandGauntlet)
+        {
+            base.ExtraAIGauntlet(player, guardian, anchor, offHandGauntlet);
+        }
 	}
 }

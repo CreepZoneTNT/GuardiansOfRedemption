@@ -39,7 +39,7 @@ public class ChickenStandard : OrchidModGuardianStandard
 
     public override bool NearbyPlayerEffect(GuardianStandardStats standardStats, Player affectedPlayer, OrchidGuardian guardian, bool isLocalPlayer, bool reinforced)
     {
-        BuffPlayer modPlayer = affectedPlayer.RedemptionPlayerBuff();
+        // BuffPlayer modPlayer = affectedPlayer.RedemptionPlayerBuff();
 
         standardStats.lifeRegen += 2;
 
@@ -49,14 +49,14 @@ public class ChickenStandard : OrchidModGuardianStandard
             if (Main.rand.NextBool(400))
             {
                 Vector2 velocity = Vector2.UnitY.RotatedByRandom(MathHelper.Pi / 3) * -10;
-                Vector2 position = affectedPlayer.Center + Vector2.UnitY * affectedPlayer.height * 0.5f;
+                Vector2 position = affectedPlayer.Top;
                 Projectile.NewProjectileDirect(affectedPlayer.GetSource_FromThis(), position, velocity, ModContent.ProjectileType<ChickenGauntlet_EggProj>(), 0, 0);
             }
         }
 
         if (guardian.RedemptionGuardian().GuardianChickenStandard && isLocalPlayer)
         {
-            Dust.NewDust(affectedPlayer.position, affectedPlayer.width, affectedPlayer.height, DustID.RedMoss, affectedPlayer.velocity.X * 0.3f, affectedPlayer.velocity.Y * 0.3f, Scale: 1);
+            Dust.NewDustDirect(affectedPlayer.position, affectedPlayer.width, affectedPlayer.height, DustID.RedMoss, affectedPlayer.velocity.X * 0.3f, affectedPlayer.velocity.Y * 0.3f, Scale: 1);
         }
         return false;
     }

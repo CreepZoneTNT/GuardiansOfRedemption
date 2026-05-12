@@ -1,6 +1,7 @@
   using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using GuardiansOfRedemption.Buffs;
 using GuardiansOfRedemption.Items.Weapons.Gauntlets;
 using GuardiansOfRedemption.Items.Weapons.Standards;
 using GuardiansOfRedemption.Projectiles.Armor;
@@ -21,6 +22,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameInput;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -33,6 +35,9 @@ public class RedemptionGuardian : ModPlayer
     public int EaglecrestShieldHitCount;
 
     public int HardlightParryCooldown;
+
+    public float DaerelGauntletUber;
+    // private int DaerelGauntletShadowTimer;
 
     public bool GuardianChickenStandard;
     public bool GuardianPureIronStandard;
@@ -82,6 +87,9 @@ public class RedemptionGuardian : ModPlayer
         GuardianXenomiteChain = false;
         GuardianOmegaChain = false;
         GuardianCosmosChain = false;
+
+        if (!Player.HasBuff<DaerelGauntletBuff>()) DaerelGauntletUber = 0;
+        else if (DaerelGauntletUber >= 720f) DaerelGauntletUber = 720f;
     }
 
     public override void PostUpdateMiscEffects()
@@ -138,6 +146,19 @@ public class RedemptionGuardian : ModPlayer
         //     r = 0.95f;
         //     g = 0.6f;
         //     b = 0.6f;
+        // }
+
+        // if (Player.HasBuff<DaerelGauntletBuff>())
+        // {
+
+        //     DaerelGauntletShadowTimer++;
+		// 	Vector2 playerPosition = Player.position + Vector2.UnitY * Player.gfxOffY;
+        
+        //     float distanceFromPlayer = Math.Sin(DaerelGauntletShadowTimer * 0.06f);
+        //     Vector2 drawPosition = playerPosition + new Vector2(0f, distanceFromPlayer).RotatedBy(rotation) * 25;
+        //     float shadow = 1 - Utils.Remap(Math.Abs(distanceFromPlayer), 0, 1, 0.1f, 0.4f, clamped: true);)
+        //     Main.PlayerRenderer.DrawPlayer(Main.Camera, Player, Player.Center + Main.rand.NextVector2Circular(12f, 12f), 0, Player.fullRotationOrigin, 0.75f, 1.25f);
+
         // }
     }
     public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)

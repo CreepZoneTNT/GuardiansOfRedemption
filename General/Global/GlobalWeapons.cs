@@ -45,20 +45,19 @@ public class GlobalWeapons : GlobalItem
             }
         }
     }
-    /*public override void OnConsumeItem(Item item, Player player)
-    {   
-        if (item.healLife > 0) { 
 
-            if (player.RedemptionGuardian().GuardianChickenStandard)
+    public override void GetHealLife(Item item, Player player, bool quickHeal, ref int healValue)
+    {
+        if (player.RedemptionGuardian().GuardianChickenStandard)
+        {
+            int EggSplosion = item.healLife / 20;
+            for (int EggMinimum = 0; EggMinimum < EggSplosion; EggMinimum++)
             {
-                int EggSplosion = item.healLife / 20;
-                for (int EggMinimum = 0; EggMinimum < EggSplosion; EggMinimum++)
-                {
                 Vector2 velocity = Vector2.UnitY.RotatedByRandom(MathHelper.Pi / 3) * -15;
-                Vector2 position = player.Center + Vector2.UnitY * player.height * 0.5f;
+                Vector2 position = player.Top;
                 Projectile.NewProjectileDirect(player.GetSource_FromThis(), position, velocity, ModContent.ProjectileType<ChickenGauntlet_EggProj>(), 0, 0);
-                }
             }
         }
-    }*/
+       
+    }
 }
