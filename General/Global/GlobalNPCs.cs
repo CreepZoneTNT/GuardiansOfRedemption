@@ -228,8 +228,8 @@ public class GlobalNPCs : GlobalNPC
 
                 if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
             {
-                npc.lifeRegen -= 8 + (BasanDebuffDuration / 4);
-                damage = BasanDebuffDuration / 12;
+                npc.lifeRegen -= 16 + (BasanDebuffDuration / 2);
+                damage = BasanDebuffDuration;
             }
             else
                 npc.lifeRegen -= 8 + (BasanDebuffDuration / 4);

@@ -1,6 +1,8 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
+using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Shapeshifter;
 using Redemption;
 using Redemption.Globals;
@@ -48,9 +50,9 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
         public override void ShapeshiftGetUIInfo(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter, ref int uiCount, ref int uiCountMax)
         {
             uiCount = 0;
-            uiCountMax = 1;
+            uiCountMax = 3;
             if (anchor.ai[2] > 0)
-            { // shell
+            { // Flame on
                 uiCount = (int)anchor.ai[2];
             }
         }
@@ -60,7 +62,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             anchor.Frame = 1;
             anchor.Timespent = 0;
             if (FlameCue)
-                anchor.ai[2] = 1;
+                anchor.ai[2] = 3;
 
             projectile.direction = player.direction;
             projectile.spriteDirection = player.direction;
@@ -95,6 +97,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 
         public override void ShapeshiftOnLeftClick(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
         {
+            anchor.Frame = 12;
             int projectileType = ModContent.ProjectileType<SageBasan_Proj>();
             Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * Item.shootSpeed;
             ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, Item.damage / 2, Item.crit, Item.knockBack, player.whoAmI);
@@ -139,6 +142,8 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
         {
             player.fireWalk = true;
             player.noFallDmg = true;
+            if (Attacking)
+                player.noKnockback = true;
         }
 
         public override void ShapeshiftAnchorAI(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
@@ -191,7 +196,7 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
                     anchor.Frame++;
 
                     if (anchor.Frame == 10)
-                    { 
+                    {
                         anchor.Frame = 1;
                     }
                 }
@@ -206,38 +211,52 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 
             if (anchor.IsRightClick && grounded && FlameCharge <= 180 && FlameCue)
             {
-                anchor.Frame = 15;
+                projectile.ai[1] = (Main.MouseWorld.X < projectile.Center.X ? -1f : 1f);
                 Attacking = true;
                 FlameCharge++;
                 anchor.ai[3]++;
+
+                anchor.Frame = 15;
                 int projectileType = ModContent.ProjectileType<SageBasan_ProjAlt>();
-                Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * (Item.shootSpeed / (8 + (anchor.ai[3] / 22.5f)));
+                Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * (Item.shootSpeed / 6);
                 if (FlameCharge % 6 == 0)
                 {
                     //CombatText.NewText(player.getRect(), Color.Black, (int)(anchor.ai[3]));
-                    ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, Item.damage / 3, Item.crit, Item.knockBack, player.whoAmI);  
-                }             
+                    ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, (Item.damage + (FlameCharge / 9)) / 3, Item.crit, Item.knockBack, player.whoAmI);
+                    if (FlameCharge % 60 == 0 && FlameCharge != 0)
+                    {
+                        anchor.ai[2] -= 1;
+                        SoundEngine.PlaySound(SoundID.LiquidsWaterLava, projectile.Center);
+                    }
+                }
 
-            } 
-            else if (FlameCharge >= 180 && FlameCue) 
+            }
+            else if (FlameCharge >= 180 && FlameCue)
             {
                 anchor.ai[2] = 0;
                 SoundEngine.PlaySound(SoundID.AbigailAttack, projectile.Center);
                 FlameCue = false;
             }
-            
+
             else if (!anchor.IsRightClick && grounded && FlameCharge >= 0)
             {
-
+                //Recharging
                 Attacking = false;
                 anchor.ai[3]--;
                 if (anchor.ai[3] <= 0)
                 {
                     anchor.ai[3] = 0;
                     FlameCharge--;
+
+                    if(FlameCharge % 60 == 0 && FlameCharge != 180 && FlameCharge != 0)
+                    {
+                        anchor.ai[2]++;
+                        SoundEngine.PlaySound(SoundID.LiquidsWaterLava, projectile.Center);   
+                    }
+                    // Finished Recharging
                     if (FlameCharge == 0 && !FlameCue)
                     {
-                        anchor.ai[2] = 1;
+                        anchor.ai[2] = 3;
                         FlameCharge = 0;
                         FlameCue = true;
                         anchor.Blink(true);

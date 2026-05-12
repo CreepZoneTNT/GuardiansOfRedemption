@@ -427,10 +427,10 @@ Items: {
 
 	SageBasan: {
 		DisplayName: Basan Totem
-		LeftClick: Flap your wings to release gusts of hot air
-		RightClick: Release a incinerating blast of fire from your beak!
-		Jump: Jump to preform a triple jump, sending hot air below
-		Passive: Tbd
+		LeftClick: Shoot heatwaves to prolong the burning effect
+		RightClick: Breath fire with a powerful burning effect
+		Jump: Jump to preform a triple jump, sending heatwaves below
+		Passive: While attacking, you are immune to knockback
 		Tooltip: Transforms you into a young Basan, granting unique abilities
 	}
 }
@@ -497,8 +497,8 @@ Projectiles: {
 	KS3Rune_Proj.DisplayName: Hologram Man Stan
 	WastelandShield_Proj.DisplayName: Bullet
 	SeedRune_Proj.DisplayName: Xenomite Shard
-	SageBasan_Proj.DisplayName: Sage Basan_ Proj
-	SageBasan_ProjAlt.DisplayName: Sage Basan_ Proj Alt
+	SageBasan_Proj.DisplayName: Heat Wave
+	SageBasan_ProjAlt.DisplayName: Fire Breath
 }
 
 Buffs: {
