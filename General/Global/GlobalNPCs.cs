@@ -1,27 +1,29 @@
 using System;
 using GuardiansOfRedemption.Achievements;
-using GuardiansOfRedemption.Items.Weapons.Quarterstaves;
-using GuardiansOfRedemption.Projectiles.Shields;
+using GuardiansOfRedemption.Buffs.Debuffs;
+using GuardiansOfRedemption.Items.Guardian.Weapons.Quarterstaves;
+using GuardiansOfRedemption.Items.Guardian.Projectiles.Shields;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
 using Redemption;
 using Redemption.Base;
+using Redemption.Globals;
 using Redemption.Helpers;
+using Redemption.Items.Armor.Vanity.TBot;
 using Redemption.NPCs.Bosses.Erhan;
+using Redemption.NPCs.Lab.Janitor;
+using Redemption.Particles;
 using Redemption.Textures;
 using Redemption.UI.ChatUI;
-using Redemption.Items.Armor.Vanity.TBot;
-using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.Enums;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Redemption.NPCs.Lab.Janitor;
-using Terraria.Enums;
-using Terraria.DataStructures;
-using GuardiansOfRedemption.Buffs.Debuffs;
 
 namespace GuardiansOfRedemption.General.Global;
 
@@ -29,6 +31,9 @@ public class GlobalNPCs : GlobalNPC
 {
     public override bool InstancePerEntity => true;
 
+    public bool FalloutDebuff = false;
+    public bool BasanDebuff = false;
+    public int BasanDebuffDuration = 0;
     public enum JanitorInsultState {
         /// <summary> Default state </summary>
         Idle,
@@ -105,8 +110,16 @@ public class GlobalNPCs : GlobalNPC
         if (npc.type == ModContent.NPCType<JanitorBot_NPC>() && janitorInsultAngery) {
             drawColor = drawColor.MultiplyRGB(Color.Tomato);
         }
-        else if (npc.HasBuff<FalloutDebuff>())
+
+
+        if (npc.HasBuff<BasanBurnDebuff>())
+        {
+            drawColor = Color.Lerp(drawColor, new Color(220, 150, 150), 0.5f);
+        }
+        if (npc.HasBuff<FalloutDebuff>())
+        {
             drawColor = drawColor.MultiplyRGB(Color.SeaGreen * 0.5f);
+        }
     }
 
 
@@ -163,7 +176,7 @@ public class GlobalNPCs : GlobalNPC
         {
             ElementalNPC elementalNPC = npc.GetGlobalNPC<ElementalNPC>();
             float poisonResist = elementalNPC.elementDmg[ElementID.Poison];
-            
+
             float mult = 1;
             if (poisonResist < 1) mult = poisonResist + (1 - poisonResist) / 2f;
 
@@ -198,6 +211,29 @@ public class GlobalNPCs : GlobalNPC
             }
 
             modifiers.FinalDamage *= mult / poisonResist;
+        }
+    }
+
+    public override void UpdateLifeRegen(NPC npc, ref int damage)
+    {
+        if(npc.HasBuff<BasanBurnDebuff>())
+        {            
+            if (npc.lifeRegen > 0)
+                npc.lifeRegen = 0;
+
+            if (BasanDebuffDuration > 480)
+            {
+                BasanDebuffDuration = 480;
+            }
+
+                if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
+            {
+                npc.lifeRegen -= 16 + (BasanDebuffDuration / 2);
+                damage = BasanDebuffDuration;
+            }
+            else
+                npc.lifeRegen -= 8 + (BasanDebuffDuration / 4);
+                damage = BasanDebuffDuration / 24;
         }
     }
 

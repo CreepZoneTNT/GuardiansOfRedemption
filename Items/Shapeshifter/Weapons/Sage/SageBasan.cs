@@ -1,9 +1,15 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GuardiansOfRedemption.Items.Other.Materials;
+using JetBrains.Annotations;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
+using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Shapeshifter;
-using OrchidMod.Content.Shapeshifter.Projectiles.Sage;
+using OrchidMod.Content.Shapeshifter.Misc;
 using Redemption;
 using Redemption.Globals;
+using Redemption.Items.Materials.HM;
+using Redemption.Items.Materials.PostML;
 using Redemption.NPCs.FowlMorning;
 using System;
 using System.Collections.Generic;
@@ -21,7 +27,14 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
     {
         public float WalkFrameCounter;
         public bool LateralMovement = false;
-        public int JumpCount = 0;
+
+        public bool LeftClickAttacking = false;
+        public bool RightClickAttacking = false;
+
+        public int Jumps = 0;
+
+        public int FlameCharge = 0;
+        public bool FlameCue = true;
 
         public override void SafeSetDefaults()
         {
@@ -31,9 +44,9 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             Item.rare = ItemRarityID.Orange;
             Item.UseSound = CustomSounds.ChickenCluck;
             Item.useTime = 40;
-            Item.shootSpeed = 2f;
+            Item.shootSpeed = 8f;
             Item.knockBack = 5f;
-            Item.damage = 90;
+            Item.damage = 60;
             ShapeshiftWidth = 20;
             ShapeshiftHeight = 40;
             ShapeshiftType = ShapeshifterShapeshiftType.Sage;
@@ -41,15 +54,28 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             MeleeSpeedRight = true;
             GroundedWildshape = true;
         }
-
+        public override void ShapeshiftGetUIInfo(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter, ref int uiCount, ref int uiCountMax)
+        {
+            uiCount = 0;
+            uiCountMax = 3;
+            if (anchor.ai[2] > 0)
+            { // Flame on
+                uiCount = (int)anchor.ai[2];
+            }
+        }
         public override void ShapeshiftAnchorOnShapeshift(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
         {
+
             anchor.Frame = 1;
             anchor.Timespent = 0;
+            if (FlameCue)
+                anchor.ai[2] = 3;
+
             projectile.direction = player.direction;
             projectile.spriteDirection = player.direction;
-            LateralMovement = false;
 
+            LateralMovement = false;
+            Jumps = 0;
             player.position.Y -= 12;
 
             for (int i = 0; i < 5; i++)
@@ -78,30 +104,45 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 
         public override void ShapeshiftOnLeftClick(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
         {
+            anchor.LeftCLickCooldown = Item.useTime;
+            LeftClickAttacking = true;
+            projectile.ai[0] = 30;
 
-            SoundEngine.PlaySound(CustomSounds.ChickenCluck, projectile.Center);
+            projectile.ai[1] = (Main.MouseWorld.X < projectile.Center.X ? -1f : 1f);
+
+            anchor.NeedNetUpdate = true;
         }
-
-        public override bool ShapeshiftCanRightClick(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter) => IsGrounded(projectile, player, 8f) && anchor.CanRightClick;
-
+       
         public override void ShapeshiftOnRightClick(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
         {
-            SoundEngine.PlaySound(CustomSounds.ChickenCluck, projectile.Center);
-            // if (anchor.CanRightClick)
-            // {
-
-                anchor.ai[0] += 40f;
-                anchor.RightCLickCooldown = 30;
-                anchor.NeedNetUpdate = true;
-            // }
-            
+            if(FlameCue && IsGrounded(projectile, player, 8))
+                SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, projectile.Center);
         }
 
-        public override bool ShapeshiftCanJump(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter) => projectile.ai[2] != 0 && player.controlJump;
+        public override void ShapeshiftOnHitNPC(NPC target, NPC.HitInfo hit, int damageDone, Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
+        {
+            base.ShapeshiftOnHitNPC(target, hit, damageDone, projectile, anchor, player, shapeshifter);
+        }
+
+        public void JumpAttack(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
+        {
+            // Checks if has flapped attack so it doesn't spam a bunch of projectiles
+
+            if (!IsGrounded(projectile, player, 8f))
+            {
+                int projectileType = ModContent.ProjectileType<SageBasan_Proj>();
+                Vector2 velocity = new Vector2(0, 8);
+                ShapeshifterNewProjectile(shapeshifter, new Vector2(projectile.Center.X, projectile.Center.Y - 6), velocity, projectileType, Item.damage / 3, Item.crit, Item.knockBack, player.whoAmI);
+            }
+        }
+
 
         public override void ShapeshiftBuffs(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
         {
             player.fireWalk = true;
+            player.noFallDmg = true;
+            if (RightClickAttacking)
+                player.noKnockback = true;
         }
 
         public override void ShapeshiftAnchorAI(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
@@ -109,63 +150,146 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             // ai[0] is used as a timer for attack animations
             // ai[1] is used to flip the sprite in the correct direction while attacking
             // ai[2] is used as a cooldown for the dash (jump)
-            // anchor.ai[0] is used as an exhaustion for right click attack
+
+            // anchor.ai[0] is used for animation for left click
             // anchor.ai[1]
-            // anchor.ai[2]
-            // anchor.ai[3]
+            // anchor.ai[2] is used for the UI
+            // anchor.ai[3] is used for time inbetween attacks of right click.
             // anchor.ai[4]
 
-            int jumps = 0;
+            // checking for if attacking
+
             bool grounded = IsGrounded(projectile, player, 8f);
             float speedMult = GetSpeedMult(player, shapeshifter, anchor, grounded);
+            GravityMult = 0.7f;
+            if (anchor.IsInputDown) GravityMult += 0.3f;
+            if (anchor.IsInputUp) GravityMult -= 0.3f;
+
+            projectile.ai[0]--;
 
             if (anchor.RightCLickCooldown > 0)
-            { // Right click cd is set to 10 seconds when used, this makes it to touching the ground "resets" it
-                speedMult *= 0.5f;
-
-                switch (anchor.RightCLickCooldown)
-                {
-                    case > 20:
-                        anchor.Frame = 12;
-                        break;
-                    case 20:
-                        anchor.Frame = 13;
-                        Vector2 dir = Vector2.UnitX * projectile.direction;
-                        Projectile wave = Projectile.NewProjectileDirect(projectile.GetSource_FromAI(), projectile.Center + dir * 24f, dir * Item.shootSpeed, ModContent.ProjectileType<Basan_HeatWave>(), Item.damage, 4f);
-                        wave.friendly = true;
-                        break;
-
-                }
+            {
+                anchor.RightCLickCooldown--;
             }
 
             // ANIMATION
 
-            if (!grounded)
+            if (!grounded && projectile.velocity.Y < 0 && !LeftClickAttacking)
             { // moving up frame
                 anchor.Timespent = 0;
-                if (projectile.velocity.Y < 0)
-                    anchor.Frame = 10;
-                else if (projectile.velocity.Y > 0)
-                    anchor.Frame = 11;
+                anchor.Frame = 10;
             }
-            else if (LateralMovement)
-            { // Player is moving left or right, cycle through frames
-                if (anchor.Frame < 1)
-                    anchor.Frame = 1;
-
-                WalkFrameCounter += projectile.velocity.X * 0.75f;
-                if (WalkFrameCounter is >= 5 or <= -5)
+            else if (!grounded && projectile.velocity.Y > 0 && !LeftClickAttacking)
+            {
+                anchor.Timespent = 0;
+                anchor.Frame = 11;
+            }
+            else if (LateralMovement && grounded)
+            {
+                if (anchor.Timespent % 8 == 0 && anchor.Timespent > 0)
                 {
-                    WalkFrameCounter = 0;
-                    anchor.Frame ++;
-                    if (anchor.Frame > 9)
+                    if (anchor.Frame > 10)
+                    {
+                        anchor.Frame = 0;
+                    }
+
+                    anchor.Frame++;
+
+                    if (anchor.Frame == 10)
+                    {
                         anchor.Frame = 1;
+                    }
                 }
             }
-            else
+            else if (!LateralMovement && grounded)
             { // idle frame
                 anchor.Timespent = 0;
                 anchor.Frame = 0;
+            }
+
+            // Attacks
+            if (anchor.Projectile.ai[0] >= 0f)
+            {
+                if (anchor.Projectile.ai[0] == 0)
+                {
+                    anchor.Frame = 1;
+                }
+                else if (anchor.Projectile.ai[0] >= 17)
+                {
+                    anchor.Frame = 12;
+                }
+                else if (anchor.Projectile.ai[0] < 17 && anchor.Projectile.ai[0] > 0)
+                {
+                    anchor.Frame = 13;
+                }
+            }
+
+            if (LeftClickAttacking)
+            {
+                if (anchor.Projectile.ai[0] == 17)
+                {
+                    int projectileType = ModContent.ProjectileType<SageBasan_Proj>();
+                    Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * Item.shootSpeed;
+                    ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, Item.damage / 2, Item.crit, Item.knockBack, player.whoAmI);
+                    SoundEngine.PlaySound(SoundID.DD2_FlameburstTowerShot, projectile.Center);
+                }
+
+                if (anchor.Projectile.ai[0] == 17)
+                    LeftClickAttacking = false;
+            }
+            if (anchor.IsRightClick && grounded && FlameCharge <= 180 && FlameCue)
+            {
+                RightClickAttacking = true;
+                FlameCharge++;
+                anchor.ai[3]++;
+
+                anchor.Frame = 15;
+                int projectileType = ModContent.ProjectileType<SageBasan_ProjAlt>();
+                Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * (Item.shootSpeed / 3);
+                if (FlameCharge % 6 == 0)
+                {
+                    //CombatText.NewText(player.getRect(), Color.Black, (int)(anchor.ai[3]));
+                    ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, (Item.damage + (FlameCharge / 9)) / 3, Item.crit, Item.knockBack, player.whoAmI);
+                    if (FlameCharge % 60 == 0 && FlameCharge != 0)
+                    {
+                        anchor.ai[2] -= 1;
+                        SoundEngine.PlaySound(SoundID.LiquidsWaterLava, projectile.Center);
+                    }
+                }
+
+            }
+            else if (FlameCharge >= 180 && FlameCue)
+            {
+                anchor.ai[2] = 0;
+                SoundEngine.PlaySound(SoundID.AbigailAttack, projectile.Center);
+                FlameCue = false;
+            }
+
+            else if (!anchor.IsRightClick && grounded && FlameCharge >= 0)
+            {
+                //Recharging
+                RightClickAttacking = false;
+                anchor.ai[3]--;
+                if (anchor.ai[3] <= 0)
+                {
+                    anchor.ai[3] = 0;
+                    FlameCharge--;
+
+                    if(FlameCharge % 60 == 0 && FlameCharge != 180 && FlameCharge != 0)
+                    {
+                        anchor.ai[2]++;
+                        SoundEngine.PlaySound(SoundID.LiquidsWaterLava, projectile.Center);   
+                    }
+                    // Finished Recharging
+                    if (FlameCharge == 0 && !FlameCue)
+                    {
+                        anchor.ai[2] = 3;
+                        FlameCharge = 0;
+                        FlameCue = true;
+                        anchor.Blink(true);
+                        SoundEngine.PlaySound(SoundID.Item20, projectile.Center);
+                    }
+                }
             }
 
             // MOVEMENT
@@ -175,13 +299,16 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
                 Vector2 intendedVelocity = projectile.velocity;
                 GravityCalculations(ref intendedVelocity, player, shapeshifter);
 
-                if (anchor.IsInputJump && ++jumps < 3)
+                if (anchor.JumpWithControlRelease(player) && Jumps > 0 && !RightClickAttacking)
                 { // Jump
-                    TryJump(ref intendedVelocity, 9f, player, shapeshifter, anchor, true);
+                    Jumps--;
+                    TryJump(ref intendedVelocity, 6.5f, player, shapeshifter, anchor, false);
+                    JumpAttack(projectile, anchor, player, shapeshifter);
+                    SoundEngine.PlaySound(SoundID.Item32, projectile.Center);
                 }
 
                 // Normal movement
-                if (anchor.IsInputLeft || anchor.IsInputRight)
+                if ((anchor.IsInputLeft || anchor.IsInputRight) && !RightClickAttacking)
                 { // Player is inputting a movement key
                     float acceleration = speedMult;
                     if (!grounded) acceleration *= 0.5f;
@@ -212,6 +339,11 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
                     TrySlowDown(ref intendedVelocity, 0.7f, player, shapeshifter, projectile);
                 }
 
+                if (IsGrounded(projectile, player, 8f, anchor.IsInputDown, anchor.IsInputDown))
+                {
+                    Jumps = 6;
+                }
+
                 FinalVelocityCalculations(ref intendedVelocity, projectile, player, true);
             }
 
@@ -230,6 +362,14 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
                     anchor.OldFrame.RemoveAt(0);
                 }
             }
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ModContent.ItemType<ShapeshifterBlankEffigy>())
+                .AddIngredient(ModContent.ItemType<BasanMaterial>(), 10)
+                .AddTile(TileID.Hellforge)
+                .Register();
         }
     }
 }
