@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using GuardiansOfRedemption.Items.Guardian.Projectiles.Accessories;
-using GuardiansOfRedemption.Items.Guardian.Weapons.Warhammers;
+using GuardiansOfRedemption.Content.Guardian.Projectiles.Accessories;
+using GuardiansOfRedemption.Content.Guardian.Weapons.Warhammers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
@@ -13,17 +12,12 @@ using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;
 using Redemption.Dusts;
-using Redemption.Dusts.Tiles;
 using Redemption.Globals;
-using Redemption.Items.Weapons.PostML.Melee;
 using Redemption.Particles;
-using Redemption.Projectiles.Magic;
-using Redemption.Projectiles.Ranged;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
 
 namespace GuardiansOfRedemption.General.Global;
 

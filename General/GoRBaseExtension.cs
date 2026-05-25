@@ -2,7 +2,6 @@ using GuardiansOfRedemption.General.Global;
 using Microsoft.Xna.Framework;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
-using Redemption.BaseExtension;
 using Terraria;
 using Terraria.Utilities;
 

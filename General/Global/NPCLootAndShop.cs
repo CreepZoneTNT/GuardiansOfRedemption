@@ -1,10 +1,8 @@
-using OrchidMod.Utilities;
 using Redemption.Globals;
 using Redemption.Items.Usable;
 using Redemption.NPCs.Bosses.Erhan;
 using Redemption.NPCs.Bosses.Thorn;
 using Redemption.NPCs.Bosses.PatientZero;
-using Redemption.NPCs.Minibosses.EaglecrestGolem;
 using Redemption.NPCs.FowlMorning;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.NPCs.Lab.Janitor;
@@ -13,20 +11,14 @@ using Terraria;
 using Terraria.Enums;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Redemption.Items.Placeable.Banners;
-using Redemption.BaseExtension;
-using GuardiansOfRedemption.Items.Guardian.Weapons.Gauntlets;
-using GuardiansOfRedemption.Items.Guardian.Weapons.Quarterstaves;
-using GuardiansOfRedemption.Items.Guardian.Weapons.Runes;
-using GuardiansOfRedemption.Items.Guardian.Weapons.Shields;
-using GuardiansOfRedemption.Items.Guardian.Weapons.Standards;
-using GuardiansOfRedemption.Items.Guardian.Weapons.Warhammers;
-using GuardiansOfRedemption.Items.Other.Materials;
-using Redemption.NPCs.Friendly;
-using OrchidMod.Content.Shapeshifter.Weapons.Symbiote;
+using GuardiansOfRedemption.Content.Guardian.Weapons.Gauntlets;
+using GuardiansOfRedemption.Content.Guardian.Weapons.Quarterstaves;
+using GuardiansOfRedemption.Content.Guardian.Weapons.Runes;
+using GuardiansOfRedemption.Content.Guardian.Weapons.Shields;
+using GuardiansOfRedemption.Content.Guardian.Weapons.Warhammers;
+using GuardiansOfRedemption.Content.Items.Other.Materials;
 
 namespace GuardiansOfRedemption.General.Global;
 

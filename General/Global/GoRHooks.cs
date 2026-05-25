@@ -8,11 +8,6 @@ using Mono.Cecil;
 using MonoMod.RuntimeDetour;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
-using OrchidMod.Content.Guardian.Misc;
-using OrchidMod.Content.Guardian.Projectiles.Misc;
-using Redemption.Globals;
-using Redemption.NPCs.Bosses.Cleaver;
-using Redemption.Projectiles.Melee;
 using Redemption.Projectiles.Ranged;
 using System;
 using System.Reflection;
@@ -117,11 +112,6 @@ public class GoRHooks : ModSystem
             }
         }
 
-        for (int i = 0; i < 5; i++)
-        {
-            Vector2 position = Main.MouseWorld;
-            Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, position.DirectionTo(Main.MouseWorld), ProjectileID.BloodArrow, 30, 0, player.whoAmI);
-        }
         orig(self, aggressor);
     }
     private void Detour_ResetStandards(orig_ResetStandards orig, OrchidGuardian self, bool forceReset = false)

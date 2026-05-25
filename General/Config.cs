@@ -1,10 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
-using OrchidMod.Content.Guardian.Weapons.Warhammers;
-using Terraria;
-using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
-using Terraria.Utilities;
 
 namespace GuardiansOfRedemption.General;
 

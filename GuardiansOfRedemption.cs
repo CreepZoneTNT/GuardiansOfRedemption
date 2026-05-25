@@ -1,28 +1,14 @@
-using System;
-using System.Numerics;
-using System.Reflection;
-using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
-using OrchidMod.Content.Guardian;
-using OrchidMod.Content.Guardian.Accessories;
 using OrchidMod.Content.Guardian.Misc;
-using OrchidMod.Content.Guardian.Projectiles.Misc;
 using OrchidMod.Content.Guardian.Weapons.Gauntlets;
 using OrchidMod.Content.Guardian.Weapons.Misc;
 using OrchidMod.Content.Guardian.Weapons.Quarterstaves;
 using OrchidMod.Content.Guardian.Weapons.Runes;
 using OrchidMod.Content.Guardian.Weapons.Shields;
 using OrchidMod.Content.Guardian.Weapons.Warhammers;
-using Redemption.BaseExtension;
 using Redemption.Globals;
 using Redemption.NPCs.Bosses.Cleaver;
-using ReLogic.Content;
-using Terraria;
-using Terraria.GameContent.Prefixes;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
-using GuardiansOfRedemption.General;
 
 namespace GuardiansOfRedemption
 {

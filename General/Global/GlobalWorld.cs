@@ -1,25 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-using System.IO;
-using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent.Generation;
+﻿using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using Terraria.WorldBuilding;
-using Redemption.Items.Placeable.Containers;
 using Redemption.Tiles.Containers;
-using Redemption.Tiles.Furniture.Lab;
-using Redemption.WorldGeneration;
 using Redemption.Items.Tools.PostML;
 using Redemption.Items.Materials.PostML;
-using GuardiansOfRedemption.Items.Guardian.Weapons.Gauntlets;
-using GuardiansOfRedemption.Items.Guardian.Weapons.Runes;
-using GuardiansOfRedemption.Items.Guardian.Weapons.Warhammers;
-using GuardiansOfRedemption.Items.Guardian.Accessories;
+using GuardiansOfRedemption.Content.Guardian.Weapons.Gauntlets;
+using GuardiansOfRedemption.Content.Guardian.Weapons.Runes;
+using GuardiansOfRedemption.Content.Guardian.Weapons.Warhammers;
+using GuardiansOfRedemption.Content.Guardian.Accessories;
 
 namespace GuardiansOfRedemption.General.Global
 {
