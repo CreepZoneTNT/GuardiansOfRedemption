@@ -46,9 +46,9 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             Item.useTime = 40;
             Item.shootSpeed = 8f;
             Item.knockBack = 5f;
-            Item.damage = 60;
+            Item.damage = 100;
             ShapeshiftWidth = 20;
-            ShapeshiftHeight = 40;
+            ShapeshiftHeight = 45;
             ShapeshiftType = ShapeshifterShapeshiftType.Sage;
             ShapeshiftTypeUI = ShapeshifterShapeshiftTypeUI.List;
             MeleeSpeedRight = true;
@@ -104,11 +104,14 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 
         public override void ShapeshiftOnLeftClick(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
         {
+            
+            projectile.ai[1] = (Main.MouseWorld.X < projectile.Center.X ? -1f : 1f);
+
             anchor.LeftCLickCooldown = Item.useTime;
             LeftClickAttacking = true;
             projectile.ai[0] = 30;
 
-            projectile.ai[1] = (Main.MouseWorld.X < projectile.Center.X ? -1f : 1f);
+            
 
             anchor.NeedNetUpdate = true;
         }
@@ -141,8 +144,11 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
         {
             player.fireWalk = true;
             player.noFallDmg = true;
-            if (RightClickAttacking)
+            if (IsGrounded(projectile,player, 8f) && !LateralMovement)
+            {
                 player.noKnockback = true;
+                shapeshifter.modPlayer.OrchidDamageResistance += 0.3f;
+            }
         }
 
         public override void ShapeshiftAnchorAI(Projectile projectile, ShapeshifterShapeshiftAnchor anchor, Player player, OrchidShapeshifter shapeshifter)
@@ -158,12 +164,11 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             // anchor.ai[4]
 
             // checking for if attacking
-
+            
             bool grounded = IsGrounded(projectile, player, 8f);
             float speedMult = GetSpeedMult(player, shapeshifter, anchor, grounded);
             GravityMult = 0.7f;
             if (anchor.IsInputDown) GravityMult += 0.3f;
-            if (anchor.IsInputUp) GravityMult -= 0.3f;
 
             projectile.ai[0]--;
 
@@ -186,11 +191,11 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
             }
             else if (LateralMovement && grounded)
             {
-                if (anchor.Timespent % 8 == 0 && anchor.Timespent > 0)
+                if (anchor.Timespent % 6 == 0 && anchor.Timespent > 0)
                 {
                     if (anchor.Frame > 10)
                     {
-                        anchor.Frame = 0;
+                        anchor.Frame = 1;
                     }
 
                     anchor.Frame++;
@@ -226,17 +231,23 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 
             if (LeftClickAttacking)
             {
-                if (anchor.Projectile.ai[0] == 17)
-                {
-                    int projectileType = ModContent.ProjectileType<SageBasan_Proj>();
-                    Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * Item.shootSpeed;
-                    ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, Item.damage / 2, Item.crit, Item.knockBack, player.whoAmI);
-                    SoundEngine.PlaySound(SoundID.DD2_FlameburstTowerShot, projectile.Center);
-                }
+                projectile.spriteDirection = (Main.MouseWorld.X < projectile.Center.X ? -1 : 1);
 
                 if (anchor.Projectile.ai[0] == 17)
+                {   
+                    
+                    int projectileType = ModContent.ProjectileType<SageBasan_Proj>();
+                    Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * Item.shootSpeed;
+                    ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, Item.damage * 0.8f, Item.crit, Item.knockBack, player.whoAmI);
+                    SoundEngine.PlaySound(SoundID.DD2_FlameburstTowerShot, projectile.Center);
+
+                    projectile.velocity = new Vector2(-4f * player.direction, -3.5f);
+                }
+
+                if (anchor.Projectile.ai[0] == 0)
                     LeftClickAttacking = false;
             }
+
             if (anchor.IsRightClick && grounded && FlameCharge <= 180 && FlameCue)
             {
                 RightClickAttacking = true;
@@ -245,11 +256,12 @@ namespace GuardiansOfRedemption.Items.Shapeshifter.Weapons.Sage
 
                 anchor.Frame = 15;
                 int projectileType = ModContent.ProjectileType<SageBasan_ProjAlt>();
+                Vector2 position = new Vector2(projectile.Center.X + 14f * player.direction, projectile.Center.Y - 2f);
                 Vector2 velocity = Vector2.Normalize(Main.MouseWorld - projectile.Center) * (Item.shootSpeed / 3);
                 if (FlameCharge % 6 == 0)
                 {
                     //CombatText.NewText(player.getRect(), Color.Black, (int)(anchor.ai[3]));
-                    ShapeshifterNewProjectile(shapeshifter, projectile.Center, velocity, projectileType, (Item.damage + (FlameCharge / 9)) / 3, Item.crit, Item.knockBack, player.whoAmI);
+                    ShapeshifterNewProjectile(shapeshifter, position, velocity, projectileType, (Item.damage + (FlameCharge / 9)) / 3, Item.crit, Item.knockBack, player.whoAmI);
                     if (FlameCharge % 60 == 0 && FlameCharge != 0)
                     {
                         anchor.ai[2] -= 1;

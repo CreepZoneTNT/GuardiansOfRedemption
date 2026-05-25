@@ -425,18 +425,56 @@ Items: {
 		DisplayName: Daerel's Fisticuffs
 	}
 
+	BasanMaterial: {
+		Tooltip: Smells of cinders
+		DisplayName: Burnt Feather
+	}
+
 	SageBasan: {
 		DisplayName: Basan Effigy
 		LeftClick: Shoot heatwaves to prolong the burning effect
 		RightClick: Breath fire with a powerful burning effect
 		Jump: Jump to preform a triple jump, sending heatwaves below
-		Passive: While attacking, you are immune to knockback
+		Passive: Increased damage resistance while standing still
 		Tooltip: Transforms you into a young Basan, granting unique abilities
 	}
 
-	BasanMaterial: {
-		Tooltip: "'Smells of cinders'"
-		DisplayName: Burnt Feather
+	BasanHelm: {
+		DisplayName: Spicy Crest
+		Tooltip:
+			'''
+			8% increased opposing damage
+			+1 guard charge
+			Enemies are more likely to target you
+			'Smells of hot sauce'
+			'''
+		SetBonus:
+			'''
+			+1 mid-air jump
+			Blocks or parries release a puff of damaging smoke
+			'''
+	}
+
+	BasanChest: {
+		DisplayName: Spicy Tunic
+		Tooltip:
+			'''
+			8% increased opposing damage
+			8% increased melee speed
+			+2 slam charges
+			'Smells of hot sauce'
+			'''
+	}
+
+	BasanLeggings: {
+		DisplayName: Spicy Shoes
+		Tooltip:
+			'''
+			8% increased melee speed
+			15% increased movement speed
+			Increased jump height
+			'Smells of hot sauce'
+			'''
 	}
 }
 

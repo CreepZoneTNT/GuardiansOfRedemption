@@ -41,9 +41,9 @@ public class RedemptionGuardian : ModPlayer
     public int GuardianDragonLeadStandardCooldown;
     public bool GuardianIVDripStandard;
 
-    public bool GuardianHeavyGuard;
-    public bool GuardianHardlight;
     public bool GuardianCommonGuard;
+    public bool GuardianHardlight;
+    public bool GuardianBasan;
 
     public bool GuardianProtectiveAmulet;
 
@@ -72,7 +72,7 @@ public class RedemptionGuardian : ModPlayer
         HardlightParryCooldown--;
         if (HardlightParryCooldown < 0) HardlightParryCooldown = 0;
 
-        GuardianHeavyGuard = false;
+        GuardianBasan = false;
         GuardianHardlight = false;
 
         GuardianProtectiveAmulet = false;

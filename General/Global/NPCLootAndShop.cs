@@ -25,6 +25,8 @@ using GuardiansOfRedemption.Items.Guardian.Weapons.Shields;
 using GuardiansOfRedemption.Items.Guardian.Weapons.Standards;
 using GuardiansOfRedemption.Items.Guardian.Weapons.Warhammers;
 using GuardiansOfRedemption.Items.Other.Materials;
+using Redemption.NPCs.Friendly;
+using OrchidMod.Content.Shapeshifter.Weapons.Symbiote;
 
 namespace GuardiansOfRedemption.General.Global;
 
@@ -82,6 +84,8 @@ public class NPCLootAndShop : GlobalNPC
 
     public override void ModifyShop(NPCShop shop)
     {
+        if (shop.NpcType == ModContent.NPCType<TreebarkDryad>() || shop.NpcType == ModContent.NPCType<TreebarkDryad_Savanna>())
+            shop.Add(ModContent.ItemType<SymbioteToad>());
         if (shop.NpcType == ModContent.NPCType<Zephos>())
             shop.Add(ModContent.ItemType<ZephosWarhammer>(), Condition.DownedQueenBee);
         if (shop.NpcType == ModContent.NPCType<JanitorBot_NPC>())

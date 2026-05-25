@@ -1,5 +1,10 @@
+using GuardiansOfRedemption.Items.Guardian.Projectiles.Shields;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Mono.Cecil;
 using MonoMod.RuntimeDetour;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
@@ -15,6 +20,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace GuardiansOfRedemption.General.Global;
 
@@ -63,6 +69,15 @@ public class GoRHooks : ModSystem
            player.Heal(3);
         }
 
+        if(player.GetModPlayer<RedemptionGuardian>().GuardianBasan)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                Vector2 position = Main.MouseWorld;
+                Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, position.DirectionTo(Main.MouseWorld), ProjectileID.BloodArrow, 30, 0, player.whoAmI);
+            }
+        }
+
         orig(self, anchor, ref toAdd, parry);
     }
     private void Detour_OnBlockProjectile(orig_OnBlockProjectile orig, OrchidGuardian self, Projectile anchor, Projectile blockedProjectile, bool parry = false)
@@ -100,6 +115,12 @@ public class GoRHooks : ModSystem
                 player.Heal(3);
                 ProtectiveAmuletTriggered = true;
             }
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            Vector2 position = Main.MouseWorld;
+            Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, position.DirectionTo(Main.MouseWorld), ProjectileID.BloodArrow, 30, 0, player.whoAmI);
         }
         orig(self, aggressor);
     }
