@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ID;
 
-namespace GuardiansOfRedemption.Content.Items.Other.Materials
+namespace GuardiansOfRedemption.Content.Other.Materials
 {
     public class BasanMaterial : ModItem
     {

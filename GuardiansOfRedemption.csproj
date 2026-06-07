@@ -22,9 +22,7 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="Items\Guardian\Weapons\Other\" />
 		<Folder Include="Dependancies\" />
-		<Folder Include="Items\Guardian\Projectiles\Other\" />
 		<Folder Include="Sounds\" />
 	</ItemGroup>
 

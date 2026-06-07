@@ -1,4 +1,4 @@
-﻿using GuardiansOfRedemption.Content.Items.Other.Materials;
+﻿using GuardiansOfRedemption.Content.Other.Materials;
 using GuardiansOfRedemption.Content.Shapeshifter.Projectiles.Sage;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;

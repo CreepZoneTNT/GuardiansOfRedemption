@@ -26,7 +26,7 @@ public class JanitorQuarterstaff_ThrownProj : OrchidModGuardianProjectile {
     public List<Vector2> OldPosition;
     public List<float> OldRotation;
 
-    public override string Texture => "GuardiansOfRedemption/Items/Guardian/Weapons/Quarterstaves/JanitorQuarterstaff";
+    public override string Texture => "GuardiansOfRedemption/Content/Guardian/Weapons/Quarterstaves/JanitorQuarterstaff";
     
     public override void SafeSetDefaults() {
         Projectile.CloneDefaults(ModContent.ProjectileType<JanitorMop_Proj>());

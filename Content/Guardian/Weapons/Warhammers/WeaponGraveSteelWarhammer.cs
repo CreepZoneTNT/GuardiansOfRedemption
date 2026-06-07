@@ -29,19 +29,19 @@ public class WeaponGraveSteelWarhammer : OrchidModGuardianHammer
         BlockDuration = 200;
     }
 
-    public override void OnThrow(Player player, OrchidGuardian guardian, Projectile projectile, bool Weak)
+    public override void OnThrow(Player player, OrchidGuardian guardian, Projectile projectile, bool Weak, bool OffHand)
     {
         if (!Weak) projectile.penetrate = 3;
         else projectile.penetrate = 2;
     }
 
-    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile)
+    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile, bool OffHand)
     {
         GuardianHammerAnchor anchor = projectile.ModProjectile as GuardianHammerAnchor;
         if (projectile.ai[1] > 0 && anchor.range < 0) projectile.penetrate = -1;
     }
 
-    public override void OnThrowHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak)
+    public override void OnThrowHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak, bool OffHand)
     {
         if (projectile.penetrate == 1)
         {

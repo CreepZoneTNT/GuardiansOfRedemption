@@ -3,6 +3,7 @@ using GuardiansOfRedemption.Content.Guardian.Projectiles.Shields;
 using Microsoft.Xna.Framework;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
+using OrchidMod.Utilities;
 using Redemption.Items.Materials.HM;
 using Redemption.Items.Materials.PostML;
 using Redemption.Tiles.Furniture.Lab;
@@ -29,7 +30,7 @@ public class XeniumShield : OrchidModGuardianShield
         blockDuration = 300;
         shouldFlip = true; 
     }
-    public override void Slam(Player player, Projectile shield)
+    public override void Slam(Player player, Projectile shield, bool WeakSlam)
     {
         if (shield.owner == Main.myPlayer && shield.ModProjectile is GuardianShieldAnchor anchor)
         {

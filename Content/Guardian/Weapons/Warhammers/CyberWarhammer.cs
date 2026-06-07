@@ -43,7 +43,7 @@ public class CyberWarhammer : OrchidModGuardianHammer
         TileCollide = false;
     }
 
-    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile)
+    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile, bool OffHand)
     {
         projectile.light = 0.5f;
         if (projectile.ModProjectile is GuardianHammerAnchor anchor)
@@ -68,13 +68,13 @@ public class CyberWarhammer : OrchidModGuardianHammer
         }
     }
 
-    public override void OnThrow(Player player, OrchidGuardian guardian, Projectile projectile, bool Weak)
+    public override void OnThrow(Player player, OrchidGuardian guardian, Projectile projectile, bool Weak, bool OffHand)
     {
         SoundEngine.PlaySound(SoundID.Item15, projectile.Center);
         if (!Weak) projectile.extraUpdates = 1;
     }
 
-    public override void OnSwing(Player player, OrchidGuardian guardian, Projectile projectile, bool FullyCharged)
+    public override void OnSwing(Player player, OrchidGuardian guardian, Projectile projectile, bool FullyCharged, bool OffHand)
     {
         SoundEngine.PlaySound(SoundID.Item15, projectile.Center);
         Vector2 direction = Vector2.Normalize(Main.MouseWorld - projectile.Center);
@@ -97,19 +97,19 @@ public class CyberWarhammer : OrchidModGuardianHammer
     }
 
 
-    public override void OnMeleeHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged)
+    public override void OnMeleeHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged, bool OffHand)
     {
         DustHelper.DrawCircle(target.Center, DustID.Electric, 2f, nogravity: true);
         SoundEngine.PlaySound(SoundID.NPCHit53 with {Volume = 0.2f}, projectile.Center);
     }
 
-    public override void OnMeleeHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged)
+    public override void OnMeleeHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged, bool OffHand)
     {
         Dust.NewDustDirect(target.position, target.width, target.height, DustID.Electric);
         target.AddBuff(ModContent.BuffType<ElectrifiedDebuff>(), 180);
     }
 
-    public override bool PreDrawHammer(Player player, OrchidGuardian guardian, Projectile projectile, SpriteBatch spriteBatch, ref Color lightColor, ref Texture2D hammerTexture, ref Rectangle drawRectangle)
+    public override bool PreDrawHammer(Player player, OrchidGuardian guardian, Projectile projectile, SpriteBatch spriteBatch, ref Color lightColor, ref Texture2D hammerTexture, ref Rectangle drawRectangle, bool OffHand)
     {
         if (projectile.timeLeft < 598)
         {

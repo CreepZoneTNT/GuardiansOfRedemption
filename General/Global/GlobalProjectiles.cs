@@ -8,6 +8,7 @@ using OrchidMod;
 using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Guardian.Projectiles.Misc;
 using OrchidMod.Content.Guardian.Weapons.Warhammers;
+using OrchidMod.Utilities;
 using Redemption.BaseExtension;
 using Redemption.Buffs.Debuffs;
 using Redemption.Buffs.NPCBuffs;

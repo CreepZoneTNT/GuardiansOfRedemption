@@ -3,6 +3,7 @@ using GuardiansOfRedemption.Content.Guardian.Projectiles.Shields;
 using Microsoft.Xna.Framework;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
+using OrchidMod.Utilities;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;
@@ -37,7 +38,7 @@ public class EaglecrestShield : OrchidModGuardianShield
         shouldFlip = true; 
     }
 
-    public override void Slam(Player player, Projectile shield)
+    public override void Slam(Player player, Projectile shield, bool WeakSlam)
     {
         OrchidGuardian guardian = player.Guardian();
         player.RedemptionGuardian().EaglecrestShieldTarget = null;

@@ -122,7 +122,7 @@ public class GirusShield : OrchidModGuardianShield
         }
     }
 
-    public override void Slam(Player player, Projectile shield)
+    public override void Slam(Player player, Projectile shield, bool WeakSlam)
     {
         // if (ChargedSlam)
         // {

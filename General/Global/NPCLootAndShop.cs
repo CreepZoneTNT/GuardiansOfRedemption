@@ -18,7 +18,7 @@ using GuardiansOfRedemption.Content.Guardian.Weapons.Quarterstaves;
 using GuardiansOfRedemption.Content.Guardian.Weapons.Runes;
 using GuardiansOfRedemption.Content.Guardian.Weapons.Shields;
 using GuardiansOfRedemption.Content.Guardian.Weapons.Warhammers;
-using GuardiansOfRedemption.Content.Items.Other.Materials;
+using GuardiansOfRedemption.Content.Other.Materials;
 
 namespace GuardiansOfRedemption.General.Global;
 

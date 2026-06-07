@@ -24,7 +24,7 @@ public class GirusWarhammer : OrchidModGuardianHammer
         BlockDuration = 480;
     }
 
-    public override void OnThrowHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak)
+    public override void OnThrowHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak, bool OffHand)
     {
         //do your magic
     }

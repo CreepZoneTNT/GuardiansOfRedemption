@@ -33,7 +33,7 @@ public class ZephosWarhammer : OrchidModGuardianHammer
         Item.Redemption().CanSwordClash = true;
     }
 
-    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile)
+    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile, bool OffHand)
     {
         if (projectile.ModProjectile is GuardianHammerAnchor anchor)
         {
@@ -73,34 +73,36 @@ public class ZephosWarhammer : OrchidModGuardianHammer
         }
     }
 
-    public override void WarhammerModifyHitNPC(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, ref NPC.HitModifiers modifiers, bool FullyCharged, bool Melee, bool Block, bool firstHit)
+    public override bool ModifyHit(Player player, OrchidGuardian guardian, Projectile projectile, NPC target, ref NPC.HitModifiers modifiers, bool FullyCharged, bool Melee, bool Block, bool firstHit)
     {
         modifiers.ArmorPenetration += 10;
         if (FullyCharged)
         {
             if (Melee && projectile.Center.Y < target.Top.Y) modifiers.SetCrit();
             if (NPCLists.SkeletonHumanoid.Contains(target.type)) modifiers.FinalDamage *= 1.5f;
-        } 
+        }
+
+        return true;
     }
 
-    public override void OnThrowHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak)
+    public override void OnThrowHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak, bool OffHand)
     {
         if (!Weak) player.AddBuff(ModContent.BuffType<ZephosWarhammerBuff>(), 600);
     }
 
-    public override void OnThrowHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak)
+    public override void OnThrowHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak, bool OffHand)
     {
         if (!Weak && projectile.Center.Y < target.Top.Y) target.AddBuff(ModContent.BuffType<BrokenArmorDebuff>(), NPCLists.SkeletonHumanoid.Contains(target.type) ? 120 : 40);
                     
     }
 
-    public override void OnMeleeHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged)
+    public override void OnMeleeHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged, bool OffHand)
     {
         if (FullyCharged && projectile.Center.Y < target.Top.Y)
             RedeDraw.SpawnExplosion(target.Center, Color.White, shakeAmount: 0.0f, scale: 0.25f, noDust: false, tex: "Redemption/Textures/Shockwave2");
     }
 
-    public override void OnMeleeHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged)
+    public override void OnMeleeHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged, bool OffHand)
     {
         if (FullyCharged && projectile.Center.Y < target.Top.Y)
         {

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
+using OrchidMod.Utilities;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
