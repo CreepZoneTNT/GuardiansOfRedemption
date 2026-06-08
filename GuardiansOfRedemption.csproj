@@ -10,10 +10,11 @@
 
 	<!-- References -->
 	<ItemGroup>
-		<ProjectReference Include="..\OrchidMod\OrchidMod.csproj" />
+		<ProjectReference Include="..\OrchidMod\OrchidMod.csproj"/>
 		<Reference Include="Redemption">
-			<HintPath>lib\Redemption_v0.8.0.4141.dll</HintPath>
+			<HintPath>lib\Redemption_v0.8.0.4150.dll</HintPath>
 		</Reference>
+		
 		<Reference Include="ParticleLibrary">
 			<HintPath>lib\ParticleLibrary.dll</HintPath>
 		</Reference>
@@ -22,9 +23,6 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="Items\Guardian\Weapons\Other\" />
-		<Folder Include="Dependancies\" />
-		<Folder Include="Items\Guardian\Projectiles\Other\" />
 		<Folder Include="Sounds\" />
 	</ItemGroup>
 

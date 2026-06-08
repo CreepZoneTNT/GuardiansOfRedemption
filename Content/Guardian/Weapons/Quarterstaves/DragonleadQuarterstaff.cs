@@ -8,7 +8,8 @@ using OrchidMod.Utilities;
 using Redemption;
 using Redemption.BaseExtension;
 using Redemption.Buffs.NPCBuffs;
-using Redemption.Effects;
+using Redemption.Effects.Trails;
+using Redemption.Effects.Trails.Tips;
 using Redemption.Globals;
 using Redemption.Items.Materials.PreHM;
 using ReLogic.Content;
@@ -148,7 +149,7 @@ namespace GuardiansOfRedemption.Content.Guardian.Weapons.Quarterstaves
 
 		public void ManageTrail(Projectile projectile)
         {
-            trail ??= new DanTrail(Main.instance.GraphicsDevice, oldDirVector.Length, new NoTip(),
+            trail= new DanTrail(RedeGraphics.Instance.Primitives, new NoTip(),
             factor =>
             {
                 float mult = factor;
@@ -162,7 +163,7 @@ namespace GuardiansOfRedemption.Content.Guardian.Weapons.Quarterstaves
                 float progress = EaseFunction.EaseCubicOut.Ease(1 - factor.X);
                 return Color.Lerp(baseColor, endColor, EaseFunction.EaseCubicIn.Ease(progress)) * (1 - progress) * projectile.Opacity;
             });
-            trail.Positions = positionCache.ToArray();
+            trail.SetPositions(cache.ToArray(), Projectile.Center);
             trail.NextPosition = tip;
         }
 
