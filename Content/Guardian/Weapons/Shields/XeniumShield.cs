@@ -29,9 +29,9 @@ public class XeniumShield : OrchidModGuardianShield
         blockDuration = 300;
         shouldFlip = true; 
     }
-    public override void Slam(Player player, Projectile shield)
+    public override void Slam(Player player, Projectile shield, bool WeakSlam)
     {
-        if (shield.owner == Main.myPlayer && shield.ModProjectile is GuardianShieldAnchor anchor)
+        if (shield.owner == Main.myPlayer && shield.ModProjectile is GuardianShieldAnchor anchor && !WeakSlam)
         {
             OrchidGuardian guardian = player.Guardian();
 

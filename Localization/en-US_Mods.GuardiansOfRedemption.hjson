@@ -476,6 +476,11 @@ Items: {
 			'Smells of hot sauce'
 			'''
 	}
+
+	XenomiteKatar: {
+		DisplayName: Xenomite Katar
+		Tooltip: ""
+	}
 }
 
 PrefixDummy: {
@@ -542,6 +547,7 @@ Projectiles: {
 	SeedRune_Proj.DisplayName: Xenomite Shard
 	SageBasan_Proj.DisplayName: Heat Wave
 	SageBasan_ProjAlt.DisplayName: Fire Breath
+	DaerelGauntlet_PunchProj.DisplayName: Daerel Gauntlet_ Punch Proj
 }
 
 Buffs: {
@@ -568,6 +574,16 @@ Buffs: {
 	BasanBurnDebuff: {
 		Description: Mods.GuardiansOfRedemption.Content.Guardian.Buffs.BasanBurnDebuff.Description
 		DisplayName: Basan Burn Debuff
+	}
+
+	DaerelGauntletBuff: {
+		DisplayName: Daerel Gauntlet Buff
+		Description: Mods.GuardiansOfRedemption.Buffs.DaerelGauntletBuff.Description
+	}
+
+	DaerelGauntletCooldownDebuff: {
+		DisplayName: Daerel Gauntlet Cooldown Debuff
+		Description: Mods.GuardiansOfRedemption.Buffs.DaerelGauntletCooldownDebuff.Description
 	}
 }
 

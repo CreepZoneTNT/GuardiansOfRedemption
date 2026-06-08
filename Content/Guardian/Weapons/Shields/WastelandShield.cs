@@ -30,9 +30,12 @@ public class WastelandShield : OrchidModGuardianShield
         shouldFlip = true;
     }
 
-    public override void Slam(Player player, Projectile shield)
+    public override void Slam(Player player, Projectile shield, bool WeakSlam)
     {
-        timer = 30;
+        if (!WeakSlam)
+            timer = 30;
+        if (WeakSlam)
+            timer = 10;
     }
 
     public override void ExtraAIShield(Projectile shield) 

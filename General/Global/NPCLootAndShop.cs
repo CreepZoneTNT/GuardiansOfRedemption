@@ -7,6 +7,7 @@ using Redemption.NPCs.FowlMorning;
 using Redemption.NPCs.Friendly.TownNPCs;
 using Redemption.NPCs.Lab.Janitor;
 using Redemption.NPCs.PreHM;
+using OrchidMod.Content.Shapeshifter.Weapons.Symbiote;
 using Terraria;
 using Terraria.Enums;
 using Terraria.GameContent.ItemDropRules;
@@ -18,7 +19,8 @@ using GuardiansOfRedemption.Content.Guardian.Weapons.Quarterstaves;
 using GuardiansOfRedemption.Content.Guardian.Weapons.Runes;
 using GuardiansOfRedemption.Content.Guardian.Weapons.Shields;
 using GuardiansOfRedemption.Content.Guardian.Weapons.Warhammers;
-using GuardiansOfRedemption.Content.Items.Other.Materials;
+using GuardiansOfRedemption.Content.Other.Materials;
+using Redemption.NPCs.Friendly;
 
 namespace GuardiansOfRedemption.General.Global;
 

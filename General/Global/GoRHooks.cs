@@ -1,4 +1,4 @@
-using GuardiansOfRedemption.Items.Guardian.Projectiles.Shields;
+using GuardiansOfRedemption.Content.Guardian.Projectiles.Shields;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;

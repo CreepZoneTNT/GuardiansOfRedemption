@@ -122,18 +122,17 @@ public class GirusShield : OrchidModGuardianShield
         }
     }
 
-    public override void Slam(Player player, Projectile shield)
+    public override void Slam(Player player, Projectile shield, bool WeakSlam)
     {
-        // if (ChargedSlam)
-        // {
+        if (!WeakSlam)
+        {
             OrchidGuardian guardian = player.GetModPlayer<OrchidGuardian>();
             SoundEngine.PlaySound(SoundID.Item92);
             DustHelper.DrawCircle(shield.Center, DustID.LifeDrain, 4f, dustSize: 2f, nogravity: true);
             Projectile dualcastBall = Projectile.NewProjectileDirect(shield.GetSource_FromThis(), shield.Center, Vector2.UnitX.RotatedBy(shield.rotation + MathHelper.Pi) * 16, ModContent.ProjectileType<GirusShield_DualcastBallProj>(), guardian.GetGuardianDamage(Item.damage * 0.5f), shield.knockBack, player.whoAmI);
             dualcastBall.friendly = true;
-        // }
+        }
         SlamTimer = 0;
-        // ChargedSlam = false;
     }
 
     public override bool Block(Player player, Projectile shield, Projectile projectile)
