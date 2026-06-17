@@ -52,7 +52,7 @@ public class JudgeWarhammer : OrchidModGuardianHammer
         HoldOffset = -8f;
     }
 
-    public override bool ThrowAI(Player player, OrchidGuardian guardian, Projectile projectile, bool Weak)
+    public override bool ThrowAI(Player player, OrchidGuardian guardian, Projectile projectile, bool Weak, bool OffHand)
     {
         if (!Weak)
         {
@@ -84,7 +84,7 @@ public class JudgeWarhammer : OrchidModGuardianHammer
         return false;
     }
 
-    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile)
+    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile, bool OffHand)
     {
         if (HasHolyLight)
         {
@@ -116,7 +116,7 @@ public class JudgeWarhammer : OrchidModGuardianHammer
         
     }
 
-    public override void OnMeleeHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged)
+    public override void OnMeleeHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged, bool OffHand)
     {
         if (HasHolyLight)
         {
@@ -124,7 +124,7 @@ public class JudgeWarhammer : OrchidModGuardianHammer
         }
     }
 
-    public override void OnMeleeHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged)
+    public override void OnMeleeHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged, bool OffHand)
     {
         if (HasHolyLight)
         {
@@ -170,7 +170,7 @@ public class JudgeWarhammer : OrchidModGuardianHammer
         }
     }
 
-    public override bool PreDrawHammer(Player player, OrchidGuardian guardian, Projectile projectile, SpriteBatch spriteBatch, ref Color lightColor, ref Texture2D hammerTexture, ref Rectangle drawRectangle)
+    public override bool PreDrawHammer(Player player, OrchidGuardian guardian, Projectile projectile, SpriteBatch spriteBatch, ref Color lightColor, ref Texture2D hammerTexture, ref Rectangle drawRectangle, bool OffHand)
     {
         SpriteEffects effects = projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
         var position = projectile.Center - Main.screenPosition + Vector2.UnitY * player.gfxOffY;

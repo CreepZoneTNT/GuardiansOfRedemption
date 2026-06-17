@@ -35,12 +35,12 @@ public class WastelandWarhammer : OrchidModGuardianHammer
 
     
 
-    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile)
+    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile, bool OffHand)
     {
         
     }
 
-    public override void OnMeleeHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged)
+    public override void OnMeleeHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged, bool OffHand)
     {
         target.AddBuff(ModContent.BuffType<GreenRashesDebuff>(), 240);
     }

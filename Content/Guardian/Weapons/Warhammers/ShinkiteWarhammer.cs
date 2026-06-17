@@ -42,7 +42,7 @@ public class ShinkiteWarhammer : OrchidModGuardianHammer
         HoldOffset = 12f;
     }
 
-    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile) 
+    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile, bool OffHand) 
     {
         if (projectile.ModProjectile is GuardianHammerAnchor anchor) {
             if (projectile.timeLeft < 598 && anchor.range > 0 && anchor.BlockDuration == 0) {
@@ -55,7 +55,7 @@ public class ShinkiteWarhammer : OrchidModGuardianHammer
     }
 
 
-    public override void OnMeleeHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak)
+    public override void OnMeleeHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak, bool OffHand)
     {
         SoundEngine.PlaySound(SoundID.Item14);
         target.immune[player.whoAmI] = 40;

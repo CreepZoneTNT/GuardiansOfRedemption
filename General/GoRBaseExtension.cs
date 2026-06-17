@@ -11,8 +11,6 @@ public static class GoRBaseExtension
 {
     
     
-    public static OrchidGuardian Guardian(this Player player) => player.GetModPlayer<OrchidGuardian>();
-    
     public static RedemptionGuardian RedemptionGuardian(this Player player) => player.GetModPlayer<RedemptionGuardian>();
     public static RedemptionGuardian RedemptionGuardian(this OrchidGuardian guardian) => guardian.Player.GetModPlayer<RedemptionGuardian>();
 

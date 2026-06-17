@@ -149,7 +149,7 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
         }
     }
 
-    public override void PostDrawGauntlet(SpriteBatch spriteBatch, Projectile projectile, Player player, bool offHandGauntlet, Color lightColor)
+    public override void GauntletPostDrawUI(SpriteBatch spriteBatch, Player player, ref Color lightColor, Projectile main, Projectile alt)
     {
         // Trying to draw the extra indicators next to the charge icon, so I'm borrowing the base draw code from Orchid (is that okay Verveine?)
         
@@ -182,7 +182,6 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
                 
                 int offSet = textureGauntletSubOn.Height + 3;
                 
-                
                 if (drawAtCursor)
                 {
                     
@@ -207,10 +206,10 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
                         Rectangle rectangle = chargeTextureOn.Bounds;
                         rectangle.Height = val;
                         rectangle.Y = chargeTextureOn.Height - val;
-                        
+
                         float zoom = Main.GameViewMatrix.Zoom.X;
-                        
-                        Vector2 drawpos = Main.MouseScreen + new Vector2((18 + textureGauntletSubOn.Width)/zoom, 18 - offSet + (textureGauntletSubOn.Height + 2) * i) + textureGauntletOn.Size() * 0.5f;
+
+                        Vector2 drawpos = Main.MouseScreen + new Vector2(18 + textureGauntletSubOn.Width, 18 - offSet + (textureGauntletSubOn.Height + 2) * i) + textureGauntletOn.Size() * 0.5f;
                         // drawpos = Vector2.Transform(drawpos, Main.UIScaleMatrix);
                         
                         if ((int)Math.Floor(BonusCharge / 180f) - 1 >= i)
@@ -279,6 +278,7 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
             }
         }
     }
+    
     public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
     {
         scale *= 1.2f;

@@ -36,19 +36,19 @@ public class PZWarhammer : OrchidModGuardianHammer
         // Item.Redemption().TechnicallyHammer = true;
         Item.Redemption().CanSwordClash = true;
     }
-    public override void OnThrowHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak)
+    public override void OnThrowHitFirst(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak, bool OffHand)
     {
         if (!Weak && !NPCLists.Robotic.Contains(target.type) && !NPCLists.Inorganic.Contains(target.type) && !NPCLists.Spirit.Contains(target.type))
             Projectile.NewProjectileDirect(projectile.GetSource_FromAI(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<PZWarhammer_CystProj>(), guardian.GetGuardianDamage(projectile.damage * 0.5f), 0, projectile.owner, target.whoAmI, Main.rand.Next(8), Main.rand.NextFloat(0.8f, 1.2f));
         
     }
-    public override void OnMeleeHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged)
+    public override void OnMeleeHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool FullyCharged, bool OffHand)
     {
         if (!NPCLists.Robotic.Contains(target.type) && !NPCLists.Inorganic.Contains(target.type) && !NPCLists.Spirit.Contains(target.type))
             Projectile.NewProjectileDirect(projectile.GetSource_FromAI(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<PZWarhammer_CystProj>(), guardian.GetGuardianDamage(projectile.damage * 0.25f), 0, projectile.owner, target.whoAmI, Main.rand.Next(8), Main.rand.NextFloat(0.8f, 1.2f));
     }
     
-    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile)
+    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile, bool OffHand)
     {
         if (projectile.ModProjectile is GuardianHammerAnchor anchor)
 

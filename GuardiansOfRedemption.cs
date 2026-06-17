@@ -1,4 +1,5 @@
 using OrchidMod;
+using OrchidMod.Content.Guardian;
 using OrchidMod.Content.Guardian.Misc;
 using OrchidMod.Content.Guardian.Weapons.Gauntlets;
 using OrchidMod.Content.Guardian.Weapons.Misc;
