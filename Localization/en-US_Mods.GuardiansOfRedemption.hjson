@@ -3,7 +3,7 @@
 Items: {
 	SkeletonWardenShield: {
 		DisplayName: Antique Aegis
-		Tooltip: ""
+		Tooltip: "Every 3rd slam breaks the aegis into penetrating shards"
 	}
 
 	EaglecrestShield: {
@@ -35,7 +35,7 @@ Items: {
 		DisplayName: Grave Steel Gavel
 		Tooltip:
 			'''
-			Can pierce twice  before breaking
+			Summons a haunted hammer on charged throw
 			'Not to be confused with a Grave Steel Warhammer'
 			'''
 	}
@@ -444,15 +444,9 @@ Items: {
 		Tooltip:
 			'''
 			8% increased opposing damage
-			+1 guard charge
 			Enemies are more likely to target you
-			'Smells of hot sauce'
 			'''
-		SetBonus:
-			'''
-			+1 mid-air jump
-			Blocks or parries release a puff of damaging smoke
-			'''
+		SetBonus: Blocks or parries release a puff of damaging smoke
 	}
 
 	BasanChest: {
@@ -461,8 +455,8 @@ Items: {
 			'''
 			8% increased opposing damage
 			8% increased melee speed
+			15% increased movement speed
 			+2 slam charges
-			'Smells of hot sauce'
 			'''
 	}
 
@@ -473,7 +467,6 @@ Items: {
 			8% increased melee speed
 			15% increased movement speed
 			Increased jump height
-			'Smells of hot sauce'
 			'''
 	}
 
@@ -548,6 +541,8 @@ Projectiles: {
 	SageBasan_Proj.DisplayName: Heat Wave
 	SageBasan_ProjAlt.DisplayName: Fire Breath
 	DaerelGauntlet_PunchProj.DisplayName: Daerel Gauntlet_ Punch Proj
+	GraveSteelWarhammer_GhostProj.DisplayName: Haunted Hammer
+	SkeletonWardenShield_BrokenShieldProj.DisplayName: Shield Shard
 }
 
 Buffs: {

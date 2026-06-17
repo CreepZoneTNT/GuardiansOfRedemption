@@ -17,7 +17,7 @@ namespace GuardiansOfRedemption.Content.Guardian.Armor.BasanArmor
 
         public override void SetStaticDefaults()
         {
-            ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
+            ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
         }  
 
         public override void SafeSetDefaults()
@@ -44,7 +44,6 @@ namespace GuardiansOfRedemption.Content.Guardian.Armor.BasanArmor
         public override void UpdateArmorSet(Player player)
         {
             RedemptionGuardian modPlayer = player.GetModPlayer<RedemptionGuardian>();
-            player.GetDamage<GuardianDamageClass>() += 0.05f;
             modPlayer.GuardianBasan = true;
         }
         public override void AddRecipes()

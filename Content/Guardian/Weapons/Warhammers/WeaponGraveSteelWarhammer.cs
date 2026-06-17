@@ -1,10 +1,11 @@
+using GuardiansOfRedemption.Content.Guardian.Projectiles.Warhammers;
+using Microsoft.Xna.Framework;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
-using Redemption;
 using Redemption.Items.Materials.PreHM;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace GuardiansOfRedemption.Content.Guardian.Weapons.Warhammers;
 
@@ -21,33 +22,19 @@ public class WeaponGraveSteelWarhammer : OrchidModGuardianHammer
         Item.knockBack = 8f;
         Item.shootSpeed = 12f;
         Item.damage = 50;
-        Item.useTime = 24;
+        Item.useTime = 34;
         Range = 30;
-        Penetrate = true;
+        Penetrate = false;
         GuardStacks = 1;
         SwingSpeed = 1.2f;
         BlockDuration = 200;
     }
 
-    public override void OnThrow(Player player, OrchidGuardian guardian, Projectile projectile, bool Weak)
-    {
-        if (!Weak) projectile.penetrate = 3;
-        else projectile.penetrate = 2;
-    }
-
-    public override void ExtraAI(Player player, OrchidGuardian guardian, Projectile projectile)
-    {
-        GuardianHammerAnchor anchor = projectile.ModProjectile as GuardianHammerAnchor;
-        if (projectile.ai[1] > 0 && anchor.range < 0) projectile.penetrate = -1;
-    }
-
     public override void OnThrowHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak)
     {
-        if (projectile.penetrate == 1)
-        {
-            for (int i = 0; i < 5; i++) Dust.NewDustDirect(projectile.Center, projectile.width, projectile.height, DustID.Lead);
-            for (int i = 0; i < 5; i++) Dust.NewDustDirect(projectile.Center, projectile.width, projectile.height, DustID.Lead, projectile.velocity.X * 0.6f, projectile.velocity.Y * 0.6f);
-            SoundEngine.PlaySound(CustomSounds.GuardBreak, target.Center);
+        if (!Weak)
+        { 
+            Projectile ghostHammer = Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.position, new Vector2(0, -4.2f), ModContent.ProjectileType<GraveSteelWarhammer_GhostProj>(), guardian.GetGuardianDamage(Item.damage * 0.5f), projectile.knockBack, projectile.owner);
         }
     }
 
