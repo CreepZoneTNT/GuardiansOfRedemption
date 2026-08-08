@@ -3,7 +3,7 @@
 Items: {
 	SkeletonWardenShield: {
 		DisplayName: Antique Aegis
-		Tooltip: "Every 3rd slam breaks the aegis into penetrating shards"
+		Tooltip: Every 3rd slam breaks the aegis into penetrating shards
 	}
 
 	EaglecrestShield: {
@@ -474,6 +474,33 @@ Items: {
 		DisplayName: Xenomite Katar
 		Tooltip: ""
 	}
+
+	BasanRifle: {
+		DisplayName: Torigashima
+		Tooltip: Converts normal bullets into high-velocity ghost-fire rounds
+	}
+
+	ElementalModulator: {
+		DisplayName: Elemental Modulator
+		Tooltip:
+			'''
+			Left click on a target dummy to link it, hold [Ctrl] to clear the link
+			Right click on a linked dummy to increase its current elemental multiplier by 5%, left click to decrease by 5%
+			Middle click on a linked dummy to reset its current elemental multiplier, hold [Ctrl] to reset all multipliers
+			Right click in inventory to toggle next elemental mode, hold [Shift] to toggle prior mode
+			[c/FF0000:Test Item]
+			'''
+		ElementMode: "[c/AFFFAF:Current element:] {0}"
+		LinkedDummy: "[c/AFFFAF:Linked dummy:] {0} @ {1}, {2}"
+		NoDummy: "[c/AFFFAF:Linked dummy:] N/A"
+
+		CombatText: {
+			Clear: Cleared!
+			Linked: Linked!
+			Reset: Reset multiplier!
+			ResetAll: Reset all multipliers!
+		}
+	}
 }
 
 PrefixDummy: {
@@ -543,6 +570,7 @@ Projectiles: {
 	DaerelGauntlet_PunchProj.DisplayName: Daerel Gauntlet_ Punch Proj
 	GraveSteelWarhammer_GhostProj.DisplayName: Haunted Hammer
 	SkeletonWardenShield_BrokenShieldProj.DisplayName: Shield Shard
+	BasanRifleProjectile.DisplayName: Basan Rifle Projectile
 }
 
 Buffs: {
@@ -631,7 +659,7 @@ Cutscene: {
 
 Achievements: {
 	ErhanSlappedAchievement: {
-		FriendlyName: How the Turntables
+		FriendlyName: Commit To The Bit
 		Description: Defeat Erhan or his Spirit solely by slapping him with the Hand of Judgement until he dies.
 	}
 }

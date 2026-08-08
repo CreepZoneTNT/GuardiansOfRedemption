@@ -2,7 +2,7 @@ using System;
 using GuardiansOfRedemption.Achievements;
 using GuardiansOfRedemption.Content.Guardian.Buffs.Debuffs;
 using GuardiansOfRedemption.Content.Guardian.Weapons.Quarterstaves;
-using GuardiansOfRedemption.Content.Shapeshifter.Buffs.Debuffs;
+using GuardiansOfRedemption.Content.Other.Buffs.Debuffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod.Content.Guardian;
@@ -208,8 +208,8 @@ public class GlobalNPCs : GlobalNPC
 
     public override void UpdateLifeRegen(NPC npc, ref int damage)
     {
-        if(npc.HasBuff<BasanBurnDebuff>())
-        {            
+        if (BasanDebuff)
+        {
             if (npc.lifeRegen > 0)
                 npc.lifeRegen = 0;
 
@@ -218,14 +218,16 @@ public class GlobalNPCs : GlobalNPC
                 BasanDebuffDuration = 480;
             }
 
-                if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
+            if (NPCLists.Plantlike.Contains(npc.type) || NPCLists.Cold.Contains(npc.type) || NPCLists.IsSlime.Contains(npc.type))
             {
                 npc.lifeRegen -= 16 + (BasanDebuffDuration / 2);
                 damage = BasanDebuffDuration;
             }
             else
+            {
                 npc.lifeRegen -= 8 + (BasanDebuffDuration / 4);
                 damage = BasanDebuffDuration / 24;
+            }
         }
     }
 

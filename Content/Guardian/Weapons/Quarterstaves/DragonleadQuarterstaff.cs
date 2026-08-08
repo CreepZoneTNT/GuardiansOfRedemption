@@ -163,8 +163,7 @@ namespace GuardiansOfRedemption.Content.Guardian.Weapons.Quarterstaves
                 float progress = EaseFunction.EaseCubicOut.Ease(1 - factor.X);
                 return Color.Lerp(baseColor, endColor, EaseFunction.EaseCubicIn.Ease(progress)) * (1 - progress) * projectile.Opacity;
             });
-            trail.SetPositions(cache.ToArray(), Projectile.Center);
-            trail.NextPosition = tip;
+            trail.SetPositions(positionCache.ToArray(), projectile.Center);
         }
 
         public override bool PreDrawQuarterstaff(SpriteBatch spriteBatch, Projectile projectile, Player player, ref Color lightColor)

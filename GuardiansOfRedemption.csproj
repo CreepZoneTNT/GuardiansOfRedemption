@@ -12,9 +12,8 @@
 	<ItemGroup>
 		<ProjectReference Include="..\OrchidMod\OrchidMod.csproj"/>
 		<Reference Include="Redemption">
-			<HintPath>lib\Redemption_v0.8.0.4150.dll</HintPath>
+			<HintPath>lib\Redemption.dll</HintPath>
 		</Reference>
-		
 		<Reference Include="ParticleLibrary">
 			<HintPath>lib\ParticleLibrary.dll</HintPath>
 		</Reference>
@@ -23,9 +22,8 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="Dependancies\" />
-		<Folder Include="Dependancies\" />
-		<Folder Include="Items\Guardian\Projectiles\Other\" />
+		<Folder Include="Content\Other\Weapons\Magic\" />
+		<Folder Include="Content\Shapeshifter\Buffs\Debuffs\" />
 		<Folder Include="Sounds\" />
 	</ItemGroup>
 

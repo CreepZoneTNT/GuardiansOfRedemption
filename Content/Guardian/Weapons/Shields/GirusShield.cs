@@ -65,7 +65,7 @@ public class GirusShield : OrchidModGuardianShield
 
     public override bool CanUseItem(Player player)
     {
-        bool slamButton = ModContent.GetInstance<OrchidClientConfig>().GuardianSwapPaviseImputs ? Main.mouseRight : Main.mouseLeft;
+        bool slamButton = ModContent.GetInstance<OrchidClientConfig>().GuardianSwapPaviseInputs ? Main.mouseRight : Main.mouseLeft;
         
         
         return base.CanUseItem(player);
@@ -94,8 +94,8 @@ public class GirusShield : OrchidModGuardianShield
             Vector2 corePosition = owner.MountedCenter + Vector2.UnitX.RotatedBy((projectile.Center - owner.MountedCenter).ToRotation()) * 45 - Main.screenPosition + Vector2.UnitY * owner.gfxOffY;
             Lighting.AddLight(corePosition, glowColor.ToVector3() * (anchor.isSlamming is 1 or 2 ? 1f : colorMult));
             
-            // bool slamButton = ModContent.GetInstance<OrchidClientConfig>().GuardianSwapPaviseImputs ? Main.mouseRight : Main.mouseLeft;
-            // bool slamButtonRelease = ModContent.GetInstance<OrchidClientConfig>().GuardianSwapPaviseImputs ? Main.mouseRightRelease : Main.mouseLeftRelease;
+            // bool slamButton = ModContent.GetInstance<OrchidClientConfig>().GuardianSwapPaviseInputs ? Main.mouseRight : Main.mouseLeft;
+            // bool slamButtonRelease = ModContent.GetInstance<OrchidClientConfig>().GuardianSwapPaviseInputs ? Main.mouseRightRelease : Main.mouseLeftRelease;
             //
             // if (slamButton)
             // {

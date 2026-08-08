@@ -1,6 +1,6 @@
-﻿using OrchidMod;
+﻿using GuardiansOfRedemption.Content.Other.Buffs.Debuffs;
+using OrchidMod;
 using OrchidMod.Content.Shapeshifter;
-using GuardiansOfRedemption.Content.Shapeshifter.Buffs.Debuffs;
 using Redemption.Globals;
 using Redemption.Particles;
 using Terraria;

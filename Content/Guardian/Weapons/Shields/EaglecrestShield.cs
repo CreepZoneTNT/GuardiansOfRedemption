@@ -3,6 +3,7 @@ using GuardiansOfRedemption.Content.Guardian.Projectiles.Shields;
 using Microsoft.Xna.Framework;
 using OrchidMod;
 using OrchidMod.Content.Guardian;
+using OrchidMod.Utilities;
 using Redemption.Globals;
 using Terraria;
 using Terraria.Audio;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using GuardiansOfRedemption.Content.Debug;
 using GuardiansOfRedemption.Rarities;
 using Microsoft.Xna.Framework;
 using Redemption.Rarities;

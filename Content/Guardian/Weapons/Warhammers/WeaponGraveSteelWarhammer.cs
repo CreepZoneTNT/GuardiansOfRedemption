@@ -30,7 +30,7 @@ public class WeaponGraveSteelWarhammer : OrchidModGuardianHammer
         BlockDuration = 200;
     }
 
-    public override void OnThrowHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak)
+    public override void OnThrowHit(Player player, OrchidGuardian guardian, NPC target, Projectile projectile, float knockback, bool crit, bool Weak, bool OffHand)
     {
         if (!Weak)
         { 

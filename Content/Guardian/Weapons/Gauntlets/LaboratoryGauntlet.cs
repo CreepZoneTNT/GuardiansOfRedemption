@@ -11,6 +11,7 @@ using Redemption.Dusts;
 using Redemption.Globals;
 using ReLogic.Content;
 using System;
+using OrchidMod.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -185,8 +186,8 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
                 if (drawAtCursor)
                 {
                     
-                    // spriteBatch.End();
-                    // spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, Main.Rasterizer, null, Main.UIScaleMatrix);
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, Main.Rasterizer, null, Main.UIScaleMatrix);
                     
                     if (player.gravDir < 0) return;
                     for (int i = 0; i < 2; i++)
@@ -209,31 +210,30 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
 
                         float zoom = Main.GameViewMatrix.Zoom.X;
 
-                        Vector2 drawpos = Main.MouseScreen + new Vector2(18 + textureGauntletSubOn.Width, 18 - offSet + (textureGauntletSubOn.Height + 2) * i) + textureGauntletOn.Size() * 0.5f;
-                        // drawpos = Vector2.Transform(drawpos, Main.UIScaleMatrix);
+                        Vector2 drawpos = Main.MouseScreen + new Vector2(18 + textureGauntletSubOn.Width, 18 - offSet + (textureGauntletSubOn.Height + 4) * i) + textureGauntletOn.Size() * 0.5f;
                         
                         if ((int)Math.Floor(BonusCharge / 180f) - 1 >= i)
                         {
-                            spriteBatch.Draw(chargeTextureReady, drawpos - new Vector2(2, 2), null, Color.White * 0.8f, 0f, Vector2.Zero, Main.UIScale, effect, 0f);
+                            spriteBatch.Draw(chargeTextureReady, drawpos - new Vector2(2, 2), null, Color.White * 0.8f, 0f, Vector2.Zero, 1f, effect, 0f);
                         }
-                        spriteBatch.Draw(chargeTextureOff, drawpos, null, Color.White, 0f, Vector2.Zero, Main.UIScale, effect, 0f);
+                        spriteBatch.Draw(chargeTextureOff, drawpos, null, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
                         
                         if ((int)Math.Floor(BonusCharge / 180f) - 1 >= i)
-                            spriteBatch.Draw(chargeTextureOn, drawpos, null, Color.White, 0f, Vector2.Zero, Main.UIScale, effect, 0f);
+                            spriteBatch.Draw(chargeTextureOn, drawpos, null, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
                         else
                         {
                             if ((int)Math.Floor(BonusCharge / 180f) != i) return;
                             drawpos.Y += chargeTextureOn.Height - val;
-                            spriteBatch.Draw(chargeTextureOn, drawpos, rectangle, Color.White, 0f, Vector2.Zero, Main.UIScale, effect, 0f);
+                            spriteBatch.Draw(chargeTextureOn, drawpos, rectangle, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
                         }
                     }
                     
-                    // spriteBatch.End();
-                    // spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
                 }
                 else
                 {
-                    Vector2 position = (player.position + new Vector2(player.width * 0.5f, player.height + player.gfxOffY + 12)).Floor();
+                    Vector2 position = (player.position + Vector2.UnitY * (player.gfxOffY + 12)).Floor();
                     if (player.gravDir < 0) position.Y -= 81;
                     
                     for (int i = 0; i < 2; i ++)
@@ -253,24 +253,26 @@ public class LaboratoryGauntlet : OrchidModGuardianGauntlet
                         rectangle.Height = val;
                         rectangle.Y = chargeTextureOn.Height - val;
                         
-                        Vector2 drawpos = new Vector2(position.X - 9 + textureGauntletSubOn.Width, position.Y - 94 * player.gravDir - offSet + (textureGauntletSubOn.Height + 4) * (player.gravDir < 0 ? i : 1 - i)) + textureGauntletOn.Size() * 0.5f - Main.screenPosition;
+                        Vector2 drawpos = new Vector2(position.X - textureGauntletSubOn.Width - 9, position.Y - 94 * player.gravDir - offSet + (textureGauntletSubOn.Height + 4) * (player.gravDir < 0 ? i : 1 - i)) + textureGauntletOn.Size() * 0.5f - Main.screenPosition;
                         Vector2 gravOffSet = Vector2.UnitY * (player.gravDir - 1);
-                        
+                        if ((main.ai[0] > 0 && main.ai[2] <= 0) || (alt.ai[0] > 0 && alt.ai[2] <= 0))
+                            drawpos.X -= 12;
                         
                         if ((int)Math.Floor(BonusCharge / 180f) - 1 >= i)
                         {
-                            spriteBatch.Draw(chargeTextureReady, drawpos - new Vector2(2, 2) + gravOffSet * 5f * Main.GameViewMatrix.Zoom.Y, null, Color.White * 0.8f, 0f, Vector2.Zero, 1f, effect, 0f);
+                            spriteBatch.Draw(chargeTextureReady, drawpos - new Vector2(2, 2) + gravOffSet * 5f, null, Color.White * 0.8f, 0f, Vector2.Zero, 1f, effect, 0f);
                         }
                         spriteBatch.Draw(chargeTextureOff, drawpos, null, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
                         
-                        // if (player.gravDir < 0) drawpos.Y -= chargeTextureOn.Height - rectangle.Height;
+							drawpos.Y += chargeTextureOn.Height - val;
+							if (player.gravDir < 0) drawpos.Y -= (chargeTextureOn.Height - rectangle.Height);
                         
                         if ((int)Math.Floor(BonusCharge / 180f) - 1 >= i)
-                            spriteBatch.Draw(chargeTextureOn, drawpos + gravOffSet * 3f * Main.GameViewMatrix.Zoom.Y * player.gravDir, null, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
+                            spriteBatch.Draw(chargeTextureOn, drawpos + gravOffSet * 3f * player.gravDir, null, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
                         else
                         {
                             if ((int)Math.Floor(BonusCharge / 180f) != i) return;
-                            drawpos.Y += chargeTextureOn.Height - val;
+                            // drawpos.Y += chargeTextureOn.Height - val;
                             spriteBatch.Draw(chargeTextureOn, drawpos, rectangle, Color.White, 0f, Vector2.Zero, 1f, effect, 0f);
                         }
                     }

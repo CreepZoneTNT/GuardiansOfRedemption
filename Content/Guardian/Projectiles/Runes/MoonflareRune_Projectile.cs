@@ -6,6 +6,7 @@ using OrchidMod.Content.Guardian;
 using Redemption.Dusts;
 using Redemption.Globals;
 using System.Collections.Generic;
+using OrchidMod.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;

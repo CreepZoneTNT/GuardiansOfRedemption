@@ -1,5 +1,4 @@
 ﻿using GuardiansOfRedemption.General.Global;
-using GuardiansOfRedemption.Content.Shapeshifter.Buffs.Debuffs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using OrchidMod;
@@ -7,6 +6,7 @@ using OrchidMod.Content.Shapeshifter;
 using Redemption;
 using Redemption.Globals;
 using System.Collections.Generic;
+using GuardiansOfRedemption.Content.Other.Buffs.Debuffs;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
