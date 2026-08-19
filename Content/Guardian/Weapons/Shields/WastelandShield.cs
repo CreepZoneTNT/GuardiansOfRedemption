@@ -39,7 +39,7 @@ public class WastelandShield : OrchidModGuardianShield
             timer = 10;
     }
 
-    public override void ExtraAIShield(Projectile shield) 
+    public override void ExtraAIShield(Player player, Projectile shield) 
     {
         if (shield.owner == Main.myPlayer && shield.ModProjectile is GuardianShieldAnchor anchor)
         {

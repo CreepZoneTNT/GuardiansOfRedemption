@@ -89,7 +89,7 @@ public class DaerelQuarterstaff : OrchidModGuardianQuarterstaff {
             
         }
 
-        if (guardian.GuardianShowDebugVisuals) {
+        if (guardian.GuardianDebugVisuals == 1) {
             for (int i = 0; i < 40; i++) {
 				Vector2 pos = Main.rand.NextVector2RectangleEdge(tip, new(42, 42));
 				Dust dust = Dust.NewDustPerfect(pos, DustID.Torch, Vector2.Zero);

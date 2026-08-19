@@ -65,11 +65,11 @@ public class SkeletonWardenShield : OrchidModGuardianShield
         }
     }
 
-    public override void ExtraAIShield(Projectile shield)
+    public override void ExtraAIShield(Player player, Projectile shield)
     {
         if (shield.owner == Main.myPlayer && shield.ModProjectile is GuardianShieldAnchor anchor)
         {
-            anchor.ShieldAnimFrame = DamageState;
+            shield.frame = DamageState;
         }
     }
     public override void SlamHitFirst(Player player, Projectile shield, NPC npc, bool WeakSlam)

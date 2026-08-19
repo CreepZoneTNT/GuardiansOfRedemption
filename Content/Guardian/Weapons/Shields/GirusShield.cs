@@ -71,11 +71,11 @@ public class GirusShield : OrchidModGuardianShield
         return base.CanUseItem(player);
     }
 
-    public override void ExtraAIShield(Projectile projectile)
+    public override void ExtraAIShield(Player player, Projectile shield)
     {
-        if (projectile.owner == Main.myPlayer && projectile.ModProjectile is GuardianShieldAnchor anchor)
+        if (shield.owner == Main.myPlayer && shield.ModProjectile is GuardianShieldAnchor anchor)
         {
-            Player owner = Main.player[projectile.owner];
+            Player owner = Main.player[shield.owner];
             
             OrchidGuardian guardian = owner.GetModPlayer<OrchidGuardian>();
             
@@ -88,10 +88,10 @@ public class GirusShield : OrchidModGuardianShield
             
             Color glowColor = new Color(150, 20, 54);
             
-            if (projectile.ai[0] > 0f || anchor.isSlamming is 1 or 2) Lighting.AddLight(projectile.Center, glowColor.ToVector3() * (anchor.isSlamming is 1 or 2 ? 1.5f : 1f));
+            if (shield.ai[0] > 0f || anchor.isSlamming is 1 or 2) Lighting.AddLight(shield.Center, glowColor.ToVector3() * (anchor.isSlamming is 1 or 2 ? 1.5f : 1f));
             
             float colorMult = 0.4f + Math.Abs((1f * Main.LocalPlayer.GetModPlayer<OrchidPlayer>().Timer120 - 60) / 120f);
-            Vector2 corePosition = owner.MountedCenter + Vector2.UnitX.RotatedBy((projectile.Center - owner.MountedCenter).ToRotation()) * 45 - Main.screenPosition + Vector2.UnitY * owner.gfxOffY;
+            Vector2 corePosition = owner.MountedCenter + Vector2.UnitX.RotatedBy((shield.Center - owner.MountedCenter).ToRotation()) * 45 - Main.screenPosition + Vector2.UnitY * owner.gfxOffY;
             Lighting.AddLight(corePosition, glowColor.ToVector3() * (anchor.isSlamming is 1 or 2 ? 1f : colorMult));
             
             // bool slamButton = ModContent.GetInstance<OrchidClientConfig>().GuardianSwapPaviseInputs ? Main.mouseRight : Main.mouseLeft;

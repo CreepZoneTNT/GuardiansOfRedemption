@@ -30,7 +30,7 @@ public class GoRHooks : ModSystem
 
     private delegate void orig_OnBlockAnyFirst(OrchidGuardian self, Projectile anchor, ref int toAdd, bool parry = false);
     private delegate void orig_OnBlockProjectile(OrchidGuardian self, Projectile anchor, Projectile blockedProjectile, bool parry = false);
-    private delegate void orig_DoParryItemParry(OrchidGuardian self, Entity aggressor);
+    private delegate void orig_DoParryItemParry(OrchidGuardian self, Entity aggressor, GuardianAttackInfo attack);
     private delegate void orig_ResetStandards(OrchidGuardian self, bool forceReset = false);
     
     public override void Load()
@@ -43,9 +43,9 @@ public class GoRHooks : ModSystem
         if (onBlockProjectile != null)
             _onBlockProjectileHook = new Hook(onBlockProjectile, Detour_OnBlockProjectile);
 
-        MethodInfo DoParryItemParry = typeof(OrchidGuardian).GetMethod("DoParryItemParry", BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
-        if (DoParryItemParry != null)
-            _DoParryItemParry = new Hook(DoParryItemParry, Detour_DoParryItemParry);
+        MethodInfo doParryItemParry = typeof(OrchidGuardian).GetMethod("DoParryItemParry", BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic, [typeof(Entity), typeof(GuardianAttackInfo)]);
+        if (doParryItemParry != null)
+            _DoParryItemParry = new Hook(doParryItemParry, Detour_DoParryItemParry);
 
         MethodInfo resetStandards = typeof(OrchidGuardian).GetMethod("ResetStandards", BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
         if (resetStandards != null)
@@ -98,7 +98,7 @@ public class GoRHooks : ModSystem
         orig(self, anchor, blockedProjectile, parry);
     }
 
-    private void Detour_DoParryItemParry(orig_DoParryItemParry orig, OrchidGuardian self, Entity aggressor)
+    private void Detour_DoParryItemParry(orig_DoParryItemParry orig, OrchidGuardian self, Entity aggressor, GuardianAttackInfo attack)
     {
         Player player = self.Player;
 
@@ -112,7 +112,7 @@ public class GoRHooks : ModSystem
             }
         }
 
-        orig(self, aggressor);
+        orig(self, aggressor, attack);
     }
     private void Detour_ResetStandards(orig_ResetStandards orig, OrchidGuardian self, bool forceReset = false)
     {
